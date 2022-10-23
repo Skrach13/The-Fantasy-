@@ -19,9 +19,10 @@ public class BattlefieldGeneration : MonoBehaviour
     /// </summary>
     /// <param name="widht"></param>
     /// <param name="height"></param>
-    public static GameObject[,] generate(int widht, int height,float margins ,GameObject floorUnit)
+    public static GameObject[,] generate(int widht, int height,float margins ,GameObject floorUnit , GameObject mainSystem)
     {
         var battleFields = new GameObject[widht,height];
+        var maintBattleSystemScripts = mainSystem.GetComponent<MainBattleSystemScripts>();
 
         for(int x = 0; x < widht; x++)
         {
@@ -29,6 +30,7 @@ public class BattlefieldGeneration : MonoBehaviour
             {
                 var floor = Instantiate(floorUnit);
                 var floorScripts = floor.GetComponent<CellFloorScripts>();
+                floorScripts.mainSystemBattleScript = maintBattleSystemScripts;
                 var sizefloor = floor.GetComponent<SpriteRenderer>();
                 floorScripts.positiongGrafCellFloor = new Vector2(x, y);
                 

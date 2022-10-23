@@ -2,16 +2,56 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
+//using System.Drawing;
 using System.Linq;
 using UnityEngine;
 
 public class PathFinder : MonoBehaviour
 {
-    public static List<Vector2> Path(int[,] pathl ,Vector2 start, Vector2 fisnish)
+
+    private static void paintPath(List<Vector2> path, GameObject[,] massiveField)
     {
-        List<Vector2> path = FindPath(pathl, start, fisnish);
-        Debug.Log(path.Count);
+        foreach (Vector2 coordinat in path)
+        {
+            massiveField[(int)coordinat.x, (int)coordinat.y].GetComponent<SpriteRenderer>().color = Color.green;
+        }
+    }
+
+    private static int[,] massiveGraff(GameObject[,] massiveFields)
+    {
+        int[,] massiceGraff = new int[massiveFields.GetUpperBound(0)+1, massiveFields.GetUpperBound(1) + 1];
+        for (int x = 0; x < massiveFields.GetUpperBound(0) + 1; x++)
+        {
+            for (int y = 0; y < massiveFields.GetUpperBound(1) + 1; y++)
+            {
+
+                if (!massiveFields[x, y].GetComponent<CellFloorScripts>().closeCell)
+                {
+                    massiceGraff[x, y] = 0;
+                }
+                else
+                {
+                    massiceGraff[x, y] = 1;
+                }
+            }
+
+        }
+
+        return massiceGraff;
+    }
+    /// <summary>
+    /// Возвращает список вершин графа ввиде Vector2 тоеть путь из точки a(start) в точку b(finish)  
+    /// </summary>
+    /// <param name="massiveField"></param>
+    /// <param name="start"></param>
+    /// <param name="fisnish"></param>
+    /// <returns></returns>
+    public static List<Vector2> Path(GameObject[,] massiveField ,Vector2 start, Vector2 fisnish)
+    {
+
+        List<Vector2> path = FindPath(massiveGraff(massiveField), start, fisnish);
+        Debug.Log($"Длина пути равна : {path.Count}");
+        paintPath(path, massiveField);
         /*
         var map = GetComponent<BattleSystem>().Map;
         foreach (Vector2 i in path)
@@ -24,8 +64,15 @@ public class PathFinder : MonoBehaviour
         return path;
     }
 
+    
 
 
+
+
+
+    /// <summary>
+    /// Создание точки граффа 
+    /// </summary>
     public class PathNode
     {
 
@@ -49,6 +96,13 @@ public class PathFinder : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Сам алгоритм поиска пути
+    /// </summary>
+    /// <param name="field"></param>
+    /// <param name="start"></param>
+    /// <param name="goal"></param>
+    /// <returns></returns>
     public static List<Vector2> FindPath(int[,] field, Vector2 start, Vector2 goal)
     {
         // Шаг 1.Создается 2 списка вершин — ожидающие рассмотрения и уже рассмотренные.
@@ -104,11 +158,25 @@ public class PathFinder : MonoBehaviour
     {
         return 1;
     }
+    /// <summary>
+    /// Получить эвристическую длину пути (примерной оценка ожидаемого пути)
+    /// </summary>
+    /// <param name="from"></param>
+    /// <param name="to"></param>
+    /// <returns></returns>
     private static int GetHeuristicPathLength(Vector2 from, Vector2 to)
     {
+        //Math.abs если очень просто то убирает знак минус у значений ( возвращает абсолютное значение)
         return (int)(Math.Abs(from.x - to.x) + Math.Abs(from.y - to.y));
     }
 
+    /// <summary>
+    /// создание списка(колекции/массива) соседей для обозреваемой точки
+    /// </summary>
+    /// <param name="pathNode"></param>
+    /// <param name="goal"></param>
+    /// <param name="field"></param>
+    /// <returns></returns>
     private static Collection<PathNode> GetNeighbours(PathNode pathNode,
          Vector2 goal, int[,] field)
     {
