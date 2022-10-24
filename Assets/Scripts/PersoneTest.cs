@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine;
 public class PersoneTest : APersoneScripts
 {
     public bool playerActive;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,5 +19,9 @@ public class PersoneTest : APersoneScripts
     void Update()
     {
         
+    }
+    internal void move(List<Vector2> path)
+    {
+        gameObject.transform.position;
     }
 }
