@@ -14,6 +14,7 @@ public abstract class APersoneScripts : MonoBehaviour
     public int iniciative;
     public Vector3 battlePosition;
     public string testgit;
+    public int movementPointsMax;
     public int movementPoints;
     public MainBattleSystemScripts mainBattleSystemScripts;
     // Start is called before the first frame update

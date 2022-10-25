@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -30,7 +31,13 @@ public class CellFloorScripts : MonoBehaviour
         GetComponent<SpriteRenderer>().color = Color.red;
 
         mainSystemBattleScript.path = PathFinder.Path(mainSystemBattleScript.massiveFields, mainSystemBattleScript.testPlayerScript.battlePosition, positiongGrafCellField);
+        PathFinder.paintPath(mainSystemBattleScript.path, mainSystemBattleScript.massiveFields, Color.green);
         //mainSystemBattleScript.newPosition = positiongGrafCellFloor;
+    }
+    private void OnMouseExit()
+    {
+        PathFinder.paintPath(mainSystemBattleScript.path, mainSystemBattleScript.massiveFields,Color.white);
+        
     }
     private void OnMouseDown()
     {

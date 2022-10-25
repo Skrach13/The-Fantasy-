@@ -6,12 +6,14 @@ using UnityEngine;
 public class PersoneTest : APersoneScripts
 {
     public bool playerActive;
+  
 
 
     // Start is called before the first frame update
     void Start()
     {
-        movementPoints = 3;
+        movementPointsMax = 10;
+        movementPoints = movementPointsMax;
        
     }
 

@@ -53,7 +53,7 @@ public class MainBattleSystemScripts : MonoBehaviour
         testEnemyScript = testEnemy.GetComponent<EnemyTest>();
 
         setPositionPersone(newPosition, massiveFields, testPlayer);
-        setPositionPersone(new Vector2(4, 2), massiveFields, testEnemy);
+        setPositionPersone(new Vector2(3, 2), massiveFields, testEnemy);
 
        
 
@@ -92,32 +92,34 @@ public class MainBattleSystemScripts : MonoBehaviour
     }
     public void PersoneMove(GameObject pesrone, List<Vector2> path)
     {
-        if (step < path.Count)
+
+        if (step < path.Count && pesrone.GetComponent<PersoneTest>().movementPoints>0)
         {
            
+
             Debug.Log($"Step = :{step}");
             if (pesrone.gameObject.transform.position.x != massiveFields[(int)path[step].x, (int)path[step].y].transform.position.x ||
                 pesrone.gameObject.transform.position.y != massiveFields[(int)path[step].x, (int)path[step].y].transform.position.y)
             {
-
                 pesrone.gameObject.transform.position = Vector2.MoveTowards(pesrone.gameObject.transform.position, massiveFields[(int)path[step].x, (int)path[step].y].gameObject.transform.position, 0.9f * Time.deltaTime);
                 Debug.Log($"persone move");
                 pesrone.GetComponent<PersoneTest>().battlePosition = massiveFields[(int)path[step].x, (int)path[step].y].GetComponent<CellFloorScripts>().positiongGrafCellField;
             }
             else
             {
-                step++;
+                pesrone.GetComponent<PersoneTest>().movementPoints--;
+                   step++;
             }
         }
         else
         {
 
             personeMove = false;
-           
+            Debug.Log($"{pesrone.GetComponent<PersoneTest>().movementPoints}");
            // for (int i = 0; i < path.Count; i++)
             //{
-              //  Vector2 floor = path[i];
-               // massiveFields[(int)floor.x, (int)floor.y].GetComponent<FloorScripts>().setPicture(sprite);
+            //  Vector2 floor = path[i];
+            // massiveFields[(int)floor.x, (int)floor.y].GetComponent<FloorScripts>().setPicture(sprite);
 
             //}
         }
