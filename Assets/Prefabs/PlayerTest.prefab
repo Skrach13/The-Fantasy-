@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.30709326, g: 0.9716981, b: 0.36639994, a: 1}
+  m_Color: {r: 0.30588242, g: 0.972549, b: 0.87233436, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -103,4 +103,7 @@ MonoBehaviour:
   damage: 0
   iniciative: 0
   battlePosition: {x: 0, y: 0, z: 0}
+  testgit: 
+  movementPoints: 0
+  mainBattleSystemScripts: {fileID: 0}
   playerActive: 0

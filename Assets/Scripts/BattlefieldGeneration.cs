@@ -32,7 +32,7 @@ public class BattlefieldGeneration : MonoBehaviour
                 var floorScripts = floor.GetComponent<CellFloorScripts>();
                 floorScripts.mainSystemBattleScript = maintBattleSystemScripts;
                 var sizefloor = floor.GetComponent<SpriteRenderer>();
-                floorScripts.positiongGrafCellFloor = new Vector2(x, y);
+                floorScripts.positiongGrafCellField = new Vector2(x, y);
                 
                 battleFields[x, y] = floor;
                 floor.transform.localPosition = new Vector3((float)(x * (sizefloor.size.x * 0.5)+(margins*x)),(float)((y * sizefloor.size.y)+(margins*y)) , 10);

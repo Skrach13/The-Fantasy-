@@ -8,8 +8,8 @@ using UnityEngine;
 /// </summary>
 public class CellFloorScripts : MonoBehaviour
 {
-    public Vector2 positiongGrafCellFloor;
-    public List<Vector2> path;
+    public Vector2 positiongGrafCellField;
+   // public List<Vector2> path;
     public MainBattleSystemScripts mainSystemBattleScript;
     public bool closeCell;
 
@@ -29,7 +29,7 @@ public class CellFloorScripts : MonoBehaviour
 
         GetComponent<SpriteRenderer>().color = Color.red;
 
-        path = PathFinder.Path(mainSystemBattleScript.massiveFields, mainSystemBattleScript.testPlayerScript.battlePosition, positiongGrafCellFloor);
+        mainSystemBattleScript.path = PathFinder.Path(mainSystemBattleScript.massiveFields, mainSystemBattleScript.testPlayerScript.battlePosition, positiongGrafCellField);
         //mainSystemBattleScript.newPosition = positiongGrafCellFloor;
     }
     private void OnMouseDown()
@@ -38,6 +38,7 @@ public class CellFloorScripts : MonoBehaviour
     }
     private void OnMouseUp()
     {
-        mainSystemBattleScript.testPlayerScript.move(path);
+        mainSystemBattleScript.personeMove = true;
+      //  mainSystemBattleScript.testPlayerScript.move(path);
     }
 }

@@ -11,7 +11,7 @@ public class PersoneTest : APersoneScripts
     // Start is called before the first frame update
     void Start()
     {
-       
+        movementPoints = 3;
        
     }
 
@@ -20,8 +20,19 @@ public class PersoneTest : APersoneScripts
     {
         
     }
-    internal void move(List<Vector2> path)
+    public void move(List<Vector2> path)
     {
-        gameObject.transform.position;
+        if (movementPoints>0)
+        {
+            for (int i = 0; i < movementPoints; i++)
+            {
+                Vector2 target = mainBattleSystemScripts.massiveFields[(int)path[i].x, (int)path[i].y].GetComponent<CellFloorScripts>().positiongGrafCellField;
+                gameObject.transform.position = Vector2.MoveTowards(gameObject.transform.position, target, 0.9f * Time.deltaTime);
+              //  path[i];
+            }
+
+        }
     }
+
+    
 }
