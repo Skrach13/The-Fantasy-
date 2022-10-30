@@ -22,7 +22,8 @@ public class PersoneTest : APersoneScripts
     {
         
     }
-    public void move(List<Vector2> path)
+
+    /*public void move(List<Vector2> path)
     {
         if (movementPoints>0)
         {
@@ -35,6 +36,6 @@ public class PersoneTest : APersoneScripts
 
         }
     }
-
+    */
     
 }

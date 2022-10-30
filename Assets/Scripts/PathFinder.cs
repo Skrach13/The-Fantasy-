@@ -2,19 +2,36 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-//using System.Drawing;
 using System.Linq;
 using UnityEngine;
 
 public class PathFinder : MonoBehaviour
 {
+    /*
+     честно спиженный и адаптированый алгоритм (https://lsreg.ru/realizaciya-algoritma-poiska-a-na-c/)
+     
+    1)Создается 2 списка вершин — ожидающие рассмотрения и уже рассмотренные.В ожидающие добавляется точка старта, список рассмотренных пока пуст.
+    2)Для каждой точки рассчитывается F = G + H.G — расстояние от старта до точки, H — примерное расстояние от точки до цели. О расчете этой величины я расскажу позднее.Так же каждая точка хранит ссылку на точку, из которой в нее пришли.
+    3)Из списка точек на рассмотрение выбирается точка с наименьшим F. Обозначим ее X.
+    4)Если X — цель, то мы нашли маршрут.
+    5)Переносим X из списка ожидающих рассмотрения в список уже рассмотренных.
+    6)Для каждой из точек, соседних для X (обозначим эту соседнюю точку Y), делаем следующее:
+    7)Если Y уже находится в рассмотренных — пропускаем ее.
+    8)Если Y еще нет в списке на ожидание — добавляем ее туда, запомнив ссылку на X и рассчитав Y.G (это X.G + расстояние от X до Y) и Y.H.
+    9)Если же Y в списке на рассмотрение — проверяем, если X.G + расстояние от X до Y<Y.G, значит мы пришли в точку Y более коротким путем, заменяем Y.G на X.G + расстояние от X до Y, а точку, из которой пришли в Y на X.
+    10)Если список точек на рассмотрение пуст, а до цели мы так и не дошли — значит маршрут не существует.
+    */
+
+
+
+
 
     /// <summary>
-    /// Возвращает список вершин графа ввиде Vector2 тоеть путь из точки a(start) в точку b(finish)  
+    /// Возвращает список вершин графа ввиде Vector2 тоесть путь из точки a(start) в точку b(finish)(по сути прослойка между основным алгоритмом)  
     /// </summary>
-    /// <param name="massiveField"></param>
-    /// <param name="start"></param>
-    /// <param name="fisnish"></param>
+    /// <param name="massiveField"> массив ячеек поля (само поле)</param>
+    /// <param name="start">стартовай вершина графа </param>
+    /// <param name="fisnish">конечная вершина графа</param>
     /// <returns></returns>
     public static List<Vector2> Path(GameObject[,] massiveField, Vector2 start, Vector2 fisnish)
     {
@@ -28,6 +45,12 @@ public class PathFinder : MonoBehaviour
           
         return path;
     }
+    /// <summary>
+    /// покраска ячеек по построеному пути ( вызываеться где нужно)
+    /// </summary>
+    /// <param name="path">массив содержащий путь по вершинам графов </param>
+    /// <param name="massiveField">массив ячеек(поле) </param>
+    /// <param name="color">цвет покраски ячеек</param>
     public static void paintPath(List<Vector2> path, GameObject[,] massiveField, Color color)
     {
         foreach (Vector2 coordinat in path)
@@ -36,33 +59,34 @@ public class PathFinder : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// прослойка для поиска пути указывающая какие ечейки на поле закрыты
+    /// </summary>
+    /// <param name="massiveFields">массив ячеек (поле)</param>
+    /// <returns></returns>
     private static int[,] massiveGraff(GameObject[,] massiveFields)
     {
-        int[,] massiceGraff = new int[massiveFields.GetUpperBound(0) + 1, massiveFields.GetUpperBound(1) + 1];
+        int[,] massiceGraff = new int[massiveFields.GetUpperBound(0) + 1, massiveFields.GetUpperBound(1) + 1];//создание массива со сторанами = поля ячеек
         for (int x = 0; x < massiveFields.GetUpperBound(0) + 1; x++)
         {
             for (int y = 0; y < massiveFields.GetUpperBound(1) + 1; y++)
             {
-
                 if (massiveFields[x, y].GetComponent<CellFloorScripts>().closeCell)
                 {
-                   
-                    massiceGraff[x, y] = 9;
+                    massiceGraff[x, y] = 9;// закрытая ячейка
                 }
                 else
                 {
-                   
-                    massiceGraff[x, y] = 0;
+                    massiceGraff[x, y] = 0;// открытая для движения
                 }
             }
-
         }
 
         return massiceGraff;
     }
 
     /// <summary>
-    /// Создание  граффа 
+    /// Создание  вершины графа 
     /// </summary>
     public class PathNode
     {

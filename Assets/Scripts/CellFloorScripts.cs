@@ -5,14 +5,22 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
-/// —крипт €чейки пол€
+/// —крипт €чейки пол€(возможно станет абстрактным)
 /// </summary>
 public class CellFloorScripts : MonoBehaviour
 {
+    /// <summary>
+    ///позици€ в графе
+    /// </summary>
     public Vector2 positiongGrafCellField;
-   // public List<Vector2> path;
+    /// <summary>
+    ///ссылка на основной скрипт системы бо€
+    /// </summary>
     public MainBattleSystemScripts mainSystemBattleScript;
-    public bool closeCell;
+    /// <summary>
+    /// определение закрыта или зан€та €чейка
+    /// </summary>
+     public bool closeCell;
 
     void Start()
     {
@@ -24,22 +32,27 @@ public class CellFloorScripts : MonoBehaviour
     {
 
     }
-
+        
     private void OnMouseEnter()
     {
+        //проверка неходит ли сейчас персонаж и закрыта ли €чейка  
         if (!mainSystemBattleScript.personeMove && !closeCell) 
         {
             Debug.Log(" онуц пути: " + positiongGrafCellField + "Ќачало пути:" + mainSystemBattleScript.testPlayerScript.battlePosition);
-        GetComponent<SpriteRenderer>().color = Color.red;
-        mainSystemBattleScript.path = PathFinder.Path(mainSystemBattleScript.massiveFields, mainSystemBattleScript.testPlayerScript.battlePosition, positiongGrafCellField);
-        PathFinder.paintPath(mainSystemBattleScript.path, mainSystemBattleScript.massiveFields, Color.green);
-        //mainSystemBattleScript.newPosition = positiongGrafCellFloor;
+        //пока не нужно но авось пригодитс€
+        //GetComponent<SpriteRenderer>().color = Color.red;
+        
+         //получение пути от персонажа до этой €чейки
+            mainSystemBattleScript.path = PathFinder.Path(mainSystemBattleScript.massiveFields, mainSystemBattleScript.testPlayerScript.battlePosition, positiongGrafCellField);
+        //закрашивание €чеек по сгенерированому пути
+            PathFinder.paintPath(mainSystemBattleScript.path, mainSystemBattleScript.massiveFields, Color.green);
         }
     }
     private void OnMouseExit()
     {
         if (!mainSystemBattleScript.personeMove)
         {
+            //перекрашивание в стандартный цвет €чеек после выхода курсора мыши из €чейки
             PathFinder.paintPath(mainSystemBattleScript.path, mainSystemBattleScript.massiveFields, Color.white);
         }
     }
@@ -49,10 +62,11 @@ public class CellFloorScripts : MonoBehaviour
     }
     private void OnMouseUp()
     {
+        // если €чейка не закрыта\зан€та то после отжати€ мыши над €чейкой начанает движение персонажа
         if (!closeCell) 
         {
             mainSystemBattleScript.personeMove = true;
         }
-            //  mainSystemBattleScript.testPlayerScript.move(path);
+           
     }
 }
