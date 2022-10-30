@@ -27,17 +27,21 @@ public class CellFloorScripts : MonoBehaviour
 
     private void OnMouseEnter()
     {
-
+        if (!mainSystemBattleScript.personeMove && !closeCell) 
+        {
+            Debug.Log("Конуц пути: " + positiongGrafCellField + "Начало пути:" + mainSystemBattleScript.testPlayerScript.battlePosition);
         GetComponent<SpriteRenderer>().color = Color.red;
-
         mainSystemBattleScript.path = PathFinder.Path(mainSystemBattleScript.massiveFields, mainSystemBattleScript.testPlayerScript.battlePosition, positiongGrafCellField);
         PathFinder.paintPath(mainSystemBattleScript.path, mainSystemBattleScript.massiveFields, Color.green);
         //mainSystemBattleScript.newPosition = positiongGrafCellFloor;
+        }
     }
     private void OnMouseExit()
     {
-        PathFinder.paintPath(mainSystemBattleScript.path, mainSystemBattleScript.massiveFields,Color.white);
-        
+        if (!mainSystemBattleScript.personeMove)
+        {
+            PathFinder.paintPath(mainSystemBattleScript.path, mainSystemBattleScript.massiveFields, Color.white);
+        }
     }
     private void OnMouseDown()
     {
@@ -45,7 +49,10 @@ public class CellFloorScripts : MonoBehaviour
     }
     private void OnMouseUp()
     {
-        mainSystemBattleScript.personeMove = true;
-      //  mainSystemBattleScript.testPlayerScript.move(path);
+        if (!closeCell) 
+        {
+            mainSystemBattleScript.personeMove = true;
+        }
+            //  mainSystemBattleScript.testPlayerScript.move(path);
     }
 }

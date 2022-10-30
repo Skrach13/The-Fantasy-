@@ -21,16 +21,11 @@ public class PathFinder : MonoBehaviour
 
         List<Vector2> path = FindPath(massiveGraff(massiveField), start, fisnish);
         Debug.Log($"Длина пути равна : {path.Count}");
-       
-        /*
-        var map = GetComponent<BattleSystem>().Map;
-        foreach (Vector2 i in path)
+        foreach(Vector2 v in path)
         {
-            map[(int)i.x, (int)i.y].GetComponent<FloorScripts>().setPicture(sprite);
-            Debug.Log(i);
-
+            Debug.Log("точки пути :" + v);
         }
-        */
+          
         return path;
     }
     public static void paintPath(List<Vector2> path, GameObject[,] massiveField, Color color)
@@ -150,21 +145,10 @@ public class PathFinder : MonoBehaviour
         return null;
 
     }
-    private static float GetDistanceBetweenNeighbours(int countPoint)
+    private static int GetDistanceBetweenNeighbours(int countPoint)
     {
-         float distanceBetweenNeighbours = 0;
-        if (countPoint % 2 == 0) { 
-            
-                distanceBetweenNeighbours = 1;
-
-        }
-        else { 
-            
-                distanceBetweenNeighbours = 1.3f;
-                
-
-        }
-        return distanceBetweenNeighbours;
+       
+        return 1;
        
     }
     /// <summary>
@@ -173,7 +157,7 @@ public class PathFinder : MonoBehaviour
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <returns></returns>
-    private static float GetHeuristicPathLength(Vector2 from, Vector2 to)
+    private static int GetHeuristicPathLength(Vector2 from, Vector2 to)
     {
         //Math.abs если очень просто то убирает знак минус у значений ( возвращает абсолютное значение)
         return (int)(Math.Abs(from.x - to.x) + Math.Abs(from.y - to.y));
@@ -192,21 +176,19 @@ public class PathFinder : MonoBehaviour
         var result = new Collection<PathNode>();
 
         // Соседними точками являются соседние по стороне клетки.
-        Vector2[] neighbourPoints = new Vector2[8];
-        // if (pathNode.Position.y % 2 == 0)
-        //}
-            neighbourPoints[0] = new Vector2(pathNode.Position.x, pathNode.Position.y + 1);// up 
-            neighbourPoints[1] = new Vector2(pathNode.Position.x + 1, pathNode.Position.y + 1); // up right
-            neighbourPoints[2] = new Vector2(pathNode.Position.x + 1, pathNode.Position.y);//right
-            neighbourPoints[3] = new Vector2(pathNode.Position.x + 1, pathNode.Position.y - 1);//down right
-            neighbourPoints[4] = new Vector2(pathNode.Position.x, pathNode.Position.y - 1);// down 
-            neighbourPoints[5] = new Vector2(pathNode.Position.x - 1, pathNode.Position.y - 1);//left down
-            neighbourPoints[6] = new Vector2(pathNode.Position.x - 1, pathNode.Position.y);//left
-            neighbourPoints[7] = new Vector2(pathNode.Position.x - 1, pathNode.Position.y + 1);// up left 
+        Vector2[] neighbourPoints = new Vector2[6];
+         if (pathNode.Position.y % 2 == 0)
+        {
+            neighbourPoints[0] = new Vector2(pathNode.Position.x - 1, pathNode.Position.y);//left
+            neighbourPoints[1] = new Vector2(pathNode.Position.x - 1, pathNode.Position.y - 1);//left down
+            neighbourPoints[2] = new Vector2(pathNode.Position.x, pathNode.Position.y - 1);//down right
+            neighbourPoints[3] = new Vector2(pathNode.Position.x + 1, pathNode.Position.y);//right
+            neighbourPoints[4] = new Vector2(pathNode.Position.x, pathNode.Position.y + 1); // up right
+            neighbourPoints[5] = new Vector2(pathNode.Position.x - 1, pathNode.Position.y + 1);// up left 
 
-        /*  }
-          else
-          {
+        }
+        else
+        {
               neighbourPoints[0] = new Vector2(pathNode.Position.x - 1, pathNode.Position.y);//left
               neighbourPoints[1] = new Vector2(pathNode.Position.x, pathNode.Position.y - 1);//down left
               neighbourPoints[2] = new Vector2(pathNode.Position.x + 1, pathNode.Position.y - 1);//down right
@@ -214,7 +196,7 @@ public class PathFinder : MonoBehaviour
               neighbourPoints[4] = new Vector2(pathNode.Position.x + 1, pathNode.Position.y + 1);//up right
               neighbourPoints[5] = new Vector2(pathNode.Position.x, pathNode.Position.y + 1);//up left
           }
-        */
+        
             int countPoint=0;
             foreach (var point in neighbourPoints)
             {

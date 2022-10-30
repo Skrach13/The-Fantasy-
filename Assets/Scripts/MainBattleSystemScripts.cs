@@ -98,6 +98,7 @@ public class MainBattleSystemScripts : MonoBehaviour
            
 
             Debug.Log($"Step = :{step}");
+
             if (pesrone.gameObject.transform.position.x != massiveFields[(int)path[step].x, (int)path[step].y].transform.position.x ||
                 pesrone.gameObject.transform.position.y != massiveFields[(int)path[step].x, (int)path[step].y].transform.position.y)
             {
@@ -115,7 +116,7 @@ public class MainBattleSystemScripts : MonoBehaviour
         {
 
             personeMove = false;
-            Debug.Log($"{pesrone.GetComponent<PersoneTest>().movementPoints}");
+            Debug.Log($"Количесто очков передвижения :{pesrone.GetComponent<PersoneTest>().movementPoints}");
            // for (int i = 0; i < path.Count; i++)
             //{
             //  Vector2 floor = path[i];

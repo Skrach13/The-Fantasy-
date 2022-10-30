@@ -254,7 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   widhtField: 5
   heightField: 5
-  marginsCell: 0.02
+  marginsCell: 0.1
   PrefloorUnit: {fileID: 3813018549820827772, guid: 088eb5cb8fa3399409ff3868fc792c74, type: 3}
   massiveBattleSystemPersone: []
   massiveBattlePlayerPersone: []
@@ -266,3 +266,7 @@ MonoBehaviour:
   testEnemy: {fileID: 0}
   testEnemyScript: {fileID: 0}
   newPosition: {x: 1, y: 1}
+  positionPersone: {x: 0, y: 0}
+  step: 0
+  personeMove: 0
+  path: []
