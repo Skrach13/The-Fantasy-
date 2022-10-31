@@ -107,16 +107,18 @@ public class MainBattleSystemScripts : MonoBehaviour
 
         if (step < path.Count && pesrone.GetComponent<PersoneTest>().movementPoints>0)// не превышает ли количество шагов длину пути (вообще надо?) и есть ли очки передвижения у персонажа
         {
-           
-
-            Debug.Log($"Step = :{step}");
-
+            if (step == 0)
+            {
+                massiveFields[(int)path[step].x, (int)path[step].y].GetComponent<CellFloorScripts>().closeCell = false; //открытие ячейки начала пути ( где в начале находится персонаж)
+            }
+                    Debug.Log($"Step = :{step}");
             if (pesrone.gameObject.transform.position.x != massiveFields[(int)path[step].x, (int)path[step].y].transform.position.x || 
                 pesrone.gameObject.transform.position.y != massiveFields[(int)path[step].x, (int)path[step].y].transform.position.y)// проверка не вышли за пределы поля ( перестраховка?)
             {
                 pesrone.gameObject.transform.position = Vector2.MoveTowards(pesrone.gameObject.transform.position, massiveFields[(int)path[step].x, (int)path[step].y].gameObject.transform.position, 0.9f * Time.deltaTime);//движение с одной ячейки на другую
                 Debug.Log($"persone move");
                 pesrone.GetComponent<PersoneTest>().battlePosition = massiveFields[(int)path[step].x, (int)path[step].y].GetComponent<CellFloorScripts>().positiongGrafCellField;//присваевание персанажу позицию графа ячейки на которой он стоит
+           
             }
             else
             {
@@ -126,7 +128,7 @@ public class MainBattleSystemScripts : MonoBehaviour
         }
         else
         {
-
+            massiveFields[(int)pesrone.GetComponent<PersoneTest>().battlePosition.x, (int)pesrone.GetComponent<PersoneTest>().battlePosition.y].GetComponent<CellFloorScripts>().closeCell = true;//закрытие ячейки на которую пришел персонаж
             personeMove = false;// персонаж не движеться
             step = 0;// сброс счетчика ходов
             Debug.Log($"Количесто очков передвижения :{pesrone.GetComponent<PersoneTest>().movementPoints}");
