@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7300992296599618909}
   - component: {fileID: 2310234291627316915}
   - component: {fileID: 7769981331803726096}
+  - component: {fileID: 9028757017270417284}
   m_Layer: 0
   m_Name: EnemyTest
   m_TagString: Untagged
@@ -103,3 +104,23 @@ MonoBehaviour:
   damage: 0
   iniciative: 0
   battlePosition: {x: 0, y: 0, z: 0}
+  testgit: 
+  movementPointsMax: 0
+  movementPoints: 0
+  mainBattleSystemScripts: {fileID: 0}
+--- !u!58 &9028757017270417284
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3689910308015888220}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.49999997

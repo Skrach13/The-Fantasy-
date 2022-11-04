@@ -28,4 +28,10 @@ public abstract class APersoneScripts : MonoBehaviour
     {
 
     }
+
+    public IEnumerator ActivePlayer()
+    {
+
+        yield return null;
+    }
 }

@@ -19,10 +19,10 @@ public class BattlefieldGeneration : MonoBehaviour
     /// <param name="floorUnit">префаб €чейки </param>
     /// <param name="mainSystem">обьект со скриптом €дра системы бо€ дл€ создание ссылки на этот скрипт в €чейках</param>
     /// <returns></returns>
-    public static GameObject[,] generate(int widht, int height ,GameObject floorUnit , GameObject mainSystem)
+    public static CellFloorScripts[,] generateFields(int widht, int height ,GameObject floorUnit , GameObject mainSystem)
     {
         //массив который будет содержать €чейки (массив пол€)
-        var battleFields = new GameObject[widht,height];
+        var battleFields = new CellFloorScripts[widht,height];
         //ссылочна€ переменна€ на основной скрипт бо€ 
         var maintBattleSystemScripts = mainSystem.GetComponent<MainBattleSystemScripts>();
 
@@ -41,7 +41,7 @@ public class BattlefieldGeneration : MonoBehaviour
                 //внесение в скрипт положени€ в графе 
                 floorScripts.positiongGrafCellField = new Vector2(x, y);
                 //внесение €чейки в общий массив €чеек бол€ 
-                battleFields[x, y] = floor;
+                battleFields[x, y] = floorScripts;
 
                 //расчет смещени€ и положени€ €чейки, дл€ пол€ из гексагонов, путЄм определени€ четности р€да по высоте ( подоброно методом тыка) 
                 if (y % 2 == 0)

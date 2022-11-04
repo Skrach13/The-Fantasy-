@@ -22,9 +22,11 @@ public class CellFloorScripts : MonoBehaviour
     /// </summary>
      public bool closeCell;
 
+    public SpriteRenderer spriteRenderer;
+
     void Start()
     {
-        
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -43,7 +45,7 @@ public class CellFloorScripts : MonoBehaviour
         //GetComponent<SpriteRenderer>().color = Color.red;
         
          //получение пути от персонажа до этой €чейки
-            mainSystemBattleScript.path = PathFinder.Path(mainSystemBattleScript.massiveFields, mainSystemBattleScript.testPlayerScript.battlePosition, positiongGrafCellField);
+            mainSystemBattleScript.path = PathFinder.Path(mainSystemBattleScript.massiveFields, mainSystemBattleScript.activePersone.battlePosition, positiongGrafCellField);
         //закрашивание €чеек по сгенерированому пути
             PathFinder.paintPath(mainSystemBattleScript.path, mainSystemBattleScript.massiveFields, Color.green);
         }
@@ -66,6 +68,7 @@ public class CellFloorScripts : MonoBehaviour
         if (!closeCell) 
         {
             mainSystemBattleScript.personeMove = true;
+            StartCoroutine(mainSystemBattleScript.PersoneMove(mainSystemBattleScript.activePersone));
         }
            
     }
