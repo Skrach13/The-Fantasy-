@@ -38,7 +38,7 @@ public class CellFloorScripts : MonoBehaviour
     private void OnMouseEnter()
     {
         //проверка неходит ли сейчас персонаж и закрыта ли ячейка  
-        if (!mainSystemBattleScript.personeMove && !closeCell) 
+        if (!mainSystemBattleScript.personeMove && !closeCell && (mainSystemBattleScript.actionTypePersone == 0))
         {
             Debug.Log("Конуц пути: " + positiongGrafCellField + "Начало пути:" + mainSystemBattleScript.testPlayerScript.battlePosition);
         //пока не нужно но авось пригодится

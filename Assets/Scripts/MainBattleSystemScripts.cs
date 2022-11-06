@@ -8,13 +8,12 @@ using UnityEngine;
 /// </summary>
 public class MainBattleSystemScripts : MonoBehaviour
 {
-    
+
     public int widhtField; // ширина поля в количестве ячеек
     public int heightField; // высота поля в коолистве ячеек
     public GameObject PrefloorUnit;// префаб ячейки поля (изменить название переменной?)
     public CellFloorScripts[,] massiveFields; //массив содержащий ячейки поля
-   // public int[,] massiveStateGraff;// массив для алгоритма поиска пути где (пока) 1 закрыто 0 откртая ячейка (использоваеться для меньшего использования GetComponent)
- 
+  
     public List<APersoneScripts> massiveBattleSystemPersone;// массив для системы инициативы ( изменен на List<>)
     public GameObject[] massiveBattlePlayerPersone;//массив для персонажей Игрока ( скорее всего будет изменен на List<>)
     public GameObject[] massiveBattleEnemyPersone;//массив для персонажей Противников ( скорее всего будет изменен на List<>)
@@ -25,14 +24,17 @@ public class MainBattleSystemScripts : MonoBehaviour
     public GameObject testEnemy;// ссылка на противника
     public EnemyTest testEnemyScript;//ссылка на скрипт противника
     public APersoneScripts activePersone;
+    public APersoneScripts target;
+    public bool playerTurn;
     private int countPersoneIsRound;
+    public actionType actionTypePersone;
 
     public Vector2 newPosition;//позиция ячейки для установки персонажа (будет изменено)
-  //  public Vector2 positionPersone;//
+                               //  public Vector2 positionPersone;//
 
     public int step;//шаг в передвижении персонажа
     public bool personeMove;// перемещаеться ли персонаж
-    public List <Vector2> path;// путь перемещения содержащее положение ячеек в графе 
+    public List<Vector2> path;// путь перемещения содержащее положение ячеек в графе 
 
     private void Awake()
     {
@@ -45,26 +47,31 @@ public class MainBattleSystemScripts : MonoBehaviour
 
         massiveFields = BattlefieldGeneration.generateFields(widhtField, heightField, PrefloorUnit, gameObject);//создание поле боя
 
+
         massiveBattleSystemPersone = new List<APersoneScripts>();
         Debug.Log(massiveBattleSystemPersone);
-       // massiveBattlePlayerPersone = new GameObject[1];// пока затычка для тестов
-       // massiveBattleEnemyPersone = new GameObject[1];// пока затычка для тестов
+        // massiveBattlePlayerPersone = new GameObject[1];// пока затычка для тестов
+        // massiveBattleEnemyPersone = new GameObject[1];// пока затычка для тестов
         testPlayer = Instantiate(testPreFabPlayer);// создание персонажа "игрока"
         testEnemy = Instantiate(testPreFabEnemy);// создание персонажа противника
-      
+
 
         testPlayerScript = testPlayer.GetComponent<PersoneTest>();// пока затычка для тестов
-        testPlayerScript.mainBattleSystemScripts = gameObject.GetComponent<MainBattleSystemScripts>();//пока затычка для тестов для присваивания положения на поле
+        testPlayerScript.mainSystemBattleScript = this;//пока затычка для тестов для присваивания положения на поле
         testEnemyScript = testEnemy.GetComponent<EnemyTest>(); //пока затычка для тестов
+        testEnemyScript.mainSystemBattleScript = this;//пока затычка для тестов для присваивания положения на поле
 
         massiveBattleSystemPersone.Add(testPlayerScript);// пока затычка для тестов
         massiveBattleSystemPersone.Add(testEnemyScript);// пока затычка для тестов
-        NextPersone();
+
 
         SetPositionPersone(newPosition, massiveFields, testPlayer); //пока затычка для тестов
         SetPositionPersone(new Vector2(3, 2), massiveFields, testEnemy);//пока затычка для тестов
+        NextPersone();
 
-
+        Debug.Log("actionType.Move " + actionType.Move);
+        Debug.Log("(int)actionType.Move)  " + (int)actionType.Move);
+        Debug.Log("(int)actionType.Move)  " + (int)actionType.Attack);
 
 
     }
@@ -72,7 +79,7 @@ public class MainBattleSystemScripts : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-   
+
 
     }
 
@@ -86,7 +93,7 @@ public class MainBattleSystemScripts : MonoBehaviour
     {
 
         var cellField = fieldmap[(int)positionSet.x, (int)positionSet.y];//локалная ссылочная переменая на ячейку поля
-       // var cellFieldScript = cellField.GetComponent<CellFloorScripts>();//локальная ссылка на скрипт ячейки поля
+                                                                         // var cellFieldScript = cellField.GetComponent<CellFloorScripts>();//локальная ссылка на скрипт ячейки поля
         if (!cellField.closeCell) // проверка не занята ли 
         {
             var position = cellField.transform.position;//локальная переменая, координаты ячейки на экране( что то вроде того НЕ В ГРАФЕ)
@@ -106,7 +113,7 @@ public class MainBattleSystemScripts : MonoBehaviour
     /// путь всегда храниться в MainBattleSystemScripts
     /// </summary>
     /// <param name="pesrone">Какого персонажа надо переместить</param>
-    
+
     public IEnumerator PersoneMove(APersoneScripts pesrone)
     {
         int step = 0;
@@ -143,7 +150,7 @@ public class MainBattleSystemScripts : MonoBehaviour
                 yield break;
 
             }
-           
+
         }
     }
 
@@ -155,16 +162,24 @@ public class MainBattleSystemScripts : MonoBehaviour
         if (countPersoneIsRound >= massiveBattleSystemPersone.Count)
         {
             countPersoneIsRound = 0;
-            Debug.Log(massiveBattleSystemPersone[countPersoneIsRound]);
-            activePersone = massiveBattleSystemPersone[countPersoneIsRound];
-            Debug.Log(activePersone);
         }
-        else
-        {
-            Debug.Log(countPersoneIsRound);
-            Debug.Log(massiveBattleSystemPersone[countPersoneIsRound]);
-            activePersone = massiveBattleSystemPersone[countPersoneIsRound];
-            Debug.Log(activePersone);
-        }
+
+        activePersone = massiveBattleSystemPersone[countPersoneIsRound];
+        activePersone.UpdatingPointStartTurn();
+        actionTypePersone = actionType.Move;
+        Debug.Log(activePersone);
+
+    }
+
+    public void changeAttack()
+    {
+        actionTypePersone = actionType.Attack;
+    }
+
+    public enum actionType
+    {
+        Move,
+        Attack,
+        PerformsAction
     }
 }

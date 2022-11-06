@@ -12,8 +12,12 @@ public class PersoneTest : APersoneScripts
     // Start is called before the first frame update
     void Start()
     {
+        personeType = Persone.Player;
+        maxHealthPoints = 10;
         movementPointsMax = 10;
-        movementPoints = movementPointsMax;
+        damage = 3;
+        healthPoint = maxHealthPoints;
+        UpdatingPointStartTurn();
        
     }
 
@@ -23,19 +27,6 @@ public class PersoneTest : APersoneScripts
         
     }
 
-    /*public void move(List<Vector2> path)
-    {
-        if (movementPoints>0)
-        {
-            for (int i = 0; i < movementPoints; i++)
-            {
-                Vector2 target = mainBattleSystemScripts.massiveFields[(int)path[i].x, (int)path[i].y].GetComponent<CellFloorScripts>().positiongGrafCellField;
-                gameObject.transform.position = Vector2.MoveTowards(gameObject.transform.position, target, 0.9f * Time.deltaTime);
-              //  path[i];
-            }
-
-        }
-    }
-    */
+   
     
 }

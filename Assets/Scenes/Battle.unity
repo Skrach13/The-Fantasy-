@@ -1104,7 +1104,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1873226829}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2003314056}
+        m_TargetAssemblyTypeName: MainBattleSystemScripts, Assembly-CSharp
+        m_MethodName: changeAttack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1873226829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1202,6 +1214,9 @@ MonoBehaviour:
   testEnemy: {fileID: 0}
   testEnemyScript: {fileID: 0}
   activePersone: {fileID: 0}
+  target: {fileID: 0}
+  playerTurn: 0
+  actionTypePersone: 0
   newPosition: {x: 1, y: 1}
   step: 0
   personeMove: 0
@@ -1241,7 +1256,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 12.6501, y: -48.3326}
+  m_AnchoredPosition: {x: 12.6501, y: -48.33264}
   m_SizeDelta: {x: 1527.3003, y: 96.6653}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2061406374
