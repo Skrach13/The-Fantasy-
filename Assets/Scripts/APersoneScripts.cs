@@ -18,6 +18,7 @@ public abstract class APersoneScripts : MonoBehaviour
     public string testgit;
     public int movementPointsMax;
     public int movementPoints;
+    public int rangeWeapone;
     public MainBattleSystemScripts mainSystemBattleScript;
     public Persone personeType;
     

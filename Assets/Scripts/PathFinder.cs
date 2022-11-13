@@ -22,10 +22,6 @@ public class PathFinder : MonoBehaviour
     10)Если список точек на рассмотрение пуст, а до цели мы так и не дошли — значит маршрут не существует.
     */
 
-
-
-
-
     /// <summary>
     /// Возвращает список вершин графа ввиде Vector2 тоесть путь из точки a(start) в точку b(finish)(по сути прослойка между основным алгоритмом)  
     /// </summary>
@@ -55,7 +51,7 @@ public class PathFinder : MonoBehaviour
     {
         foreach (Vector2 coordinat in path)
         {
-            massiveField[(int)coordinat.x, (int)coordinat.y].spriteRenderer.color = color;
+            massiveField[(int)coordinat.x, (int)coordinat.y].paintCellBattle(color);
         }
     }
 

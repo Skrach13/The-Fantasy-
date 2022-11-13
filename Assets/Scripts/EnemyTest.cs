@@ -11,6 +11,7 @@ public class EnemyTest : APersoneScripts
         maxHealthPoints = 10;
         movementPointsMax = 10;
         damage = 3;
+        rangeWeapone = 2;
         healthPoint = maxHealthPoints;
         UpdatingPointStartTurn();
 

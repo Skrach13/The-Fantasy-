@@ -21,6 +21,9 @@ public class CellFloorScripts : MonoBehaviour
     /// определение закрыта или зан€та €чейка
     /// </summary>
      public bool closeCell;
+    public int attackRange;
+    public APersoneScripts personeStayInCell;
+    public int distanceFromAttacker;
 
     public SpriteRenderer spriteRenderer;
 
@@ -71,5 +74,10 @@ public class CellFloorScripts : MonoBehaviour
             StartCoroutine(mainSystemBattleScript.PersoneMove(mainSystemBattleScript.activePersone));
         }
            
+    }
+
+    public void paintCellBattle(Color color)
+    {
+        spriteRenderer.color = color;
     }
 }

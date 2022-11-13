@@ -80,6 +80,7 @@ public class MainBattleSystemScripts : MonoBehaviour
     void Update()
     {
 
+       
 
     }
 
@@ -146,6 +147,7 @@ public class MainBattleSystemScripts : MonoBehaviour
                 massiveFields[(int)pesrone.GetComponent<APersoneScripts>().battlePosition.x, (int)pesrone.GetComponent<APersoneScripts>().battlePosition.y].GetComponent<CellFloorScripts>().closeCell = true;//закрытие ячейки на которую пришел персонаж
                 personeMove = false;// персонаж не движеться
                 step = 0;// сброс счетчика ходов
+                ResetColorCellFields();
                 Debug.Log($"Количесто очков передвижения :{pesrone.GetComponent<APersoneScripts>().movementPoints}");
                 yield break;
 
@@ -171,10 +173,24 @@ public class MainBattleSystemScripts : MonoBehaviour
 
     }
 
+    public void ResetColorCellFields()
+    {
+        for (int i = 0; i < massiveFields.GetLength(0);i++)
+            {
+             for (int y = 0; y < massiveFields.GetLength(1); y++)
+              {
+                massiveFields[i, y].paintCellBattle(Color.white);
+              }
+            }
+    }
+
     public void changeAttack()
     {
         actionTypePersone = actionType.Attack;
+        AreaAttack.AttackArea(massiveFields ,activePersone);
     }
+
+
 
     public enum actionType
     {
