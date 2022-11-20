@@ -20,7 +20,7 @@ public abstract class APersoneScripts : MonoBehaviour
     public int movementPoints;
     public int rangeWeapone;
     public MainBattleSystemScripts mainSystemBattleScript;
-    public Persone personeType;
+    public PersoneType personeType;
     
     // Start is called before the first frame update
     void Start()
@@ -48,7 +48,7 @@ public abstract class APersoneScripts : MonoBehaviour
 
     }
     
-    public enum Persone
+    public enum PersoneType
     {
         Enemy,
         Player,

@@ -12,7 +12,7 @@ public class PersoneTest : APersoneScripts
     // Start is called before the first frame update
     void Start()
     {
-        personeType = Persone.Player;
+        personeType = PersoneType.Player;
         maxHealthPoints = 10;
         movementPointsMax = 10;
         damage = 3;

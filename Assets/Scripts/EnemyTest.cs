@@ -7,11 +7,11 @@ public class EnemyTest : APersoneScripts
     // Start is called before the first frame update
     void Start()
     {
-        personeType = Persone.Enemy;
+        personeType = PersoneType.Enemy;
         maxHealthPoints = 10;
         movementPointsMax = 10;
         damage = 3;
-        rangeWeapone = 2;
+        rangeWeapone = 5;
         healthPoint = maxHealthPoints;
         UpdatingPointStartTurn();
 
@@ -26,7 +26,7 @@ public class EnemyTest : APersoneScripts
     private void OnMouseEnter()
     {
         Debug.Log(mainSystemBattleScript);
-        if (mainSystemBattleScript.activePersone.personeType == Persone.Player)
+        if (mainSystemBattleScript.activePersone.personeType == PersoneType.Player)
         {
            Debug.Log("mainBattleSystemScripts.target" + mainSystemBattleScript.target);
            mainSystemBattleScript.target = this;
@@ -40,12 +40,13 @@ public class EnemyTest : APersoneScripts
         mainSystemBattleScript.target = null;
     }
 
-    private void OnMouseDown()
+    private void OnMouseUp()
     {
-        if(((int)mainSystemBattleScript.actionTypePersone) == 1)
+        if(((int)mainSystemBattleScript.actionTypePersone) == 1 && mainSystemBattleScript.massiveFields[(int)battlePosition.x,(int)battlePosition.y].attackRange != 0)
         {
             ActionsBattle.Attack(mainSystemBattleScript.activePersone,this);
         }
+        Debug.Log("Click Enemy");
     }
 
 

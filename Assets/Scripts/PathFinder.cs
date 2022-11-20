@@ -31,14 +31,7 @@ public class PathFinder : MonoBehaviour
     /// <returns></returns>
     public static List<Vector2> Path(CellFloorScripts[,] massiveField, Vector2 start, Vector2 fisnish)
     {
-
         List<Vector2> path = FindPath(massiveGraff(massiveField), start, fisnish);
-        Debug.Log($"Длина пути равна : {path.Count}");
-        foreach(Vector2 v in path)
-        {
-            Debug.Log("точки пути :" + v);
-        }
-          
         return path;
     }
     /// <summary>

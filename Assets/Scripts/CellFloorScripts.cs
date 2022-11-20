@@ -23,13 +23,16 @@ public class CellFloorScripts : MonoBehaviour
      public bool closeCell;
     public int attackRange;
     public APersoneScripts personeStayInCell;
-    public int distanceFromAttacker;
+   // public int distanceFromAttacker;
 
     public SpriteRenderer spriteRenderer;
 
+    private void Awake()
+    {
+       spriteRenderer = GetComponent<SpriteRenderer>();
+    }
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -43,7 +46,6 @@ public class CellFloorScripts : MonoBehaviour
         //проверка неходит ли сейчас персонаж и закрыта ли €чейка  
         if (!mainSystemBattleScript.personeMove && !closeCell && (mainSystemBattleScript.actionTypePersone == 0))
         {
-            Debug.Log(" онуц пути: " + positiongGrafCellField + "Ќачало пути:" + mainSystemBattleScript.testPlayerScript.battlePosition);
         //пока не нужно но авось пригодитс€
         //GetComponent<SpriteRenderer>().color = Color.red;
         
@@ -55,7 +57,7 @@ public class CellFloorScripts : MonoBehaviour
     }
     private void OnMouseExit()
     {
-        if (!mainSystemBattleScript.personeMove)
+        if (!mainSystemBattleScript.personeMove && (mainSystemBattleScript.actionTypePersone == 0))
         {
             //перекрашивание в стандартный цвет €чеек после выхода курсора мыши из €чейки
             PathFinder.paintPath(mainSystemBattleScript.path, mainSystemBattleScript.massiveFields, Color.white);
@@ -68,12 +70,12 @@ public class CellFloorScripts : MonoBehaviour
     private void OnMouseUp()
     {
         // если €чейка не закрыта\зан€та то после отжати€ мыши над €чейкой начанает движение персонажа
-        if (!closeCell) 
+        if (!closeCell && (mainSystemBattleScript.actionTypePersone == 0)) 
         {
             mainSystemBattleScript.personeMove = true;
             StartCoroutine(mainSystemBattleScript.PersoneMove(mainSystemBattleScript.activePersone));
         }
-           
+                
     }
 
     public void paintCellBattle(Color color)
