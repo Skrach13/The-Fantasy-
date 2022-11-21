@@ -16,7 +16,7 @@ public class CellFloorScripts : MonoBehaviour
     /// <summary>
     ///ссылка на основной скрипт системы бо€
     /// </summary>
-    public MainBattleSystemScripts mainSystemBattleScript;
+    public MainBattleSystems mainSystemBattleScript;
     /// <summary>
     /// определение закрыта или зан€та €чейка
     /// </summary>
@@ -31,9 +31,9 @@ public class CellFloorScripts : MonoBehaviour
     {
        spriteRenderer = GetComponent<SpriteRenderer>();
     }
-    void Start()
-    {
-    }
+   // void Start()
+   // {
+   // }
 
     // Update is called once per frame
     void Update()

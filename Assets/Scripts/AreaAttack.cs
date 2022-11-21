@@ -34,6 +34,47 @@ public class AreaAttack : MonoBehaviour
             counAtattackRange++;
         }
 
+    } 
+    
+    /// <summary>
+    /// костыль дл€ ј»
+    /// </summary>
+    /// <param name="fields"></param>
+    /// <param name="attacking"></param>
+    public static List<APersoneScripts> PersoneAttackArea(CellFloorScripts[,] fields, APersoneScripts attacking)
+    {
+        List<APersoneScripts> playerPersone = new List<APersoneScripts>();
+        Vector2 vector = attacking.battlePosition;//позици€ атакующего
+        int counAtattackRange = 1;// счетчик дистанции атаки оружи€
+        fields[(int)vector.x, (int)vector.y].attackRange = attacking.rangeWeapone;// присваивание €чейки где стоит атакующей дистанции оружи€ дл€ закрытие €чейки
+        //колекци€ €чеек попадающих в дистанцую атаки
+        Collection<CellFloorScripts> fistCollection = GetNeighbours((fields[(int)attacking.battlePosition.x, (int)attacking.battlePosition.y]), fields , counAtattackRange); ;
+        Collection<CellFloorScripts> secondCollection = new Collection<CellFloorScripts>();
+        counAtattackRange++;
+        while (counAtattackRange <= attacking.rangeWeapone)
+        {
+            secondCollection.Clear();
+            var collection = new Collection<CellFloorScripts>();
+            foreach (CellFloorScripts cell in fistCollection)
+            {
+                if (cell.closeCell)
+                {
+                    if (fields[(int)cell.positiongGrafCellField.x, (int)cell.positiongGrafCellField.y].personeStayInCell.personeType == APersoneScripts.PersoneType.Player)
+                    {
+                        playerPersone.Add(fields[(int)cell.positiongGrafCellField.x, (int)cell.positiongGrafCellField.y].personeStayInCell);
+                    }
+                }
+                collection = GetNeighbours(cell, fields, counAtattackRange);
+                secondCollection.AddRange(collection);
+                Debug.Log(cell.positiongGrafCellField);
+
+            }
+            fistCollection.Clear();
+            fistCollection.AddRange(secondCollection);
+            counAtattackRange++;
+        }
+        return playerPersone;
+
     }
 
     private static Collection<CellFloorScripts> GetNeighbours(CellFloorScripts cellFloor, CellFloorScripts[,] field,int countRangeAttack )

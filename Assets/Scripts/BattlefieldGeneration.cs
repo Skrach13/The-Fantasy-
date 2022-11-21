@@ -24,7 +24,7 @@ public class BattlefieldGeneration : MonoBehaviour
         //массив который будет содержать €чейки (массив пол€)
         var battleFields = new CellFloorScripts[widht,height];
         //ссылочна€ переменна€ на основной скрипт бо€ 
-        var maintBattleSystemScripts = mainSystem.GetComponent<MainBattleSystemScripts>();
+        var maintBattleSystemScripts = mainSystem.GetComponent<MainBattleSystems>();
 
         for(int x = 0; x < widht; x++)
         {

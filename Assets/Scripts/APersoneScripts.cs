@@ -19,7 +19,7 @@ public abstract class APersoneScripts : MonoBehaviour
     public int movementPointsMax;
     public int movementPoints;
     public int rangeWeapone;
-    public MainBattleSystemScripts mainSystemBattleScript;
+    public MainBattleSystems mainSystemBattleScript;
     public PersoneType personeType;
     
     // Start is called before the first frame update
@@ -34,12 +34,12 @@ public abstract class APersoneScripts : MonoBehaviour
 
     }
 
-    public IEnumerator ActivePlayer()
+    public IEnumerator AIEnemyActioner()
     {
         yield return null;
     }
 
-    public void UpdatingPointStartTurn()
+    public void ResetPointActioneStartTurn()
     {
         movementPoints = movementPointsMax;
     }

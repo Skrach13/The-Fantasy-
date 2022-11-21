@@ -107,7 +107,7 @@ public class PathFinder : MonoBehaviour
     /// <param name="start"></param>
     /// <param name="goal"></param>
     /// <returns></returns>
-    public static List<Vector2> FindPath(int[,] field, Vector2 start, Vector2 goal)
+    private static List<Vector2> FindPath(int[,] field, Vector2 start, Vector2 goal)
     {
         // Ўаг 1.—оздаетс€ 2 списка вершин Ч ожидающие рассмотрени€ и уже рассмотренные.
         //       ¬ ожидающие добавл€етс€ точка старта, список рассмотренных пока пуст. 

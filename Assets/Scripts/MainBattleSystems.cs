@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
 /// класс содержащий в себе основную систему отвечающую за бой ( по окончанию написания кода изменить описание)
 /// </summary>
-public class MainBattleSystemScripts : MonoBehaviour
+public class MainBattleSystems : MonoBehaviour
 {
 
     public int widhtField; // ширина поля в количестве ячеек
@@ -39,36 +40,25 @@ public class MainBattleSystemScripts : MonoBehaviour
 
     private void Awake()
     {
-
+        massiveFields = BattlefieldGeneration.generateFields(widhtField, heightField, PrefloorUnit, gameObject);//создание поле боя
+        massivePersoneInBattle = new List<APersoneScripts>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        massiveFields = BattlefieldGeneration.generateFields(widhtField, heightField, PrefloorUnit, gameObject);//создание поле боя
-
-        massivePersoneInBattle = new List<APersoneScripts>();
         // massiveBattlePlayerPersone = new GameObject[1];// пока затычка для тестов
         // massiveBattleEnemyPersone = new GameObject[1];// пока затычка для тестов
-        testPlayer = Instantiate(testPreFabPlayer);// создание персонажа "игрока"
-        testEnemy = Instantiate(testPreFabEnemy);// создание персонажа противника
+     
+        CreatePersoneInBattle(APersoneScripts.PersoneType.Player,12,new Vector2(2,8));
+        CreatePersoneInBattle(APersoneScripts.PersoneType.Player,15,new Vector2(7,5));
+        CreatePersoneInBattle(APersoneScripts.PersoneType.Player,7,new Vector2(2,2));
+        CreatePersoneInBattle(APersoneScripts.PersoneType.Enemy,11,new Vector2(8,8));
+        CreatePersoneInBattle(APersoneScripts.PersoneType.Enemy,13,new Vector2(8,5));
+        CreatePersoneInBattle(APersoneScripts.PersoneType.Enemy,8,new Vector2(8,2));
 
-
-        testPlayerScript = testPlayer.GetComponent<PersoneTest>();// пока затычка для тестов
-        testPlayerScript.mainSystemBattleScript = this;//пока затычка для тестов для присваивания положения на поле
-        testPlayerScript.iniciative = 8;
-        massivePersoneInBattle.Add(testPlayerScript);// пока затычка для тестов
-        SetPositionPersone(newPosition, massiveFields, testPlayerScript); //пока затычка для тестов
-
-        testEnemyScript = testEnemy.GetComponent<EnemyTest>(); //пока затычка для тестов
-        testEnemyScript.iniciative = 7;
-        testEnemyScript.mainSystemBattleScript = this;//пока затычка для тестов для присваивания положения на поле
-        massivePersoneInBattle.Add(testEnemyScript);// пока затычка для тестов
-        SetPositionPersone(new Vector2(3, 2), massiveFields, testEnemyScript);//пока затычка для тестов
-
-        CreatePersoneInBattle(APersoneScripts.PersoneType.Player,15,new Vector2(4,4));
-
-
+        SortIniciative();
+       
         activePersone = massivePersoneInBattle[0];
     }
 
@@ -109,7 +99,54 @@ public class MainBattleSystemScripts : MonoBehaviour
     /// <param name="pesrone">Какого персонажа надо переместить</param>
     public IEnumerator PersoneMove(APersoneScripts pesrone)
     {
+        
         int step = 0;
+            massiveFields[(int)path[step].x, (int)path[step].y].closeCell = false; //открытие ячейки начала пути ( где в начале находится персонаж)
+            massiveFields[(int)path[step].x, (int)path[step].y].personeStayInCell = null;
+        step++;
+        while (true)
+        {
+
+            if (step < path.Count && pesrone.movementPoints > 0)// не превышает ли количество шагов длину пути (вообще надо?да надо зачем хз) и есть ли очки передвижения у персонажа
+            {
+                if (step == 0)
+                {
+                    massiveFields[(int)path[step].x, (int)path[step].y].closeCell = false; //открытие ячейки начала пути ( где в начале находится персонаж)
+                    massiveFields[(int)path[step].x, (int)path[step].y].personeStayInCell = null;
+                }
+                if (pesrone.gameObject.transform.position.x != massiveFields[(int)path[step].x, (int)path[step].y].transform.position.x ||
+                    pesrone.gameObject.transform.position.y != massiveFields[(int)path[step].x, (int)path[step].y].transform.position.y)// проверка не вышли за пределы поля ( перестраховка?)
+                {
+                    pesrone.gameObject.transform.position = Vector2.MoveTowards(pesrone.gameObject.transform.position, massiveFields[(int)path[step].x, (int)path[step].y].gameObject.transform.position, 0.9f * Time.deltaTime);//движение с одной ячейки на другую
+                    pesrone.battlePosition = massiveFields[(int)path[step].x, (int)path[step].y].positiongGrafCellField;//присваевание персанажу позицию графа ячейки на которой он стоит
+                    yield return null;
+                }
+                else
+                {
+                    pesrone.movementPoints--;// уменьшение очков движения персонажа
+                    step++;// увелечения номера шага
+                }
+            }
+            else
+            {
+                massiveFields[(int)pesrone.battlePosition.x, (int)pesrone.battlePosition.y].closeCell = true;//закрытие ячейки на которую пришел персонаж
+                massiveFields[(int)pesrone.battlePosition.x, (int)pesrone.battlePosition.y].personeStayInCell = pesrone;
+                personeMove = false;// персонаж не движеться
+                step = 0;// сброс счетчика ходов
+                ResetStatsCellFields();
+                yield break;
+
+            }
+
+        }
+    } 
+    public IEnumerator PersoneMove(APersoneScripts pesrone, List<Vector2> path)//затычка для ИИ
+    {
+        
+        int step = 0;
+            massiveFields[(int)path[step].x, (int)path[step].y].closeCell = false; //открытие ячейки начала пути ( где в начале находится персонаж)
+            massiveFields[(int)path[step].x, (int)path[step].y].personeStayInCell = null;
+        step++;
         while (true)
         {
 
@@ -157,10 +194,14 @@ public class MainBattleSystemScripts : MonoBehaviour
         }
 
         activePersone = massivePersoneInBattle[countPersoneIsRound];
-        activePersone.UpdatingPointStartTurn();
+        activePersone.ResetPointActioneStartTurn();
         actionTypePersone = actionType.Move;
         ResetStatsCellFields();
         Debug.Log(activePersone);
+        if(activePersone.personeType == APersoneScripts.PersoneType.Enemy)
+        {
+            StartCoroutine(AIBattle.AIaction(activePersone));
+        }
 
     }
     /// <summary>
@@ -196,16 +237,18 @@ public class MainBattleSystemScripts : MonoBehaviour
     }
 
     /// <summary>
-    /// сортировка массива инициативы
+    /// сортировка массива инициативы где первый с самой большой инициативой
     /// </summary>
     public void SortIniciative()
     {
-        massivePersoneInBattle.OrderBy(APersoneScript => APersoneScript.iniciative);
+       //хер его знает как это работает
+        massivePersoneInBattle.Sort(delegate (APersoneScripts x, APersoneScripts y) {
+            return y.iniciative.CompareTo(x.iniciative);
+        });
     }
 
     public void CreatePersoneInBattle(APersoneScripts.PersoneType personeType,int iniciative,Vector2 startPosition)
     {
-        APersoneScripts personeScript;
         var prefab = new GameObject();
         if (personeType == APersoneScripts.PersoneType.Player) 
         {
@@ -215,9 +258,10 @@ public class MainBattleSystemScripts : MonoBehaviour
         {
             prefab = Instantiate(testPreFabEnemy);// создание персонажа противника
         }
+            APersoneScripts personeScript;
             personeScript = prefab.GetComponent<APersoneScripts>();// пока затычка для тестов
             personeScript.mainSystemBattleScript = this;//пока затычка для тестов для присваивания положения на поле
-            testPlayerScript.iniciative = iniciative;
+            personeScript.iniciative = iniciative;
             massivePersoneInBattle.Add(personeScript);// пока затычка для тестов
             SetPositionPersone(startPosition, massiveFields, personeScript); //пока затычка для тестов
        

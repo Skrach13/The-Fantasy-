@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,7 @@ public class EnemyTest : APersoneScripts
         damage = 3;
         rangeWeapone = 5;
         healthPoint = maxHealthPoints;
-        UpdatingPointStartTurn();
+        ResetPointActioneStartTurn();
 
     }
 
@@ -49,5 +50,31 @@ public class EnemyTest : APersoneScripts
         Debug.Log("Click Enemy");
     }
 
+    public  IEnumerator AIEnemyActione()
+    {
+        //опрежелить ближайщего персонажа игрока
+        PersoneTest target = null;
+        float minDistance = 0; 
+        float distance = 0; 
+        foreach (PersoneTest player in mainSystemBattleScript.massivePersoneInBattle )
+        {
+            distance = Math.Abs(player.battlePosition.x - this.battlePosition.x) + Math.Abs(player.battlePosition.y - this.battlePosition.y);
+            if (minDistance < distance)
+            {
+                minDistance = distance;
+                target = player;
+            }
 
+
+        }
+        Debug.Log(target.battlePosition + " " + distance);
+           // yield return null;
+
+        // определить растояние необходимое пройти для атаки
+        // пройти растояние необходимое пройти для атаки
+        // если можно атаковать => атаковать
+        // закончить свой ход 
+        mainSystemBattleScript.NextPersoneIniciative();
+        yield break;
+    }
 }

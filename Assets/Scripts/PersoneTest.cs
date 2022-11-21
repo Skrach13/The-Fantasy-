@@ -18,7 +18,7 @@ public class PersoneTest : APersoneScripts
         damage = 3;
         rangeWeapone = 1;
         healthPoint = maxHealthPoints;
-        UpdatingPointStartTurn();
+        ResetPointActioneStartTurn();
        
     }
 
