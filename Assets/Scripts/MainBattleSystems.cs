@@ -29,7 +29,7 @@ public class MainBattleSystems : MonoBehaviour
     public APersoneScripts target;
     public bool playerTurn;
     private int countPersoneIsRound;
-    public actionType actionTypePersone;
+    public ActionType actionTypePersone;
 
     public Vector2 newPosition;//позиция ячейки для установки персонажа (будет изменено)
                                //  public Vector2 positionPersone;//
@@ -51,7 +51,7 @@ public class MainBattleSystems : MonoBehaviour
         // massiveBattleEnemyPersone = new GameObject[1];// пока затычка для тестов
      
         CreatePersoneInBattle(APersoneScripts.PersoneType.Player,12,new Vector2(2,8));
-        CreatePersoneInBattle(APersoneScripts.PersoneType.Player,15,new Vector2(7,5));
+        CreatePersoneInBattle(APersoneScripts.PersoneType.Player,15,new Vector2(2,5));
         CreatePersoneInBattle(APersoneScripts.PersoneType.Player,7,new Vector2(2,2));
         CreatePersoneInBattle(APersoneScripts.PersoneType.Enemy,11,new Vector2(8,8));
         CreatePersoneInBattle(APersoneScripts.PersoneType.Enemy,13,new Vector2(8,5));
@@ -99,7 +99,7 @@ public class MainBattleSystems : MonoBehaviour
     /// <param name="pesrone">Какого персонажа надо переместить</param>
     public IEnumerator PersoneMove(APersoneScripts pesrone)
     {
-        
+        personeMove = true;
         int step = 0;
             massiveFields[(int)path[step].x, (int)path[step].y].closeCell = false; //открытие ячейки начала пути ( где в начале находится персонаж)
             massiveFields[(int)path[step].x, (int)path[step].y].personeStayInCell = null;
@@ -107,7 +107,7 @@ public class MainBattleSystems : MonoBehaviour
         while (true)
         {
 
-            if (step < path.Count && pesrone.movementPoints > 0)// не превышает ли количество шагов длину пути (вообще надо?да надо зачем хз) и есть ли очки передвижения у персонажа
+            if (step < path.Count && pesrone.actionPoints > 0)// не превышает ли количество шагов длину пути (вообще надо?да надо зачем хз) и есть ли очки передвижения у персонажа
             {
                 if (step == 0)
                 {
@@ -123,7 +123,7 @@ public class MainBattleSystems : MonoBehaviour
                 }
                 else
                 {
-                    pesrone.movementPoints--;// уменьшение очков движения персонажа
+                    pesrone.actionPoints--;// уменьшение очков движения персонажа
                     step++;// увелечения номера шага
                 }
             }
@@ -150,7 +150,7 @@ public class MainBattleSystems : MonoBehaviour
         while (true)
         {
 
-            if (step < path.Count && pesrone.movementPoints > 0)// не превышает ли количество шагов длину пути (вообще надо?да надо зачем хз) и есть ли очки передвижения у персонажа
+            if (step < path.Count && pesrone.actionPoints > 0)// не превышает ли количество шагов длину пути (вообще надо?да надо зачем хз) и есть ли очки передвижения у персонажа
             {
                 if (step == 0)
                 {
@@ -166,7 +166,7 @@ public class MainBattleSystems : MonoBehaviour
                 }
                 else
                 {
-                    pesrone.movementPoints--;// уменьшение очков движения персонажа
+                    pesrone.actionPoints--;// уменьшение очков движения персонажа
                     step++;// увелечения номера шага
                 }
             }
@@ -195,7 +195,7 @@ public class MainBattleSystems : MonoBehaviour
 
         activePersone = massivePersoneInBattle[countPersoneIsRound];
         activePersone.ResetPointActioneStartTurn();
-        actionTypePersone = actionType.Move;
+        actionTypePersone = ActionType.Move;
         ResetStatsCellFields();
         Debug.Log(activePersone);
         if(activePersone.personeType == APersoneScripts.PersoneType.Enemy)
@@ -224,14 +224,14 @@ public class MainBattleSystems : MonoBehaviour
     /// </summary>
     public void changeAttack()
     {
-        if (!(actionTypePersone == actionType.Attack))
+        if (!(actionTypePersone == ActionType.Attack))
         {
-            actionTypePersone = actionType.Attack;
+            actionTypePersone = ActionType.Attack;
             AreaAttack.AttackArea(massiveFields, activePersone);
         }
         else
         {
-            actionTypePersone = actionType.Move;
+            actionTypePersone = ActionType.Move;
             ResetStatsCellFields();
         }
     }
@@ -269,7 +269,7 @@ public class MainBattleSystems : MonoBehaviour
     /// <summary>
     /// перечесление действий в бою
     /// </summary>
-    public enum actionType
+    public enum ActionType
     {
         Move,
         Attack,

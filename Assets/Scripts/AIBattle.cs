@@ -13,23 +13,47 @@ internal class AIBattle
     public static IEnumerator AIaction(APersoneScripts enemy)
     {
         //определить нет ли персонажа игрока в радиусе атаки
-        List<APersoneScripts> maybeTarget = new List<APersoneScripts>();
-        APersoneScripts target = null;
-        maybeTarget = AreaAttack.PersoneAttackArea(enemy.mainSystemBattleScript.massiveFields,enemy);
-        if (maybeTarget.Count > 0)
+             List<APersoneScripts> maybeTarget = null;
+             APersoneScripts target = null;
+        while (enemy.actionPoints > 0)
         {
-            foreach (var i in maybeTarget)
+            maybeTarget = AreaAttack.PersoneAttackArea(enemy.mainSystemBattleScript.massiveFields, enemy);
+            if (maybeTarget.Count > 0)
             {
-                Debug.Log($" возможная цель {i.battlePosition} позиция ИИ {enemy.battlePosition}");
+                float minDistance = 20;
+                float distance = 0;
+                foreach (var playerPersone in maybeTarget)
+                {
+                    distance = Math.Abs(playerPersone.battlePosition.x - enemy.battlePosition.x) + Math.Abs(playerPersone.battlePosition.y - enemy.battlePosition.y);
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        target = playerPersone;
+                    }
+                    Debug.Log($" возможная цель {playerPersone.battlePosition} позиция ИИ {enemy.battlePosition}");
+                }
+                if (enemy.actionPoints >= 2)
+                {
+                    ActionsBattle.Attack(enemy, target);
+                }
+                else
+                {
+                  break;
+                }
             }
-        }
+            if (maybeTarget.Count == 0)
+            {
 
-        //опрежелить ближайщего персонажа игрока
-        target = neighboringPlayerPersone(enemy);
-        List<Vector2> path = PathFinder.Path(enemy.mainSystemBattleScript.massiveFields,enemy.battlePosition,target.battlePosition);
-        Debug.Log(path.Count);
-        yield return enemy.mainSystemBattleScript.PersoneMove(enemy,path);
-        
+                enemy.mainSystemBattleScript.ResetStatsCellFields();
+                CellFloorScripts neighbodCell = null;
+                //опрежелить ближайщего персонажа игрока
+                target = neighboringPlayerPersoneFields(enemy);
+                neighbodCell = AreaAttack.NeighborCellToAttack(enemy.mainSystemBattleScript.massiveFields, enemy, target);
+                List<Vector2> path = PathFinder.Path(enemy.mainSystemBattleScript.massiveFields, enemy.battlePosition, neighbodCell.positiongGrafCellField);
+                yield return enemy.mainSystemBattleScript.PersoneMove(enemy, path);
+            }
+            enemy.mainSystemBattleScript.ResetStatsCellFields();
+        }
         // определить растояние необходимое пройти для атаки
         // пройти растояние необходимое пройти для атаки
         // если можно атаковать => атаковать
@@ -39,7 +63,12 @@ internal class AIBattle
     }
 
 
-    static private APersoneScripts neighboringPlayerPersone(APersoneScripts enemy)
+    /// <summary>
+    /// ближайщий игрок по отношению ИИ
+    /// </summary>
+    /// <param name="enemy"></param>
+    /// <returns></returns>
+    static private APersoneScripts neighboringPlayerPersoneFields(APersoneScripts enemy)
     {
         APersoneScripts target = null;
         float minDistance = 20;
@@ -57,6 +86,7 @@ internal class AIBattle
                 }
             }
         }
+
         Debug.Log($" цель {target} позиция цели {target.battlePosition} дистанция до цели {minDistance} позиция ИИ {enemy.battlePosition}");
         return target;
     }

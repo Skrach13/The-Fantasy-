@@ -6,7 +6,9 @@ public class ActionsBattle : MonoBehaviour
 {
     public static void Attack(APersoneScripts attacking, APersoneScripts target)
     {
+
         target.healthPoint -= attacking.damage;
+        attacking.actionPoints -= 2;
         Debug.Log("target.healthPoint" + target.healthPoint  + "attacking.damage" +  attacking.damage);
     }
     

@@ -16,8 +16,8 @@ public abstract class APersoneScripts : MonoBehaviour
     public int iniciative;
     public Vector3 battlePosition;
     public string testgit;
-    public int movementPointsMax;
-    public int movementPoints;
+    public int actionPointsMax;
+    public int actionPoints;
     public int rangeWeapone;
     public MainBattleSystems mainSystemBattleScript;
     public PersoneType personeType;
@@ -41,7 +41,7 @@ public abstract class APersoneScripts : MonoBehaviour
 
     public void ResetPointActioneStartTurn()
     {
-        movementPoints = movementPointsMax;
+        actionPoints = actionPointsMax;
     }
     public void ResertStats() 
     { 

@@ -14,7 +14,7 @@ public class PersoneTest : APersoneScripts
     {
         personeType = PersoneType.Player;
         maxHealthPoints = 10;
-        movementPointsMax = 10;
+        actionPointsMax = 10;
         damage = 3;
         rangeWeapone = 1;
         healthPoint = maxHealthPoints;
