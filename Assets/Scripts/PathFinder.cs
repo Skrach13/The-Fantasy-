@@ -29,7 +29,7 @@ public class PathFinder : MonoBehaviour
     /// <param name="start">стартовай вершина графа </param>
     /// <param name="fisnish">конечна€ вершина графа</param>
     /// <returns></returns>
-    public static List<Vector2> Path(CellFloorScripts[,] massiveField, Vector2 start, Vector2 fisnish)
+    public static List<Vector2> Path(CellFieldInBattle[,] massiveField, Vector2 start, Vector2 fisnish)
     {
         List<Vector2> path = FindPath(massiveGraff(massiveField), start, fisnish);
         return path;
@@ -40,7 +40,7 @@ public class PathFinder : MonoBehaviour
     /// <param name="path">массив содержащий путь по вершинам графов </param>
     /// <param name="massiveField">массив €чеек(поле) </param>
     /// <param name="color">цвет покраски €чеек</param>
-    public static void paintPath(List<Vector2> path, CellFloorScripts[,] massiveField, Color color)
+    public static void paintPath(List<Vector2> path, CellFieldInBattle[,] massiveField, Color color)
     {
         foreach (Vector2 coordinat in path)
         {
@@ -53,7 +53,7 @@ public class PathFinder : MonoBehaviour
     /// </summary>
     /// <param name="massiveFields">массив €чеек (поле)</param>
     /// <returns></returns>
-    private static int[,] massiveGraff(CellFloorScripts[,] massiveFields)
+    private static int[,] massiveGraff(CellFieldInBattle[,] massiveFields)
     {
         int[,] massiceGraff = new int[massiveFields.GetUpperBound(0) + 1, massiveFields.GetUpperBound(1) + 1];//создание массива со сторанами = пол€ €чеек
         for (int x = 0; x < massiveFields.GetUpperBound(0) + 1; x++)

@@ -1,11 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using static EnumInBattle;
 
-public class PersoneTest : APersoneScripts
+public class PersoneTest : PersoneInBattle
 {
-    public bool playerActive;
+   // public bool playerActive;
   
 
 
@@ -17,7 +14,7 @@ public class PersoneTest : APersoneScripts
         actionPointsMax = 10;
         damage = 3;
         rangeWeapone = 1;
-        healthPoint = maxHealthPoints;
+        HealthPoint = maxHealthPoints;
         ResetPointActioneStartTurn();
        
     }

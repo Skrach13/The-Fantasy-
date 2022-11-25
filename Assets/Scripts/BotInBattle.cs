@@ -1,23 +1,22 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static EnumInBattle;
 using static UnityEngine.EventSystems.EventTrigger;
 using static UnityEngine.GraphicsBuffer;
 
-internal class AIBattle 
+internal class BotInBattle 
 {
-    public static IEnumerator AIaction(APersoneScripts enemy)
+    public static IEnumerator BotAction(PersoneInBattle enemy)
     {
         //определить нет ли персонажа игрока в радиусе атаки
-             List<APersoneScripts> maybeTarget = null;
-             APersoneScripts target = null;
+             List<PersoneInBattle> maybeTarget = null;
+             PersoneInBattle target = null;
         while (enemy.actionPoints > 0)
         {
-            maybeTarget = AreaAttack.PersoneAttackArea(enemy.mainSystemBattleScript.massiveFields, enemy);
+            maybeTarget = AreaAttack.PersoneAttackArea(enemy.mainSystemBattleScript.MassiveFields, enemy);
             if (maybeTarget.Count > 0)
             {
                 float minDistance = 20;
@@ -45,11 +44,11 @@ internal class AIBattle
             {
 
                 enemy.mainSystemBattleScript.ResetStatsCellFields();
-                CellFloorScripts neighbodCell = null;
+                CellFieldInBattle neighbodCell = null;
                 //опрежелить ближайщего персонажа игрока
                 target = neighboringPlayerPersoneFields(enemy);
-                neighbodCell = AreaAttack.NeighborCellToAttack(enemy.mainSystemBattleScript.massiveFields, enemy, target);
-                List<Vector2> path = PathFinder.Path(enemy.mainSystemBattleScript.massiveFields, enemy.battlePosition, neighbodCell.positiongGrafCellField);
+                neighbodCell = AreaAttack.NeighborCellToAttack(enemy.mainSystemBattleScript.MassiveFields, enemy, target);
+                List<Vector2> path = PathFinder.Path(enemy.mainSystemBattleScript.MassiveFields, enemy.battlePosition, neighbodCell.positiongGrafCellField);
                 yield return enemy.mainSystemBattleScript.PersoneMove(enemy, path);
             }
             enemy.mainSystemBattleScript.ResetStatsCellFields();
@@ -68,15 +67,15 @@ internal class AIBattle
     /// </summary>
     /// <param name="enemy"></param>
     /// <returns></returns>
-    static private APersoneScripts neighboringPlayerPersoneFields(APersoneScripts enemy)
+    static private PersoneInBattle neighboringPlayerPersoneFields(PersoneInBattle enemy)
     {
-        APersoneScripts target = null;
+        PersoneInBattle target = null;
         float minDistance = 20;
         float distance = 0;
 
         foreach (var player in enemy.mainSystemBattleScript.massivePersoneInBattle)
         {
-            if (player.personeType == APersoneScripts.PersoneType.Player)
+            if (player.personeType == PersoneType.Player)
             {
                 distance = Math.Abs(player.battlePosition.x - enemy.battlePosition.x) + Math.Abs(player.battlePosition.y - enemy.battlePosition.y);
                 if (distance < minDistance)

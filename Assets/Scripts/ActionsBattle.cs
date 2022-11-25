@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ActionsBattle : MonoBehaviour
 {
-    public static void Attack(APersoneScripts attacking, APersoneScripts target)
+    public static void Attack(PersoneInBattle attacking, PersoneInBattle target)
     {
 
-        target.healthPoint -= attacking.damage;
+        target.HealthPoint -= attacking.damage;
         attacking.actionPoints -= 2;
-        Debug.Log("target.healthPoint" + target.healthPoint  + "attacking.damage" +  attacking.damage);
+        Debug.Log("target.healthPoint" + target.HealthPoint  + "attacking.damage" +  attacking.damage);
     }
     
 

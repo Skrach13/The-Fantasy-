@@ -1,28 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
 /// —крипт €чейки пол€(возможно станет абстрактным)
 /// </summary>
-public class CellFloorScripts : MonoBehaviour
+public class CellFieldInBattle : MonoBehaviour
 {
-    /// <summary>
-    ///позици€ в графе
-    /// </summary>
+   
     public Vector2 positiongGrafCellField;
     /// <summary>
     ///ссылка на основной скрипт системы бо€
     /// </summary>
     public MainBattleSystems mainSystemBattleScript;
-    /// <summary>
-    /// определение закрыта или зан€та €чейка
-    /// </summary>
-     public bool closeCell;
+    public bool closeCell;
     public int attackRange;
-    public APersoneScripts personeStayInCell;
+    public PersoneInBattle personeStayInCell;
    // public int distanceFromAttacker;
 
     public SpriteRenderer spriteRenderer;
@@ -50,9 +41,9 @@ public class CellFloorScripts : MonoBehaviour
         //GetComponent<SpriteRenderer>().color = Color.red;
         
          //получение пути от персонажа до этой €чейки
-            mainSystemBattleScript.path = PathFinder.Path(mainSystemBattleScript.massiveFields, mainSystemBattleScript.activePersone.battlePosition, positiongGrafCellField);
+            mainSystemBattleScript.path = PathFinder.Path(mainSystemBattleScript.MassiveFields, mainSystemBattleScript.activePersone.battlePosition, positiongGrafCellField);
         //закрашивание €чеек по сгенерированому пути
-            PathFinder.paintPath(mainSystemBattleScript.path, mainSystemBattleScript.massiveFields, Color.green);
+            PathFinder.paintPath(mainSystemBattleScript.path, mainSystemBattleScript.MassiveFields, Color.green);
         }
     }
     private void OnMouseExit()
@@ -60,7 +51,7 @@ public class CellFloorScripts : MonoBehaviour
         if (!mainSystemBattleScript.personeMove && (mainSystemBattleScript.actionTypePersone == 0))
         {
             //перекрашивание в стандартный цвет €чеек после выхода курсора мыши из €чейки
-            PathFinder.paintPath(mainSystemBattleScript.path, mainSystemBattleScript.massiveFields, Color.white);
+            PathFinder.paintPath(mainSystemBattleScript.path, mainSystemBattleScript.MassiveFields, Color.white);
         }
     }
     private void OnMouseDown()

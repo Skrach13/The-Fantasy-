@@ -1,9 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using static EnumInBattle;
 
-public class EnemyTest : APersoneScripts
+public class EnemyTest : PersoneInBattle
 {
     // Start is called before the first frame update
     void Start()
@@ -13,7 +11,7 @@ public class EnemyTest : APersoneScripts
         actionPointsMax = 10;
         damage = 3;
         rangeWeapone = 3;
-        healthPoint = maxHealthPoints;
+        HealthPoint = maxHealthPoints;
         ResetPointActioneStartTurn();
 
     }
@@ -43,7 +41,7 @@ public class EnemyTest : APersoneScripts
 
     private void OnMouseUp()
     {
-        if(((int)mainSystemBattleScript.actionTypePersone) == 1 && mainSystemBattleScript.massiveFields[(int)battlePosition.x,(int)battlePosition.y].attackRange != 0)
+        if(((int)mainSystemBattleScript.actionTypePersone) == 1 && mainSystemBattleScript.MassiveFields[(int)battlePosition.x,(int)battlePosition.y].attackRange != 0)
         {
             ActionsBattle.Attack(mainSystemBattleScript.activePersone,this);
         }
