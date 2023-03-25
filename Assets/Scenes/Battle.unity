@@ -459,8 +459,9 @@ RectTransform:
   - {fileID: 1529003089}
   - {fileID: 1701437679}
   - {fileID: 2061406373}
-  m_Father: {fileID: 2003314054}
-  m_RootOrder: 1
+  - {fileID: 1757957329}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -937,13 +938,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1757957326}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -960, y: -540, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_Father: {fileID: 694706069}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1781668454
 GameObject:
@@ -1185,9 +1186,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 519420032}
-  - {fileID: 694706069}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2003314056
 MonoBehaviour:
@@ -1203,7 +1203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   widhtField: 10
   heightField: 10
-  PrefloorUnit: {fileID: 3813018549820827772, guid: 088eb5cb8fa3399409ff3868fc792c74, type: 3}
+  PrefloorUnit: {fileID: 7450991306459292960, guid: 088eb5cb8fa3399409ff3868fc792c74, type: 3}
   massivePersoneInBattle: []
   massiveBattlePlayerPersone: []
   massiveBattleEnemyPersone: []

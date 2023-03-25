@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PathFinder : MonoBehaviour
@@ -29,9 +30,9 @@ public class PathFinder : MonoBehaviour
     /// <param name="start">стартовай вершина графа </param>
     /// <param name="fisnish">конечная вершина графа</param>
     /// <returns></returns>
-    public static List<Vector2> Path(CellFieldInBattle[,] massiveField, Vector2 start, Vector2 fisnish)
+    public static List<Vector2> Path(CellInBattle[,] massiveField, Vector2 start, Vector2 fisnish)
     {
-        List<Vector2> path = FindPath(massiveGraff(massiveField), start, fisnish);
+        List<Vector2> path = FindPath(massiveField, start, fisnish);
         return path;
     }
     /// <summary>
@@ -40,7 +41,7 @@ public class PathFinder : MonoBehaviour
     /// <param name="path">массив содержащий путь по вершинам графов </param>
     /// <param name="massiveField">массив ячеек(поле) </param>
     /// <param name="color">цвет покраски ячеек</param>
-    public static void paintPath(List<Vector2> path, CellFieldInBattle[,] massiveField, Color color)
+    public static void paintPath(List<Vector2> path, CellInBattle[,] massiveField, Color color)
     {
         foreach (Vector2 coordinat in path)
         {
@@ -53,14 +54,14 @@ public class PathFinder : MonoBehaviour
     /// </summary>
     /// <param name="massiveFields">массив ячеек (поле)</param>
     /// <returns></returns>
-    private static int[,] massiveGraff(CellFieldInBattle[,] massiveFields)
+    private static int[,] massiveGraff(CellInBattle[,] massiveFields)
     {
         int[,] massiceGraff = new int[massiveFields.GetUpperBound(0) + 1, massiveFields.GetUpperBound(1) + 1];//создание массива со сторанами = поля ячеек
         for (int x = 0; x < massiveFields.GetUpperBound(0) + 1; x++)
         {
             for (int y = 0; y < massiveFields.GetUpperBound(1) + 1; y++)
             {
-                if (massiveFields[x, y].closeCell)
+                if (massiveFields[x, y].CloseCell)
                 {
                     massiceGraff[x, y] = 9;// закрытая ячейка
                 }
@@ -107,7 +108,7 @@ public class PathFinder : MonoBehaviour
     /// <param name="start"></param>
     /// <param name="goal"></param>
     /// <returns></returns>
-    private static List<Vector2> FindPath(int[,] field, Vector2 start, Vector2 goal)
+    private static List<Vector2> FindPath(CellInBattle[,] field, Vector2 start, Vector2 goal)
     {
         // Шаг 1.Создается 2 списка вершин — ожидающие рассмотрения и уже рассмотренные.
         //       В ожидающие добавляется точка старта, список рассмотренных пока пуст. 
@@ -125,27 +126,26 @@ public class PathFinder : MonoBehaviour
         openSet.Add(startNode);
         while (openSet.Count > 0)
         {
-            // Шаг 3.
-            var currentNode = openSet.OrderBy(node =>
-              node.EstimateFullPathLength).First();
-            // Шаг 4.
-            if (currentNode.Position == goal)
-                return GetPathForNode(currentNode);
-            // Шаг 5.
+            // Шаг 3.взять первый узел из отсиртированного списка (по ожидаемому полному пути) 
+            var currentNode = openSet.OrderBy(node => node.EstimateFullPathLength).First();
+            // Шаг 4.проверяем текущий узел не пришли ли мы к цели, и если пришли возвращаем путь и выходим из цикла
+            if (currentNode.Position == goal) return GetPathForNode(currentNode);
+            // Шаг 5.даляем расмотртенный узел из списка не просмотренных
             openSet.Remove(currentNode);
+            //добавляем расмотренный узел в список просмотренных
             closedSet.Add(currentNode);
             // Шаг 6.
             foreach (var neighbourNode in GetNeighbours(currentNode, goal, field))
             {
-                // Шаг 7.
+                // Шаг 7.проверяем был ли соседний узел просмотрен, если да перейти к следующему узлу ( проверка через поиск совподений по позиции)
                 if (closedSet.Count(node => node.Position == neighbourNode.Position) > 0)
                     continue;
-                var openNode = openSet.FirstOrDefault(node =>
-                  node.Position == neighbourNode.Position);
-                // Шаг 8.
+                // проверяем есть ли в не просмотренных узлах текущий сосед ( проверка через поиск совпадений по позиции)
+                var openNode = openSet.FirstOrDefault(node => node.Position == neighbourNode.Position);
+                // Шаг 8.//если в не просмотреных узлах нет текущего соседа то добовляем в список не просмотреных
                 if (openNode == null)
                     openSet.Add(neighbourNode);
-                else
+                else //Если же Y в списке на рассмотрение — проверяем, если X.G + расстояние от X до Y<Y.G, значит мы пришли в точку Y более коротким путем, заменяем Y.G на X.G + расстояние от X до Y, а точку, из которой пришли в Y на X.
                   if (openNode.PathLengthFromStart > neighbourNode.PathLengthFromStart)
                 {
                     // Шаг 9.
@@ -158,11 +158,90 @@ public class PathFinder : MonoBehaviour
         return null;
 
     }
-    private static int GetDistanceBetweenNeighbours(int countPoint)
+
+    /// <summary>
+    /// создание списка(колекции/массива) соседей для обозреваемой точки
+    /// </summary>
+    /// <param name="pathNode"></param>
+    /// <param name="goal"></param>
+    /// <param name="field"></param>
+    /// <returns></returns>
+    private static Collection<PathNode> GetNeighbours(PathNode pathNode,
+         Vector2 goal, CellInBattle[,] field)
     {
-       
-        return 1;
-       
+        var result = new Collection<PathNode>();
+
+        // Соседними точками являются соседние по стороне клетки.
+        Vector2[] neighbourPoints = new Vector2[6];
+        if (pathNode.Position.y % 2 == 0)
+        {
+            neighbourPoints[0] = new Vector2(pathNode.Position.x - 1, pathNode.Position.y);//left
+            neighbourPoints[1] = new Vector2(pathNode.Position.x - 1, pathNode.Position.y - 1);//left down
+            neighbourPoints[2] = new Vector2(pathNode.Position.x, pathNode.Position.y - 1);//down right
+            neighbourPoints[3] = new Vector2(pathNode.Position.x + 1, pathNode.Position.y);//right
+            neighbourPoints[4] = new Vector2(pathNode.Position.x, pathNode.Position.y + 1); // up right
+            neighbourPoints[5] = new Vector2(pathNode.Position.x - 1, pathNode.Position.y + 1);// up left 
+
+        }
+        else
+        {
+            neighbourPoints[0] = new Vector2(pathNode.Position.x - 1, pathNode.Position.y);//left
+            neighbourPoints[1] = new Vector2(pathNode.Position.x, pathNode.Position.y - 1);//down left
+            neighbourPoints[2] = new Vector2(pathNode.Position.x + 1, pathNode.Position.y - 1);//down right
+            neighbourPoints[3] = new Vector2(pathNode.Position.x + 1, pathNode.Position.y);//right
+            neighbourPoints[4] = new Vector2(pathNode.Position.x + 1, pathNode.Position.y + 1);//up right
+            neighbourPoints[5] = new Vector2(pathNode.Position.x, pathNode.Position.y + 1);//up left
+        }
+
+        int countPoint = 0;
+        foreach (var point in neighbourPoints)
+        {
+            // Проверяем, что не вышли за границы карты.
+            if (point.x < 0 || point.x >= field.GetLength(0))
+                continue;
+            if (point.y < 0 || point.y >= field.GetLength(1))
+                continue;
+            // Проверяем, что по клетке можно ходить.
+            if ((field[(int)point.x, (int)point.y].CloseCell == true))
+                continue;
+            // Заполняем данные для точки маршрута.
+            var neighbourNode = new PathNode()
+            {
+                Position = point,
+                CameFrom = pathNode,
+                PathLengthFromStart = pathNode.PathLengthFromStart +
+                GetDistanceBetweenNeighbours(field[(int)point.x, (int)point.y].RibsWeight, field[(int)pathNode.Position.x, (int)pathNode.Position.y].RibsWeight),
+                HeuristicEstimatePathLength = GetHeuristicPathLength(field[(int)point.x, (int)point.y].PositionInGraff, field[(int)goal.x, (int)goal.y].PositionInGraff)
+            };
+
+            countPoint++;
+            result.Add(neighbourNode);
+        }
+        return result;
+    }
+
+    private static List<Vector2> GetPathForNode(PathNode pathNode)
+    {
+        var result = new List<Vector2>();
+        var currentNode = pathNode;
+        while (currentNode != null)
+        {
+            result.Add(currentNode.Position);
+            currentNode = currentNode.CameFrom;
+        }
+        result.Reverse();
+        return result;
+    }
+    private static float GetDistanceBetweenNeighbours(float weightNode , float weightPreviousNode)
+    {
+        if(weightNode < weightPreviousNode)
+        {
+            return weightPreviousNode;
+        }
+        else
+        {
+            return weightNode;
+        }
     }
     /// <summary>
     /// Получить эвристическую длину пути (примерной оценка ожидаемого пути)
@@ -176,82 +255,6 @@ public class PathFinder : MonoBehaviour
         return (int)(Math.Abs(from.x - to.x) + Math.Abs(from.y - to.y));
     }
 
-    /// <summary>
-    /// создание списка(колекции/массива) соседей для обозреваемой точки
-    /// </summary>
-    /// <param name="pathNode"></param>
-    /// <param name="goal"></param>
-    /// <param name="field"></param>
-    /// <returns></returns>
-    private static Collection<PathNode> GetNeighbours(PathNode pathNode,
-         Vector2 goal, int[,] field)
-    {
-        var result = new Collection<PathNode>();
-
-        // Соседними точками являются соседние по стороне клетки.
-        Vector2[] neighbourPoints = new Vector2[6];
-         if (pathNode.Position.y % 2 == 0)
-        {
-            neighbourPoints[0] = new Vector2(pathNode.Position.x - 1, pathNode.Position.y);//left
-            neighbourPoints[1] = new Vector2(pathNode.Position.x - 1, pathNode.Position.y - 1);//left down
-            neighbourPoints[2] = new Vector2(pathNode.Position.x, pathNode.Position.y - 1);//down right
-            neighbourPoints[3] = new Vector2(pathNode.Position.x + 1, pathNode.Position.y);//right
-            neighbourPoints[4] = new Vector2(pathNode.Position.x, pathNode.Position.y + 1); // up right
-            neighbourPoints[5] = new Vector2(pathNode.Position.x - 1, pathNode.Position.y + 1);// up left 
-
-        }
-        else
-        {
-              neighbourPoints[0] = new Vector2(pathNode.Position.x - 1, pathNode.Position.y);//left
-              neighbourPoints[1] = new Vector2(pathNode.Position.x, pathNode.Position.y - 1);//down left
-              neighbourPoints[2] = new Vector2(pathNode.Position.x + 1, pathNode.Position.y - 1);//down right
-              neighbourPoints[3] = new Vector2(pathNode.Position.x + 1, pathNode.Position.y);//right
-              neighbourPoints[4] = new Vector2(pathNode.Position.x + 1, pathNode.Position.y + 1);//up right
-              neighbourPoints[5] = new Vector2(pathNode.Position.x, pathNode.Position.y + 1);//up left
-          }
-        
-            int countPoint=0;
-            foreach (var point in neighbourPoints)
-            {
 
 
-                // Проверяем, что не вышли за границы карты.
-                if (point.x < 0 || point.x >= field.GetLength(0))
-                    continue;
-                if (point.y < 0 || point.y >= field.GetLength(1))
-                    continue;
-                // Проверяем, что по клетке можно ходить.
-                if ((field[(int)point.x, (int)point.y] != 0) && (field[(int)point.x, (int)point.y] != 1))
-                    continue;
-                // Заполняем данные для точки маршрута.
-                var neighbourNode = new PathNode()
-                {
-                    Position = point,
-                    CameFrom = pathNode,
-                    PathLengthFromStart = pathNode.PathLengthFromStart +
-                    GetDistanceBetweenNeighbours(countPoint),
-                    HeuristicEstimatePathLength = GetHeuristicPathLength(point, goal)
-                };
-
-                countPoint++;
-                result.Add(neighbourNode);
-            }
-            return result;
-     }
-
-        private static List<Vector2> GetPathForNode(PathNode pathNode)
-        {
-            var result = new List<Vector2>();
-            var currentNode = pathNode;
-            while (currentNode != null)
-            {
-                result.Add(currentNode.Position);
-                currentNode = currentNode.CameFrom;
-            }
-            result.Reverse();
-            return result;
-        }
-
-
-    
 }

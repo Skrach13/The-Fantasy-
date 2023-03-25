@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionsBattle : MonoBehaviour
+public static class ActionsBattle 
 {
     public static void Attack(PersoneInBattle attacking, PersoneInBattle target)
     {

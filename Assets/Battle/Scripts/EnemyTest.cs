@@ -41,7 +41,7 @@ public class EnemyTest : PersoneInBattle
 
     private void OnMouseUp()
     {
-        if(((int)mainSystemBattleScript.actionTypePersone) == 1 && mainSystemBattleScript.MassiveFields[(int)battlePosition.x,(int)battlePosition.y].attackRange != 0)
+        if(((int)mainSystemBattleScript.actionTypePersone) == 1 && mainSystemBattleScript.MassiveFields[(int)battlePosition.x,(int)battlePosition.y].AttackRange != 0)
         {
             ActionsBattle.Attack(mainSystemBattleScript.activePersone,this);
         }

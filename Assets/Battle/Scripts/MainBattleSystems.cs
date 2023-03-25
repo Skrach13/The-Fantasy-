@@ -11,8 +11,8 @@ public class MainBattleSystems : MonoBehaviour
 
     public int widhtField; // ширина поля в количестве ячеек
     public int heightField; // высота поля в коолистве ячеек
-    public GameObject PrefloorUnit;// префаб ячейки поля (изменить название переменной?)
-    private static CellFieldInBattle[,] massiveFields; //массив содержащий ячейки поля
+    public CellInBattle PrefloorUnit;// префаб ячейки поля (изменить название переменной?)
+    private static CellInBattle[,] massiveFields; //массив содержащий ячейки поля
 
     public List<PersoneInBattle> massivePersoneInBattle;// массив для системы инициативы ( изменен на List<>)
     public GameObject[] massiveBattlePlayerPersone;//массив для персонажей Игрока ( скорее всего будет изменен на List<>)
@@ -36,7 +36,7 @@ public class MainBattleSystems : MonoBehaviour
     public bool personeMove;// перемещаеться ли персонаж
     public List<Vector2> path;// путь перемещения содержащее положение ячеек в графе 
 
-    public CellFieldInBattle[,] MassiveFields { get => massiveFields; set => massiveFields = value; }
+    public CellInBattle[,] MassiveFields { get => massiveFields; set => massiveFields = value; }
 
     private void Awake()
     {
@@ -75,18 +75,18 @@ public class MainBattleSystems : MonoBehaviour
     /// <param name="positionSet"> позиция на поле ссылающее на ячейку в массиве поля </param>
     /// <param name="fieldmap">массив поля боя</param>
     /// <param name="persone">персонаж которого надо поставить на поле</param>
-    public void SetPositionPersone(Vector2 positionSet, CellFieldInBattle[,] fieldmap, PersoneInBattle persone)
+    public void SetPositionPersone(Vector2 positionSet, CellInBattle[,] fieldmap, PersoneInBattle persone)
     {
         var cellField = fieldmap[(int)positionSet.x, (int)positionSet.y];//локалная ссылочная переменая на ячейку поля
                                                                          // var cellFieldScript = cellField.GetComponent<CellFloorScripts>();//локальная ссылка на скрипт ячейки поля
-        if (!cellField.closeCell) // проверка не занята ли 
+        if (!cellField.CloseCell) // проверка не занята ли 
         {
             var position = cellField.transform.position;//локальная переменая, координаты ячейки на экране( что то вроде того НЕ В ГРАФЕ)
             position.z = positionSet.y;// установка Z для коеретной отрисовки ( что бы обьекты друг друга перекрывали привильно) НЕ ПРОВЕРЕНО!!!
-            persone.battlePosition = cellField.positiongGrafCellField;//присваивание персонажу позиции ячейки в графе на которой он стоит
+            persone.battlePosition = cellField.PositiongCell;//присваивание персонажу позиции ячейки в графе на которой он стоит
             persone.transform.position = position;//установка персонажу координат на экране
-            cellField.closeCell = true;//закрытие ячейки на которой стоит персонаж
-            cellField.personeStayInCell = persone;//закрытие ячейки на которой стоит персонаж
+            cellField.CloseCell = true;//закрытие ячейки на которой стоит персонаж
+            cellField.PersoneStayInCell = persone;//закрытие ячейки на которой стоит персонаж
         }
         else
         {
@@ -102,8 +102,8 @@ public class MainBattleSystems : MonoBehaviour
     {
         personeMove = true;
         int step = 0;
-            MassiveFields[(int)path[step].x, (int)path[step].y].closeCell = false; //открытие ячейки начала пути ( где в начале находится персонаж)
-            MassiveFields[(int)path[step].x, (int)path[step].y].personeStayInCell = null;
+            MassiveFields[(int)path[step].x, (int)path[step].y].CloseCell = false; //открытие ячейки начала пути ( где в начале находится персонаж)
+            MassiveFields[(int)path[step].x, (int)path[step].y].PersoneStayInCell = null;
         step++;
         while (true)
         {
@@ -112,14 +112,14 @@ public class MainBattleSystems : MonoBehaviour
             {
                 if (step == 0)
                 {
-                    MassiveFields[(int)path[step].x, (int)path[step].y].closeCell = false; //открытие ячейки начала пути ( где в начале находится персонаж)
-                    MassiveFields[(int)path[step].x, (int)path[step].y].personeStayInCell = null;
+                    MassiveFields[(int)path[step].x, (int)path[step].y].CloseCell = false; //открытие ячейки начала пути ( где в начале находится персонаж)
+                    MassiveFields[(int)path[step].x, (int)path[step].y].PersoneStayInCell = null;
                 }
                 if (pesrone.gameObject.transform.position.x != MassiveFields[(int)path[step].x, (int)path[step].y].transform.position.x ||
                     pesrone.gameObject.transform.position.y != MassiveFields[(int)path[step].x, (int)path[step].y].transform.position.y)// проверка не вышли за пределы поля ( перестраховка?)
                 {
                     pesrone.gameObject.transform.position = Vector2.MoveTowards(pesrone.gameObject.transform.position, MassiveFields[(int)path[step].x, (int)path[step].y].gameObject.transform.position, 0.9f * Time.deltaTime);//движение с одной ячейки на другую
-                    pesrone.battlePosition = MassiveFields[(int)path[step].x, (int)path[step].y].positiongGrafCellField;//присваевание персанажу позицию графа ячейки на которой он стоит
+                    pesrone.battlePosition = MassiveFields[(int)path[step].x, (int)path[step].y].PositiongCell;//присваевание персанажу позицию графа ячейки на которой он стоит
                     yield return null;
                 }
                 else
@@ -130,8 +130,8 @@ public class MainBattleSystems : MonoBehaviour
             }
             else
             {
-                MassiveFields[(int)pesrone.battlePosition.x, (int)pesrone.battlePosition.y].closeCell = true;//закрытие ячейки на которую пришел персонаж
-                MassiveFields[(int)pesrone.battlePosition.x, (int)pesrone.battlePosition.y].personeStayInCell = pesrone;
+                MassiveFields[(int)pesrone.battlePosition.x, (int)pesrone.battlePosition.y].CloseCell = true;//закрытие ячейки на которую пришел персонаж
+                MassiveFields[(int)pesrone.battlePosition.x, (int)pesrone.battlePosition.y].PersoneStayInCell = pesrone;
                 personeMove = false;// персонаж не движеться
                 step = 0;// сброс счетчика ходов
                 ResetStatsCellFields();
@@ -145,8 +145,8 @@ public class MainBattleSystems : MonoBehaviour
     {
         
         int step = 0;
-            MassiveFields[(int)path[step].x, (int)path[step].y].closeCell = false; //открытие ячейки начала пути ( где в начале находится персонаж)
-            MassiveFields[(int)path[step].x, (int)path[step].y].personeStayInCell = null;
+            MassiveFields[(int)path[step].x, (int)path[step].y].CloseCell = false; //открытие ячейки начала пути ( где в начале находится персонаж)
+            MassiveFields[(int)path[step].x, (int)path[step].y].PersoneStayInCell = null;
         step++;
         while (true)
         {
@@ -155,14 +155,14 @@ public class MainBattleSystems : MonoBehaviour
             {
                 if (step == 0)
                 {
-                    MassiveFields[(int)path[step].x, (int)path[step].y].closeCell = false; //открытие ячейки начала пути ( где в начале находится персонаж)
-                    MassiveFields[(int)path[step].x, (int)path[step].y].personeStayInCell = null;
+                    MassiveFields[(int)path[step].x, (int)path[step].y].CloseCell = false; //открытие ячейки начала пути ( где в начале находится персонаж)
+                    MassiveFields[(int)path[step].x, (int)path[step].y].PersoneStayInCell = null;
                 }
                 if (pesrone.gameObject.transform.position.x != MassiveFields[(int)path[step].x, (int)path[step].y].transform.position.x ||
                     pesrone.gameObject.transform.position.y != MassiveFields[(int)path[step].x, (int)path[step].y].transform.position.y)// проверка не вышли за пределы поля ( перестраховка?)
                 {
                     pesrone.gameObject.transform.position = Vector2.MoveTowards(pesrone.gameObject.transform.position, MassiveFields[(int)path[step].x, (int)path[step].y].gameObject.transform.position, 0.9f * Time.deltaTime);//движение с одной ячейки на другую
-                    pesrone.battlePosition = MassiveFields[(int)path[step].x, (int)path[step].y].positiongGrafCellField;//присваевание персанажу позицию графа ячейки на которой он стоит
+                    pesrone.battlePosition = MassiveFields[(int)path[step].x, (int)path[step].y].PositiongCell;//присваевание персанажу позицию графа ячейки на которой он стоит
                     yield return null;
                 }
                 else
@@ -173,8 +173,8 @@ public class MainBattleSystems : MonoBehaviour
             }
             else
             {
-                MassiveFields[(int)pesrone.battlePosition.x, (int)pesrone.battlePosition.y].closeCell = true;//закрытие ячейки на которую пришел персонаж
-                MassiveFields[(int)pesrone.battlePosition.x, (int)pesrone.battlePosition.y].personeStayInCell = pesrone;
+                MassiveFields[(int)pesrone.battlePosition.x, (int)pesrone.battlePosition.y].CloseCell = true;//закрытие ячейки на которую пришел персонаж
+                MassiveFields[(int)pesrone.battlePosition.x, (int)pesrone.battlePosition.y].PersoneStayInCell = pesrone;
                 personeMove = false;// персонаж не движеться
                 step = 0;// сброс счетчика ходов
                 ResetStatsCellFields();
@@ -215,7 +215,7 @@ public class MainBattleSystems : MonoBehaviour
             for (int y = 0; y < MassiveFields.GetLength(1); y++)
             {
                 MassiveFields[i, y].paintCellBattle(Color.white);
-                MassiveFields[i, y].attackRange = 0;
+                MassiveFields[i, y].AttackRange = 0;
             }
         }
     }
