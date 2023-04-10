@@ -17,7 +17,7 @@ public class GroupGlobalMap : MonoBehaviour
         m_Group[2].name = $"tvar{m_Group[2].name}";
         m_Group[2].Agility = 5;
         m_Group[2].Agility += 1;
-        Debug.Log(m_Group[2].name);
+    //    Debug.Log(m_Group[2].name);
         AssetDatabase.CreateAsset(m_Group[2], $"Assets/1{m_Group[2].Agility}.asset");
         m_Group.Add((Persone)AssetDatabase.LoadAssetAtPath($"Assets/1{m_Group[2].Agility}.asset", typeof(Persone)));
         // m_Group[2].name;
