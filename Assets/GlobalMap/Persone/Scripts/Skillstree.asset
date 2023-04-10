@@ -9,11 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9708042b8a0569e4b90a2238c7e7b4f4, type: 3}
-  m_Name: Cow
+  m_Script: {fileID: 11500000, guid: 93b58206c287b69449f72e44b6ed74fd, type: 3}
+  m_Name: Skillstree
   m_EditorClassIdentifier: 
-  HitPoints: 0
-  MpPoints: 0
-  Intelect: 0
-  Agility: 0
-  Constitution: 0
+  _skillas:
+    _methodAction: 1
+    _name: asd
+    _image: {fileID: 0}
+  _skillasz:
+    _methodAction: 0
+    _name: asfgadg
+    _image: {fileID: 0}
