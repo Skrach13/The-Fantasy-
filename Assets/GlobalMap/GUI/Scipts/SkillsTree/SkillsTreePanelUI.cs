@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SkillsTreePanelUI : MonoBehaviour
@@ -14,17 +12,17 @@ public class SkillsTreePanelUI : MonoBehaviour
     [SerializeField] private List<SkillButtonInTreeUI> _buttonSkillsUI;
     [SerializeField] private List<GameObject> _levelSkillsUI;
 
+    [Header("SkillsPanelUI")]
+    [SerializeField] private SkillsPanelUI _panelUI;
 
-    private void Start()
-    {
-
-    }
     public void ShowSkillsTreePersone(string name,int levelStat)
     {
         var persone = GroupGlobalMap.Instance.GetPerosne(name);
+
         for (int i = 0; i < _buttonSkillsUI.Count; i++)
         {
-            if(_buttonSkillsUI[i].NeededLevelStatAvailable <= levelStat)
+           // _buttonSkillsUI[i].OnClickButton += _panelUI.AddSkill();
+            if (_buttonSkillsUI[i].NeededLevelStatAvailable <= levelStat)
             {
                 _buttonSkillsUI[i].UnlockedSkill();
             }

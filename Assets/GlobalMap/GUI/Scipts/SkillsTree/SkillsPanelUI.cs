@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SkillsPanelUI : MonoBehaviour
@@ -18,7 +19,15 @@ public class SkillsPanelUI : MonoBehaviour
     {
         ShowStatsAndSkillsTreePersone(GroupGlobalMap.Instance.Group[0].Name);
     }
+    private void OnDestroy()
+    {
+        _panelSelectedPersone.OnSelectedPerson -= ShowStatsAndSkillsTreePersone;
+    }
 
+    public void AddSkill(KeySkills keySkills)
+    {
+
+    }
     private void ShowStatsAndSkillsTreePersone(string name)
     {
         _nameVisablePersone = name;
@@ -33,9 +42,5 @@ public class SkillsPanelUI : MonoBehaviour
            
         }
     }
-    
-    private void OnDestroy()
-    {
-        _panelSelectedPersone.OnSelectedPerson -= ShowStatsAndSkillsTreePersone;
-    }
+
 }

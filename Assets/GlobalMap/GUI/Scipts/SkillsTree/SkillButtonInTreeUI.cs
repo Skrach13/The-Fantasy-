@@ -13,6 +13,7 @@ public class SkillButtonInTreeUI : MonoBehaviour
 
     public event Action<KeySkills> OnClickButton;
 
+
     public bool IsAvailable { get => _isAvailable; set => _isAvailable = value; }
     public int NeededLevelStatAvailable { get => _neededLevelStatAvailable; set => _neededLevelStatAvailable = value; }
     public KeySkills Skill { get => _skill; set => _skill = value; }
@@ -27,7 +28,6 @@ public class SkillButtonInTreeUI : MonoBehaviour
     }
     private void OnDestroy()
     {
-
         _button.onClick.RemoveListener(OnDownButton);
     }    
 
@@ -39,7 +39,7 @@ public class SkillButtonInTreeUI : MonoBehaviour
 
     private void OnDownButton()
     {
-        OnClickButton?.Invoke(Skill);
+        OnClickButton(Skill);      
     }
     public void BuildButton(KeySkills skill, SkillButtonInTreeUI previousSkill, int neededLevel)
     {

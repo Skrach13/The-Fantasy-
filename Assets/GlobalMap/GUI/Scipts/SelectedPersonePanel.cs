@@ -22,7 +22,8 @@ public class SelectedPersonePanel : MonoBehaviour
     }
     private void VisualStatsPersone(string name)
     {
-        OnSelectedPerson(name);
+        OnSelectedPerson?.Invoke(name);
+       // OnSelectedPerson(name);
     }
     
     /// <summary>
