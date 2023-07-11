@@ -11,10 +11,8 @@ public class SelectedPersonePanel : MonoBehaviour
     private List<ButtonSelectedPerson> _selectedButtons = new List<ButtonSelectedPerson>();
 
     private void OnEnable()
-    {
-        
-        CreateButtomSelectedPersone();         
-
+    {        
+        CreateButtomSelectedPersone();
     }
     private void OnDisable()
     {
@@ -22,8 +20,7 @@ public class SelectedPersonePanel : MonoBehaviour
     }
     private void VisualStatsPersone(string name)
     {
-        OnSelectedPerson?.Invoke(name);
-       // OnSelectedPerson(name);
+        OnSelectedPerson?.Invoke(name);       
     }
     
     /// <summary>

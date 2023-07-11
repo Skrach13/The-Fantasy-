@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class StatsUpExpiriens : SingletonBase<StatsUpExpiriens>
+[CreateAssetMenu (fileName = "StatsUpExpiriensProperties",menuName = "Persone/StatsUpExpiriensProperties")]
+public class StatsUpExpiriensProperties : ScriptableObject
 {
     [SerializeField] private int[] _upExpiriensStat;
 

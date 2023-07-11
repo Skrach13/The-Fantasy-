@@ -18,10 +18,12 @@ public class SkillsTreePanelUI : MonoBehaviour
     public void ShowSkillsTreePersone(string name,int levelStat)
     {
         var persone = GroupGlobalMap.Instance.GetPerosne(name);
+        
 
         for (int i = 0; i < _buttonSkillsUI.Count; i++)
         {
-           // _buttonSkillsUI[i].OnClickButton += _panelUI.AddSkill();
+            
+
             if (_buttonSkillsUI[i].NeededLevelStatAvailable <= levelStat)
             {
                 _buttonSkillsUI[i].UnlockedSkill();
@@ -39,8 +41,18 @@ public class SkillsTreePanelUI : MonoBehaviour
             {
                 _buttonSkillsUI[i].UnlockedButton();
             }
+            _buttonSkillsUI[i].ClearListnerButton();
+            _buttonSkillsUI[i].OnClickButton += _panelUI.AddSkill;
         }
     }
+    private void OnDisable()
+    {
+        for(int i=0;i < _buttonSkillsUI.Count; i++)
+        {
+           _buttonSkillsUI[i].OnClickButton -= _panelUI.AddSkill;
+        }
+    }
+
 
     [ContextMenu(nameof(BuildTree))]
     private void BuildTree()

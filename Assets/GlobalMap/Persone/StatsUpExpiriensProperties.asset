@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa78c9ea9ff2c2e47a5776b264999221, type: 3}
+  m_Name: StatsUpExpiriensProperties
+  m_EditorClassIdentifier: 
+  _upExpiriensStat: 00000000c80000002c010000c20100005802000084030000b004000008070000600900001c0c0000a00f00008813000064190000401f000010270000e02e0000983a000050460000f0550000a861000030750000b888000010a4000068bf000060ea000070110100084c010040420f0020d6130060e31600

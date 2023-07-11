@@ -26,7 +26,7 @@ public class SkillsPanelUI : MonoBehaviour
 
     public void AddSkill(KeySkills keySkills)
     {
-
+        GroupGlobalMap.Instance.AddSkillPersone(NameVisablePersone,keySkills);
     }
     private void ShowStatsAndSkillsTreePersone(string name)
     {

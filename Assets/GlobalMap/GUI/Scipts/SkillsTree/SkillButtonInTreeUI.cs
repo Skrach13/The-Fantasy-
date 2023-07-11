@@ -31,11 +31,11 @@ public class SkillButtonInTreeUI : MonoBehaviour
         _button.onClick.RemoveListener(OnDownButton);
     }    
 
-    public void UnlockedButton() => _button.enabled = false;   
-    public void LockButton() => _button.enabled = true;
+    public void UnlockedButton() => _button.enabled = true;   
+    public void LockButton() => _button.enabled = false;
     public void UnlockedSkill() => _lock.enabled = false;
     public void LockSkill() => _lock.enabled = true;
-
+    public void ClearListnerButton() => OnClickButton = null;
 
     private void OnDownButton()
     {

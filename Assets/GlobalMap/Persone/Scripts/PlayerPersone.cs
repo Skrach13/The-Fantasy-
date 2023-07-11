@@ -11,8 +11,12 @@ public class PlayerPersone : BasePersone
 
     public bool TryGetSkills(KeySkills keySkills,out SkillBase skill )
     {
-        var beSkill = true;
-        beSkill = _skills.TryGetValue(keySkills, out skill);       
+        bool beSkill = _skills.TryGetValue(keySkills, out skill);
+        return beSkill;
+    }
+    public bool TrySkill(KeySkills keySkills)
+    {
+        bool beSkill = _skills.TryGetValue(keySkills, out var skill);
         return beSkill;
     }
 
@@ -26,7 +30,7 @@ public class PlayerPersone : BasePersone
             p.Stats[i].Value = assets.Persones[index].Stats[i].Value;
             if (p.Stats[i].Stats != EStats.MaxHealth)
             {               
-                p.Stats[i].NeededExperience = StatsUpExpiriens.Instance.UpExpiriensStat[p.Stats[i].Value];
+                p.Stats[i].NeededExperience = GroupGlobalMap.Instance.StatsUpExpiriensProperties.UpExpiriensStat[p.Stats[i].Value];
             }
         }
         p.Description = assets.Persones[index].Description;
@@ -45,4 +49,5 @@ public class PlayerPersone : BasePersone
         p.Description = asset.Description;
         return p;
     }
+       
 }

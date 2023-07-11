@@ -4,11 +4,14 @@ using UnityEngine;
 public class GroupGlobalMap : SingletonBase<GroupGlobalMap>
 {
     [SerializeField] private SkillsProperties _skillsTree;
-    [SerializeField] private List<PlayerPersone> _group = new List<PlayerPersone>();
     [SerializeField] private PersoneAssets _personeAssets;
+    [SerializeField] private StatsUpExpiriensProperties _statsUpExpiriensProperties;
     [SerializeField] private string _testName;
 
-    public List<PlayerPersone> Group { get => _group; set => _group = value; }
+    [SerializeField] private List<PlayerPersone> _group = new List<PlayerPersone>();
+
+    public List<PlayerPersone> Group { get => _group; private set => _group = value; }
+    public StatsUpExpiriensProperties StatsUpExpiriensProperties { get => _statsUpExpiriensProperties; private set => _statsUpExpiriensProperties = value; }
 
     private void Start()
     {
@@ -22,9 +25,18 @@ public class GroupGlobalMap : SingletonBase<GroupGlobalMap>
             Group.Add(PlayerPersone.CreatePersone(_personeAssets, i));
             //TEST
             _group[i].Skills.Add(KeySkills.AttackMelle,_skillsTree.GetSkill(0));
-
+        }               
+    }
+    public void AddSkillPersone(string name, KeySkills keySkills)
+    {
+        if (GetPerosne(name).TrySkill(keySkills) == false)
+        {
+             GetPerosne(name).Skills.Add(keySkills,_skillsTree.GetSkill(keySkills));
         }
-               
+        else
+        {
+            Debug.Log("этот скилл есть у персонажа");
+        }
     }
 
     public PlayerPersone GetPerosne(string name)
