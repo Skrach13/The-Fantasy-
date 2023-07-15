@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EItemID 
+public enum ItemType 
 {
    potion,
    Weapone,

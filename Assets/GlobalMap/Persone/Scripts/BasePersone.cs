@@ -10,6 +10,7 @@ public abstract class BasePersone
     public int Health;
     public Stat[] Stats = new Stat[(int)EStats.Charism+1];   
     public string Description;
+    
 
    
 }

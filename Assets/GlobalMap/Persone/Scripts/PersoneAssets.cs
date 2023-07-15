@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "Persone", menuName = "Persone/Persone", order = 1)]
 public class PersoneAssets : ScriptableObject
@@ -9,6 +10,7 @@ public class PersoneAssets : ScriptableObject
     public class PerosneAsset
     {
         public string Name = "NoneName";
+        public Image Image;
         public Race Race;
         public StatValue[] Stats;       
         [TextArea(order = 8)] public string Description;
