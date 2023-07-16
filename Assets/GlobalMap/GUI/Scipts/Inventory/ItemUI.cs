@@ -44,28 +44,29 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
     public void OnEndDrag(PointerEventData eventData)
     {
 
-        SlotItemUI parant = transform.parent?.GetComponent<SlotItemUI>();
-        if (parant == null)
+        SlotItemUI parent = transform.parent?.GetComponent<SlotItemUI>();
+        if (parent == null)
         {
             transform.SetParent(ParantSlotTransform);
         }
         else
         {
-            if (parant.ItemUI == null)
+            if (parent.ItemUI == null)
             {
-                parant.ItemUI = this;
+                parent.ItemUI = this;
                 _parantSlotTransform.GetComponent<SlotItemUI>().ItemUI = null;
-                _parantSlotTransform = parant.transform;
+                _parantSlotTransform = parent.transform;
             }
             else
-            {    //если в слоте есть предмет          
-                ItemUI itemUI = parant.ItemUI;//временно сохраняем это предмет            
-                parant.ItemUI = this;//записываем в новый слот перетаскиваемый предмет
+            {
+                //если в слоте есть предмет          
+                ItemUI itemUI = parent.ItemUI;//временно сохраняем это предмет            
+                parent.ItemUI = this;//записываем в новый слот перетаскиваемый предмет
                 itemUI.transform.SetParent(_parantSlotTransform);//назначаем родительский трансформу сохраненому предмету 
                 itemUI.ParantSlotTransform = _parantSlotTransform;//записываем сохраненому предмету его родительский трансформ
                 _parantSlotTransform.GetComponent<SlotItemUI>().ItemUI = itemUI;//записываем в слот из которого перетаскиваем сохраненый предмет 
                 itemUI.transform.localPosition = Vector3.zero;//устанавливаем позицию сохраненого предмета в слот перетаскиваемого предмета
-                _parantSlotTransform = parant.transform;//сохраняем родительску трансформу перетаскиваемому предмету
+                _parantSlotTransform = parent.transform;//сохраняем родительску трансформу перетаскиваемому предмету
 
             }
         }

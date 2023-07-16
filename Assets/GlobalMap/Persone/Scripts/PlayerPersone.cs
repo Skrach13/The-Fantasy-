@@ -6,7 +6,7 @@ using UnityEngine.UI;
 [Serializable]
 public class PlayerPersone : BasePersone
 {
-    private Image _image;
+    private Sprite _sprite;
     #region Items Persone
     [SerializeField] private ItemBase _rightHandItem;
     [SerializeField] private ItemBase _LeftHandItem;
@@ -28,7 +28,7 @@ public class PlayerPersone : BasePersone
     [SerializeField] private Dictionary<KeySkills, SkillBase> _skills = new();
 
     public Dictionary<KeySkills, SkillBase> Skills { get => _skills; private set => _skills = value; }
-    public Image Image { get => _image; set => _image = value; }
+    public Sprite Sprite { get => _sprite; set => _sprite = value; }
 
     public bool TryGetSkills(KeySkills keySkills, out SkillBase skill)
     {
@@ -54,7 +54,7 @@ public class PlayerPersone : BasePersone
                 p.Stats[i].NeededExperience = GroupGlobalMap.Instance.StatsUpExpiriensProperties.UpExpiriensStat[p.Stats[i].Value];
             }
         }
-        p.Image = assets.Persones[index].Image;
+        p.Sprite = assets.Persones[index]._sprite;
         p.Description = assets.Persones[index].Description;
         return p;
     }

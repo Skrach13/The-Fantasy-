@@ -11,19 +11,13 @@ public class InventoryUI : MonoBehaviour
 
 
     [SerializeField] private GameObject _container;
-    private InventoryPlayerGroup _inventory;
-
-    private void Start()
-    {
-        _inventory = FindAnyObjectByType<InventoryPlayerGroup>();
-    }
 
     private void OnEnable()
     {
         AddItemsAndSlots();
     }
 
-    private void AddItemsAndSlots()
+    public void AddItemsAndSlots()
     {
         if (_slotsUI.Count != 0)
         {
@@ -33,10 +27,10 @@ public class InventoryUI : MonoBehaviour
             }
                 _slotsUI.Clear();
         }
-        for (int i = 0; i < _inventory.SlotsItem.Count + _additionalSlots; i++)
+        for (int i = 0; i < InventoryPlayerGroup.Instance.SlotsItem.Count + _additionalSlots; i++)
         {
             _slotsUI.Add(Instantiate(_slotUIPrefab, _container.transform));
-            if (i < _inventory.SlotsItem.Count)
+            if (i < InventoryPlayerGroup.Instance.SlotsItem.Count)
             {
                ItemUI itemUI = Instantiate(_itemUIPrefab, _slotsUI[i].transform);
                 _slotsUI[i].ItemUI = itemUI;                

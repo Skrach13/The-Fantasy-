@@ -874,7 +874,7 @@ MonoBehaviour:
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 197618234}
   m_HorizontalScrollbarVisibility: 2
-  m_VerticalScrollbarVisibility: 0
+  m_VerticalScrollbarVisibility: 2
   m_HorizontalScrollbarSpacing: -3
   m_VerticalScrollbarSpacing: -3
   m_OnValueChanged:
@@ -2889,7 +2889,7 @@ GameObject:
   - component: {fileID: 701934676}
   - component: {fileID: 701934678}
   - component: {fileID: 701934677}
-  - component: {fileID: 701934680}
+  - component: {fileID: 701934679}
   m_Layer: 5
   m_Name: InventoryPanel
   m_TagString: Untagged
@@ -2910,8 +2910,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1427099480}
-  - {fileID: 1996659886}
   - {fileID: 1817901695}
+  - {fileID: 1996659886}
   m_Father: {fileID: 1683369287}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2958,7 +2958,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 701934675}
   m_CullTransparentMesh: 1
---- !u!114 &701934680
+--- !u!114 &701934679
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2967,13 +2967,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 701934675}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 963255bad6232914b845d318fb07375f, type: 3}
+  m_Script: {fileID: 11500000, guid: 09adce2d196247841b625f97a206fc71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slotUIPrefab: {fileID: 2922733486593824129, guid: a99aad276f057934c956403401fde087, type: 3}
-  _itemUIPrefab: {fileID: 1930987867, guid: 22b992a2c5c214f4093e7a667a06f539, type: 3}
-  _additionalSlots: 7
-  _container: {fileID: 1393882219}
+  _selectedPersone: {fileID: 1996659887}
+  _inventoryUI: {fileID: 1817901696}
+  _personePanel: {fileID: 1427099483}
 --- !u!1 &704009234
 GameObject:
   m_ObjectHideFlags: 0
@@ -8296,7 +8295,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 701934680}
+      - m_Target: {fileID: 1817901696}
         m_TargetAssemblyTypeName: InventoryUI, Assembly-CSharp
         m_MethodName: DebugAddItems
         m_Mode: 1
@@ -8957,6 +8956,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1817901695}
+  - component: {fileID: 1817901696}
   m_Layer: 5
   m_Name: InventoryPanel
   m_TagString: Untagged
@@ -8978,13 +8978,29 @@ RectTransform:
   m_Children:
   - {fileID: 112740256}
   m_Father: {fileID: 701934676}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.32328203, y: 0.06655012}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1817901696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817901694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a4ef0e7b3c734f49ba52b2fe6d56f93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slotUIPrefab: {fileID: 2922733486593824129, guid: a99aad276f057934c956403401fde087, type: 3}
+  _itemUIPrefab: {fileID: 1930987867, guid: 22b992a2c5c214f4093e7a667a06f539, type: 3}
+  _additionalSlots: 7
+  _container: {fileID: 1393882219}
 --- !u!1 &1819381462
 GameObject:
   m_ObjectHideFlags: 0
@@ -10685,7 +10701,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 701934676}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.06655012}
@@ -10954,9 +10970,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2005477034
 MonoBehaviour:
