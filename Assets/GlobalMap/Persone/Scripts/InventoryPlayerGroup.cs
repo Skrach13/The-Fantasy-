@@ -3,24 +3,24 @@ using UnityEngine;
 
 public class InventoryPlayerGroup : SingletonBase<InventoryPlayerGroup>
 {
-    private List<SlotInventory> _slotsItem;
+    [SerializeField] private List<SlotItem> _slotsItem;
 
-    public List<SlotInventory> SlotsItem { get => _slotsItem; private set => _slotsItem = value; }
+    public List<SlotItem> SlotsItem { get => _slotsItem; private set => _slotsItem = value; }
 
     private new void Awake()
     {
         base.Awake();
         if (SlotsItem == null)
         {
-            SlotsItem = new List<SlotInventory>();
+            SlotsItem = new List<SlotItem>();
         }
     }
     //Debug Test
     public void AddAllItemsInData()
     {
         for (int i = 0; i < ItemsData.Instance.Items.Length; i++)
-        {           
-            AddItem(ItemsData.Instance.GetItem((ItemID)i), 1);            
+        {
+            AddItem(ItemsData.Instance.GetItem((ItemID)i), 1);
         }
     }
 
@@ -29,7 +29,7 @@ public class InventoryPlayerGroup : SingletonBase<InventoryPlayerGroup>
     /// </summary>
     /// <param name="name"></param>
     /// <returns>SlotInventory</returns>
-    public SlotInventory GetSlot(ItemBase item)
+    public SlotItem GetSlot(ItemBase item)
     {
         if (SlotsItem.Count == 0) return null;
 
@@ -47,12 +47,38 @@ public class InventoryPlayerGroup : SingletonBase<InventoryPlayerGroup>
         var itemInList = GetSlot(item);
         if (itemInList == null)
         {
-            var slot = new SlotInventory(item, count);
+            var slot = new SlotItem(item, count);
             SlotsItem.Add(slot);
         }
         else
         {
             itemInList.Count += count;
+        }
+    }
+    /// <summary>
+    /// удаляет предмет если его количество 0 или возвращает false (происходит создание нового слота) 
+    /// или убавляет количество предметов
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    public bool RemoveItem(ItemBase item, int count)
+    {
+        var itemInList = GetSlot(item);
+        if (itemInList == null || itemInList.Count - count < 0)
+        {
+            return false;           
+        }
+        else if( itemInList.Count - count == 0 )
+        {
+            itemInList.Count -= count;
+            SlotsItem.Remove(itemInList);
+            return true;
+        }
+        else
+        {
+            itemInList.Count -= count;
+            return true;
         }
     }
 }

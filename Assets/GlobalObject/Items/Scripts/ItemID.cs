@@ -6,6 +6,6 @@ public enum ItemID
     Spear,
     TwoHandedSword,
     PotionHealth
-} 
-   
+}
+
 

@@ -33,10 +33,8 @@ public class InventoryUI : MonoBehaviour
             if (i < InventoryPlayerGroup.Instance.SlotsItem.Count)
             {
                ItemUI itemUI = Instantiate(_itemUIPrefab, _slotsUI[i].transform);
-                _slotsUI[i].ItemUI = itemUI;                
-                //debug test
-                //TODO
-                itemUI.Item = ItemsData.Instance.GetItem((ItemID)i);
+                _slotsUI[i].ItemUI = itemUI;
+                itemUI.Item = ItemsData.Instance.GetItem(InventoryPlayerGroup.Instance.SlotsItem[i].Item.ItemID);
                 itemUI.name = itemUI.Item.name;
                 itemUI.SetSprite();
             }

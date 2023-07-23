@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemType 
+public enum ItemType
 {
-   potion,
-   Weapone,
-   Armor,
-   QuestItem,
-   Ressurse
+    Potion,
+    Weapone,
+    Armor,
+    Jewelry,
+    QuestItem,
+    Ressurse
 }

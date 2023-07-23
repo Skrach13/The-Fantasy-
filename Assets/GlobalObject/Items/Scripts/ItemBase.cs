@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
-using UnityEngine.UI;
 
+[Serializable]
 [CreateAssetMenu(fileName = "Item", menuName = "ScriptableObjects/ItemBase")]
 public class ItemBase : ScriptableObject
 {

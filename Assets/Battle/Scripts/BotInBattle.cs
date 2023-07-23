@@ -48,7 +48,7 @@ internal class BotInBattle
                 //опрежелить ближайщего персонажа игрока
                 target = neighboringPlayerPersoneFields(enemy);
                 neighbodCell = AreaAttack.NeighborCellToAttack(enemy.mainSystemBattleScript.MassiveFields, enemy, target);
-                List<Vector2> path = PathFinder.Path(enemy.mainSystemBattleScript.MassiveFields, enemy.battlePosition, neighbodCell.PositiongCell);
+                List<Vector2> path = PathFinderInBattle.Path(enemy.mainSystemBattleScript.MassiveFields, enemy.battlePosition, neighbodCell.PositiongCell);
                 yield return enemy.mainSystemBattleScript.PersoneMove(enemy, path);
             }
             enemy.mainSystemBattleScript.ResetStatsCellFields();

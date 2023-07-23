@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CellInBattle : CellBase
+public class CellInBattle : CellInBattleBase
 {
 
     public MainBattleSystems MainSystemBattleScript { get; set; }
@@ -34,9 +34,9 @@ public class CellInBattle : CellBase
             //GetComponent<SpriteRenderer>().color = Color.red;
 
             //получение пути от персонажа до этой €чейки
-            MainSystemBattleScript.path = PathFinder.Path(MainSystemBattleScript.MassiveFields, MainSystemBattleScript.activePersone.battlePosition, PositiongCell);
+            MainSystemBattleScript.path = PathFinderInBattle.Path(MainSystemBattleScript.MassiveFields, MainSystemBattleScript.activePersone.battlePosition, PositiongCell);
             //закрашивание €чеек по сгенерированому пути
-            PathFinder.paintPath(MainSystemBattleScript.path, MainSystemBattleScript.MassiveFields, Color.green);
+            PathFinderInBattle.paintPath(MainSystemBattleScript.path, MainSystemBattleScript.MassiveFields, Color.green);
         }
     }
     private void OnMouseExit()
@@ -44,7 +44,7 @@ public class CellInBattle : CellBase
         if (!MainSystemBattleScript.personeMove && (MainSystemBattleScript.actionTypePersone == 0))
         {
             //перекрашивание в стандартный цвет €чеек после выхода курсора мыши из €чейки
-            PathFinder.paintPath(MainSystemBattleScript.path, MainSystemBattleScript.MassiveFields, Color.white);
+            PathFinderInBattle.paintPath(MainSystemBattleScript.path, MainSystemBattleScript.MassiveFields, Color.white);
         }
     }
     private void OnMouseDown()

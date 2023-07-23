@@ -6,30 +6,27 @@ using UnityEngine.UI;
 [Serializable]
 public class PlayerPersone : BasePersone
 {
+
     private Sprite _sprite;
     #region Items Persone
-    [SerializeField] private ItemBase _rightHandItem;
-    [SerializeField] private ItemBase _LeftHandItem;
-    [SerializeField] private ItemBase _bodyItem;
-    [SerializeField] private ItemBase _necklaceItem;
-    [SerializeField] private ItemBase _ringItem;
-    [SerializeField] private ItemBase _potionItem;
-    public ItemBase RightHandItem { get => _rightHandItem; set => _rightHandItem = value; }
-    public ItemBase LeftHandItem { get => _LeftHandItem; set => _LeftHandItem = value; }
-    public ItemBase BodyItem { get => _bodyItem; set => _bodyItem = value; }
-    public ItemBase NecklaceItem { get => _necklaceItem; set => _necklaceItem = value; }
-    public ItemBase RingItem { get => _ringItem; set => _ringItem = value; }
-    public ItemBase PotionItem { get => _potionItem; set => _potionItem = value; }
-    [SerializeField] private ItemBase[] _items = new ItemBase[6];
+    [SerializeField] private SlotItem _rightHandItem = new();
+    [SerializeField] private SlotItem _LeftHandItem = new();
+    [SerializeField] private SlotItem _bodyItem = new();
+    [SerializeField] private SlotItem _necklaceItem = new();
+    [SerializeField] private SlotItem _ringItem = new();
+    [SerializeField] private SlotItem _potionItem = new();
+    public SlotItem RightHandItem { get => _rightHandItem; set => _rightHandItem = value; }
+    public SlotItem LeftHandItem { get => _LeftHandItem; set => _LeftHandItem = value; }
+    public SlotItem BodyItem { get => _bodyItem; set => _bodyItem = value; }
+    public SlotItem NecklaceItem { get => _necklaceItem; set => _necklaceItem = value; }
+    public SlotItem RingItem { get => _ringItem; set => _ringItem = value; }
+    public SlotItem PotionItem { get => _potionItem; set => _potionItem = value; }
     #endregion
-    public ItemBase[] Items { get => _items; }
-
 
     [SerializeField] private Dictionary<KeySkills, SkillBase> _skills = new();
-
     public Dictionary<KeySkills, SkillBase> Skills { get => _skills; private set => _skills = value; }
     public Sprite Sprite { get => _sprite; set => _sprite = value; }
-
+      
     public bool TryGetSkills(KeySkills keySkills, out SkillBase skill)
     {
         bool beSkill = _skills.TryGetValue(keySkills, out skill);

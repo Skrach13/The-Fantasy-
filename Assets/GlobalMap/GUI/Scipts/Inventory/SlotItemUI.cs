@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class SlotItemUI : MonoBehaviour, IDropHandler
 {
-    [SerializeField] private ItemUI _itemUI;
+    [SerializeField] protected ItemUI _itemUI;
     public ItemUI ItemUI { get => _itemUI; set => _itemUI = value; }
 
     public void OnDrop(PointerEventData eventData)

@@ -8,6 +8,9 @@ public class InventoryControllerUI : MonoBehaviour
     [SerializeField] private PersonePanelUI _personePanel;
 
     private string _nameSelectedPersone;
+
+    public string NameSelectedPersone { get => _nameSelectedPersone; set => _nameSelectedPersone = value; }
+
     private void Start()
     {
         _selectedPersone.OnSelectedPerson += SelectedPersone;
@@ -17,12 +20,12 @@ public class InventoryControllerUI : MonoBehaviour
     {
         _inventoryUI.AddItemsAndSlots();
         _personePanel.UpddatePanel(GroupGlobalMap.Instance.GetPerosne(name));
-        _nameSelectedPersone = name;
+        NameSelectedPersone = name;
     }
 
     private void OnEnable()
     {
-        _nameSelectedPersone = GroupGlobalMap.Instance.Group[0].Name;
-        SelectedPersone(_nameSelectedPersone);        
+        NameSelectedPersone = GroupGlobalMap.Instance.Group[0].Name;
+        SelectedPersone(NameSelectedPersone);        
     }
 }
