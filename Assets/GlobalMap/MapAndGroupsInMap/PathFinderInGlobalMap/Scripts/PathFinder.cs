@@ -76,7 +76,7 @@ public class PathFinder : MonoBehaviour
     /// <summary>
     /// Создание  вершины графа 
     /// </summary>
-    public class PathNode
+    private class PathNode
     {
 
         // Координаты точки на карте.

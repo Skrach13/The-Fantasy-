@@ -8,7 +8,7 @@ public class GlobalMapGraf : MonoBehaviour
     [SerializeField] private PlayerGroupOnTheMap _groupGlobal;
 
     public GlobalMapCell[,] Cells { get => _cells; set => _cells = value; }
-    public event Action<List<GlobalMapCell>> OnCellClicked;
+    public event Action<List<CellBase>> OnCellClicked;
     private List<Vector2> _path;
 
     public void AddListner()
@@ -29,7 +29,7 @@ public class GlobalMapGraf : MonoBehaviour
 
     private void EnterCellMouse(Vector2 posGraf)
     {
-        _path = PathFinder.Path(_cells, _groupGlobal.PositionInMap, posGraf);
+        _path = PathFinder.Path(_cells, _groupGlobal.MoveInMap.PositionInMap, posGraf);
         PathFinder.PaintPath(_path, _cells, Color.green);
     }
     private void ExitCellMouse()
@@ -38,7 +38,7 @@ public class GlobalMapGraf : MonoBehaviour
     }
     private void ClickedCell()
     {
-        var _cellInPath = new List<GlobalMapCell>(); 
+        var _cellInPath = new List<CellBase>(); 
         for (int i = 0; i < _path.Count; i++)
         {
             _cellInPath.Add(_cells[(int)_path[i].x, (int)_path[i].y]);
