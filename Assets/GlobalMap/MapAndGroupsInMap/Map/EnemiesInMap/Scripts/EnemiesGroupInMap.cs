@@ -2,21 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemiesGroupInMap : MonoBehaviour
-{
-   // [SerializeField] private Vector2 _positionInGraf;
-    [SerializeField] private GlobalMapGraf _mapGraf;
+public class EnemiesGroupInMap : GroupInMap
+{      
     [SerializeField] private int _countRangeWalk;
     [SerializeField] private EnemyProperties[] _enemies;
-    [SerializeField] private MoveInMap _moveInMap;
+    
 
     private List<CellBase> _randomGrafWalk;
-    private void Start()
+
+    public EnemyProperties[] Enemies { get => _enemies; set => _enemies = value; }
+
+    private new void Start()
     {
-        _moveInMap = GetComponent<MoveInMap>();
-      //  transform.position = _mapGraf.Cells[(int)_positionInGraf.x, (int)_positionInGraf.y].transform.position;
+        base.Start();
+        _moveInMap = GetComponent<MoveInMap>();   
         _randomGrafWalk = AddAreaWalk();
         StartCoroutine(PatrolWalk());
+        _raycast.OnRaycastHit += CheckedAnotherGroup;
+    }
+    private void OnDestroy()
+    {
+        _raycast.OnRaycastHit -= CheckedAnotherGroup;
+    }
+
+    private void CheckedAnotherGroup(GroupInMap group)
+    {
+        Debug.Log($"{group.name}");
+        BattleData.Instance.StartBattle(_enemies);
     }
 
     private IEnumerator PatrolWalk()
@@ -30,8 +42,6 @@ public class EnemiesGroupInMap : MonoBehaviour
             }
             yield return StartCoroutine( _moveInMap.MovedInPath(path));
         }
-
-       //  yield break;
     }
 
 
@@ -44,8 +54,7 @@ public class EnemiesGroupInMap : MonoBehaviour
         _mapGraf.Cells[(int)position.x, (int)position.y].PaintCell(Color.blue);
         int count = 1;
         while (count < _countRangeWalk)
-        {
-            Debug.Log($"{count}");
+        {           
             List<CellBase> nextList = new List<CellBase>();
             for (int i = 0; i < firstList.Count; i++)
             {

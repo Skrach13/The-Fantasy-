@@ -1,18 +1,18 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneHelper : MonoBehaviour
+public class SceneHelper : SingletonBase<SceneHelper>
 {
     private void Start()
     {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+      //  Cursor.visible = true;
+      // Cursor.lockState = CursorLockMode.None;
     }
     private void Update()
     {
         if (Input.GetKeyUp(KeyCode.F2))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            RestartLevel();
         }
         if (Input.GetKeyDown(KeyCode.F1) == true)
         {
