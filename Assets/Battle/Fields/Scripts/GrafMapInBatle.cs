@@ -5,17 +5,20 @@ using UnityEngine;
 
 public class GrafMapInBatle : MonoBehaviour
 {
-    [SerializeField] private CellInBattle[,] _cells;
-    [SerializeField] private PlayerGroupOnTheMap _groupGlobal;
+    [SerializeField] private CellInBattle[,] _cells;   
     [SerializeField] private MainBattleSystems _mainSystem;
 
     public CellInBattle[,] Cells { get => _cells; set => _cells = value; }
     public event Action<List<CellInBattle>> OnCellClicked;
     private List<Vector2> _path;
 
+    private void Awake()
+    {
+           
+    }
     private void Start()
-    {       
-        _mainSystem.Cells = _cells;
+    {
+        OnCellClicked += MainBattleSystems.Instance.StartMove;
     }
 
     public void AddListner()
@@ -48,7 +51,7 @@ public class GrafMapInBatle : MonoBehaviour
 
     private void EnterCellMouse(Vector2 posGraf)
     {
-        _path = PathFinderInBattle.Path(_cells, _mainSystem._activePersone.BattlePosition, posGraf);
+        _path = PathFinderInBattle.Path(_cells, _mainSystem.ActivePersone.BattlePosition, posGraf);
         PathFinderInBattle.PaintPath(_path, _cells, Color.green);
     }
     private void ExitCellMouse()

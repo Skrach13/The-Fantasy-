@@ -6,27 +6,30 @@ using static EnumInBattle;
 /// </summary>
 public abstract class PersoneInBattle : MonoBehaviour
 {
-    [SerializeField] protected string NamePersone;
-    [SerializeField] protected int _healthPoint;
-    [SerializeField] protected int _maxHealthPoints;
-    [SerializeField] protected int actionPointsMax;
-    [SerializeField] protected int _damage;
-    [SerializeField] private int iniciative;
-    [SerializeField] protected PersoneType personeType;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    public string NamePersone;
+    public int MaxHealthPoints;
+    public int _healthPoint;
+    public int ActionPointsMax;
+    public int Damage;
+    public int Iniciative;
+    public Stat[] Stats;
+    public PersoneType PersoneType;
     public int ActionPoints;
     public int RangeWeapone;
     public Vector2 BattlePosition;
 
+    public Sprite Icon;
+
     private MovePersone _move;
     public int HealthPoint {get => _healthPoint; set => _healthPoint = _healthPoint < 0 ? _healthPoint = 0 : _healthPoint = value ;}
-    public int Damage { get => _damage; set => _damage = value; }
-    public string NamePersone1 { get => NamePersone; set => NamePersone = value; }
-    public PersoneType PersoneType { get => personeType; set => personeType = value; }   
-    public int Iniciative { get => iniciative; set => iniciative = value; }
+  
     public MovePersone Move { get => _move; set => _move = value; }
+    public SpriteRenderer SpriteRenderer { get => _spriteRenderer; set => _spriteRenderer = value; }
+
     public void ResetPointActioneStartTurn()
     {
-        ActionPoints = actionPointsMax;
+        ActionPoints = ActionPointsMax;
        
     }
     public void ResetStats() 

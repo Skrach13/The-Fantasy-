@@ -60,7 +60,7 @@ internal class BotInBattle
         // пройти растояние необходимое пройти для атаки
         // если можно атаковать => атаковать
         // закончить свой ход 
-        MainBattleSystems.Instance.NextPersoneIniciative();
+        MainBattleSystems.Instance.InitiativeManager.NextPersoneIniciative();
         yield break;
     }
 

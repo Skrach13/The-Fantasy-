@@ -10,155 +10,64 @@ public class MainBattleSystems : SingletonBase<MainBattleSystems>
 {
     [SerializeField] private CellInBattle[,] _cells; //массив содержащий €чейки пол€
 
-    [SerializeField] private List<PersoneInBattle> _massivePersoneInBattle;// массив дл€ системы инициативы ( изменен на List<>)   
-    public GameObject _testPreFabPlayer;//префаб персонажа(будет изменено)
-    public GameObject _testPreFabEnemy;//префаб противника(будет изменено)
-    
-    public PersoneInBattle _activePersone;
-    public PersoneInBattle _target;
-    
-    public bool _playerTurn;
-    private int _countPersoneIsRound;
-    public ActionType _actionTypePersone;
+    private PersoneGroupsManager _groupsManager;
+    private InitiativeManager _initiativeManager;
 
-    public Vector2 _newPosition;//позици€ €чейки дл€ установки персонажа (будет изменено)
-                                //  public Vector2 positionPersone;//
+    public PersoneInBattle Target;
+    public PersoneInBattle ActivePersone { get => InitiativeManager.ActivePersone; set => InitiativeManager.ActivePersone = value; }
+    public ActionType ActionTypePersone { get => InitiativeManager.ActionTypePersone; set => InitiativeManager.ActionTypePersone = value; }
+
     public int _step;//шаг в передвижении персонажа
     public bool _personeMove;// перемещаетьс€ ли персонаж
     [SerializeField] private GrafMapInBatle _map;
 
     public List<Vector2> _path;// путь перемещени€ содержащее положение €чеек в графе 
-    public CellInBattle[,] Cells { get => _cells; set => _cells = value; }
-    public List<PersoneInBattle> MassivePersoneInBattle { get => _massivePersoneInBattle; set => _massivePersoneInBattle = value; }
+    public CellInBattle[,] Cells { get => _map.Cells;}
+    public List<PersoneInBattle> MassivePersoneInBattle { get => _groupsManager.MassivePersoneInBattle; }
     public GrafMapInBatle Map { get => _map; set => _map = value; }
+    public InitiativeManager InitiativeManager { get => _initiativeManager; set => _initiativeManager = value; }
 
     private new void Awake()
     {
         base.Awake();
-        MassivePersoneInBattle = new List<PersoneInBattle>();
+
     }
 
     // Start is called before the first frame update
     void Start()
-    {        
-        Map.OnCellClicked += StartMove;
+    {
+        _groupsManager = GetComponent<PersoneGroupsManager>();
+        InitiativeManager = GetComponent<InitiativeManager>();
 
-        CreatePersoneInBattle(PersoneType.Player, 12, new Vector2(2, 8));
-        CreatePersoneInBattle(PersoneType.Player, 15, new Vector2(2, 5));
-        CreatePersoneInBattle(PersoneType.Player, 7, new Vector2(2, 2));
-        CreatePersoneInBattle(PersoneType.Enemy, 11, new Vector2(8, 8));
-        CreatePersoneInBattle(PersoneType.Enemy, 13, new Vector2(8, 5));
-        CreatePersoneInBattle(PersoneType.Enemy, 8, new Vector2(8, 2));
-
-        SortIniciative();
-
-        _activePersone = MassivePersoneInBattle[0];
+        // Map.OnCellClicked += StartMove;
+        //_groupsManager.SortIniciative();
+       // _initiativeManager.NextPersoneIniciative();
+        //ActivePersone = MassivePersoneInBattle[0];
     }
     private void OnDestroy()
-    {        
+    {
         Map.OnCellClicked += StartMove;
     }
 
-    private void StartMove(List<CellInBattle> path)
+    public void StartMove(List<CellInBattle> path)
     {
-       StartCoroutine(_activePersone.Move.PersoneMove(path , Cells));
-    }
-    /// <summary>
-    /// метод дл€ установки персонажа на поле бо€ (применение этим не ограничено) 
-    /// </summary>
-    /// <param name="positionSet"> позици€ на поле ссылающее на €чейку в массиве пол€ </param>
-    /// <param name="fieldmap">массив пол€ бо€</param>
-    /// <param name="persone">персонаж которого надо поставить на поле</param>
-    public void SetPositionPersone(Vector2 positionSet, CellInBattle[,] fieldmap, PersoneInBattle persone)
-    {
-        var cellField = fieldmap[(int)positionSet.x, (int)positionSet.y];//локална€ ссылочна€ перемена€ на €чейку пол€
-                                                                         // var cellFieldScript = cellField.GetComponent<CellFloorScripts>();//локальна€ ссылка на скрипт €чейки пол€
-        if (!cellField.CloseCell) // проверка не зан€та ли 
-        {
-            var position = cellField.transform.position;//локальна€ перемена€, координаты €чейки на экране( что то вроде того Ќ≈ ¬ √–ј‘≈)
-            position.z = positionSet.y;// установка Z дл€ коеретной отрисовки ( что бы обьекты друг друга перекрывали привильно) Ќ≈ ѕ–ќ¬≈–≈Ќќ!!!
-            persone.BattlePosition = cellField.PositionInGraff;//присваивание персонажу позиции €чейки в графе на которой он стоит
-            persone.transform.position = position;//установка персонажу координат на экране
-            cellField.CloseCell = true;//закрытие €чейки на которой стоит персонаж
-            cellField.PersoneStayInCell = persone;//закрытие €чейки на которой стоит персонаж
-        }
-        else
-        {
-            Debug.Log("ячейка зан€та или закрыта");
-        }
-    } 
-
-    public void NextPersoneIniciative()
-    {
-        _countPersoneIsRound++;
-
-        if (_countPersoneIsRound >= MassivePersoneInBattle.Count)
-        {
-            _countPersoneIsRound = 0;
-        }
-
-        _activePersone = MassivePersoneInBattle[_countPersoneIsRound];
-        _activePersone.ResetPointActioneStartTurn();
-        _actionTypePersone = ActionType.Move;
-        Map.ResetStatsCellFields();
-        Debug.Log(_activePersone);
-        if (_activePersone.PersoneType == PersoneType.Enemy)
-        {
-            StartCoroutine(BotInBattle.BotAction(_activePersone));
-        }
-
+        StartCoroutine(ActivePersone.Move.PersoneMove(path, Cells));
     }
 
-    /// <summary>
-    /// ѕереключение на атаку с визуальным подсвечеванием радиуса атаки и определением доступных дл€ атки врагов(через кнопку)
-    /// </summary>
     public void changeAttack()
     {
-        if (!(_actionTypePersone == ActionType.Attack))
+        if (!(ActionTypePersone == ActionType.Attack))
         {
-            _actionTypePersone = ActionType.Attack;
-            AreaAttack.AttackArea(Cells, _activePersone);
+            ActionTypePersone = ActionType.Attack;
+            AreaAttack.AttackArea(Cells, ActivePersone);
         }
         else
         {
-            _actionTypePersone = ActionType.Move;
+            ActionTypePersone = ActionType.Move;
             Map.ResetStatsCellFields();
         }
     }
 
-    /// <summary>
-    /// сортировка массива инициативы где первый с самой большой инициативой
-    /// </summary>
-    public void SortIniciative()
-    {
-        //хер его знает как это работает
-        MassivePersoneInBattle.Sort(delegate (PersoneInBattle x, PersoneInBattle y)
-        {
-            return y.Iniciative.CompareTo(x.Iniciative);
-        });
-    }
-
-    public void CreatePersoneInBattle(PersoneType personeType, int iniciative, Vector2 startPosition)
-    {
-        GameObject prefab = null;
-        if (personeType == PersoneType.Player)
-        {
-            prefab = Instantiate(_testPreFabPlayer);// создание персонажа "игрока"
-        }
-        if (personeType == PersoneType.Enemy)
-        {
-            prefab = Instantiate(_testPreFabEnemy);// создание персонажа противника
-        }
-        PersoneInBattle personeScript;
-        personeScript = prefab.GetComponent<PersoneInBattle>();// пока затычка дл€ тестов        
-        personeScript.Iniciative = iniciative;
-        MassivePersoneInBattle.Add(personeScript);// пока затычка дл€ тестов
-        SetPositionPersone(startPosition, Cells, personeScript); //пока затычка дл€ тестов
-
-    }
-    /// <summary>
-    /// перечесление действий в бою
-    /// </summary>
     public enum ActionType
     {
         Move,

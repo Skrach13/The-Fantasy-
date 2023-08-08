@@ -12,4 +12,6 @@ public class EnemyProperties : ScriptableObject
     [SerializeField] private ClassEnemy _enemyClass;
     [SerializeField] private Race _race;
     [SerializeField] private Sprite _sprite;
+    public Stat[] Stats;    
+    public Sprite Icon;   
 }

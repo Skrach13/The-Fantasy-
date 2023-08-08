@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [Serializable]
 public class PlayerPersone : BasePersone
 {
 
     private Sprite _sprite;
+    public Sprite Icon;
     #region Items Persone
     [SerializeField] private SlotItem _rightHandItem = new();
     [SerializeField] private SlotItem _LeftHandItem = new();
@@ -51,7 +51,8 @@ public class PlayerPersone : BasePersone
                 p.Stats[i].NeededExperience = GroupGlobalMap.Instance.StatsUpExpiriensProperties.UpExpiriensStat[p.Stats[i].Value];
             }
         }
-        p.Sprite = assets.Persones[index]._sprite;
+        p.Icon = assets.Persones[index].IconInBattle;
+        p.Sprite = assets.Persones[index].Sprite;
         p.Description = assets.Persones[index].Description;
         return p;
     }

@@ -9,7 +9,8 @@ public class PersoneAssets : ScriptableObject
     public class PerosneAsset
     {
         public string Name = "NoneName";
-        public Sprite _sprite;
+        public Sprite IconInBattle;
+        public Sprite Sprite;
         public Race Race;
         public StatValue[] Stats;       
         [TextArea(order = 8)] public string Description;

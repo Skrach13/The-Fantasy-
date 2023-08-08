@@ -20,7 +20,7 @@ public class CellInBattle : CellInBattleBase
     private void OnMouseEnter()
     {
         //проверка неходит ли сейчас персонаж и закрыта ли €чейка  
-        if (!MainSystemBattleScript._personeMove && !CloseCell && (MainSystemBattleScript._actionTypePersone == 0))
+        if (!MainSystemBattleScript._personeMove && !CloseCell && (MainSystemBattleScript.ActionTypePersone == 0))
         {
             OnCellEnter?.Invoke(PositionInGraff);
         }
@@ -28,7 +28,7 @@ public class CellInBattle : CellInBattleBase
 
     private void OnMouseExit()
     {
-        if (!MainSystemBattleScript._personeMove && (MainSystemBattleScript._actionTypePersone == 0))
+        if (!MainSystemBattleScript._personeMove && (MainSystemBattleScript.ActionTypePersone == 0))
         {
             OnCellExit?.Invoke();
         }
@@ -36,7 +36,7 @@ public class CellInBattle : CellInBattleBase
     private void OnMouseDown()
     {
         // если €чейка не закрыта\зан€та то после нажати€ мыши над €чейкой начанает движение персонажа
-        if (!CloseCell && (MainSystemBattleScript._actionTypePersone == 0))
+        if (!CloseCell && (MainSystemBattleScript.ActionTypePersone == 0))
         {
             OnClickedCell?.Invoke();
             MainSystemBattleScript._personeMove = true;

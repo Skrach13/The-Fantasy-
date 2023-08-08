@@ -13,5 +13,35 @@ MonoBehaviour:
   m_Name: EnemiesProperties
   m_EditorClassIdentifier: 
   _enemyClass: 0
-  _race: 1
+  _race: 2
   _sprite: {fileID: 21300000, guid: 5d52b20f865aff242bfcb08c3b6f61a5, type: 3}
+  Stats:
+  - Name: 
+    Stats: 0
+    Value: 15
+    _upExperience: 0
+  - Name: 
+    Stats: 1
+    Value: 3
+    _upExperience: 0
+  - Name: 
+    Stats: 2
+    Value: 2
+    _upExperience: 0
+  - Name: 
+    Stats: 3
+    Value: 3
+    _upExperience: 0
+  - Name: 
+    Stats: 4
+    Value: 1
+    _upExperience: 0
+  - Name: 
+    Stats: 5
+    Value: 1
+    _upExperience: 0
+  - Name: 
+    Stats: 6
+    Value: 0
+    _upExperience: 0
+  Icon: {fileID: 21300000, guid: 064087ffd3c6130499c37096c7ada263, type: 3}
