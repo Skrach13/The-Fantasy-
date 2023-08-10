@@ -13,6 +13,7 @@ public class InitiativeManager : MonoBehaviour
     public PersoneInBattle ActivePersone;
 
     public event Action<PersoneInBattle> OnNextPersoneActive;
+    public event Action<int> OnNextPersoneIndex;
 
     private void Start()
     {
@@ -32,6 +33,7 @@ public class InitiativeManager : MonoBehaviour
         ActionTypePersone = ActionType.Move;
         MainBattleSystems.Instance.Map.ResetStatsCellFields();
         Debug.Log(ActivePersone);
+        OnNextPersoneIndex?.Invoke(_countPersoneIsRound);
         if (ActivePersone.PersoneType == PersoneType.Player)
         {
             OnNextPersoneActive?.Invoke(ActivePersone);

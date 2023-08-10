@@ -49,7 +49,7 @@ public class PersoneGroupsManager : MonoBehaviour
         playerPersone.SpriteRenderer.sprite = playerPersone.Icon;
         
 
-        playerPersone._healthPoint = playerPersone.MaxHealthPoints;
+        playerPersone.HealthPoint = playerPersone.MaxHealthPoints;
 
         playerPersone.RangeWeapone = 2;
         playerPersone.Damage = 3;
@@ -70,7 +70,7 @@ public class PersoneGroupsManager : MonoBehaviour
         enemy.Icon = properties.Icon;
         enemy.SpriteRenderer.sprite = properties.Icon;       
 
-        enemy._healthPoint = properties.Stats[0].Value;
+        enemy.HealthPoint = properties.Stats[0].Value;
 
         enemy.RangeWeapone = 2;
         enemy.Damage = 3;

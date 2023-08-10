@@ -9,14 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93b58206c287b69449f72e44b6ed74fd, type: 3}
-  m_Name: Skillstree
+  m_Script: {fileID: 11500000, guid: b67edf26147205341ac4726171094762, type: 3}
+  m_Name: SkillBase
   m_EditorClassIdentifier: 
-  _skillas:
-    _methodAction: 1
-    _name: asd
-    _image: {fileID: 0}
-  _skillasz:
-    _methodAction: 0
-    _name: asfgadg
-    _image: {fileID: 0}
+  _methodAction: 0
+  _name: 
+  _image: {fileID: 0}

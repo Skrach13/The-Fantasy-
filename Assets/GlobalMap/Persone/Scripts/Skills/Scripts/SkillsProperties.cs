@@ -12,8 +12,8 @@ public enum KeySkills
 [CreateAssetMenu(fileName = "Skillstree", menuName = "Persone/SkillsProperties")]
 public class SkillsProperties : ScriptableObject
 {
-    [SerializeField] private Skills.Atack _skillas = new();
-    [SerializeField] private Skills.AtackRange _skillasz = new();
+    [SerializeField] private SkillBase _skillas ;
+    [SerializeField] private SkillBase _skillasz;
 
     private Dictionary<KeySkills, SkillBase> _skillMap;
 
