@@ -13,7 +13,8 @@ internal class BotInBattle
         PersoneInBattle target = null;
         while (enemy.ActionPoints > 0)
         {
-            maybeTarget = AreaAttack.PersoneAttackArea(MainBattleSystems.Instance.Cells, enemy);
+            MainBattleSystems.Instance.Map.ResetStatsCellFields();
+            maybeTarget = DefiningArea.FindAvailableTargets(MainBattleSystems.Instance.Cells, enemy, (SkillActive)enemy.Skills.GetValueOrDefault(KeySkills.AttackMelle));
             if (maybeTarget.Count > 0)
             {
                 float minDistance = 20;
@@ -30,7 +31,9 @@ internal class BotInBattle
                 }
                 if (enemy.ActionPoints >= 2)
                 {
-                    ActionsBattle.Attack(enemy, target);
+                    enemy.Skills.TryGetValue(KeySkills.AttackMelle, out SkillBase skill);
+                    enemy.ActionPoints -= 2;
+                    (skill as SkillAttacking).UseSkill(target);
                 }
                 else
                 {
@@ -44,14 +47,10 @@ internal class BotInBattle
                 CellInBattle neighbodCell = null;
                 //опрежелить ближайщего персонажа игрока
                 target = neighboringPlayerPersoneFields(enemy);
-                neighbodCell = AreaAttack.NeighborCellToAttack(MainBattleSystems.Instance.Cells, enemy, target);
-                List<Vector2> path = PathFinderInBattle.Path(MainBattleSystems.Instance.Cells, enemy.BattlePosition, neighbodCell.PositionInGraff);
+                
+                neighbodCell = DefiningArea.NeighborCellToAttack(MainBattleSystems.Instance.Cells, enemy, target, (SkillActive)enemy.Skills.GetValueOrDefault(KeySkills.AttackMelle));
+                var _cellInPath = MainBattleSystems.Instance.Map.GetCellsInPath(enemy.BattlePosition, neighbodCell.PositionInGraff);
 
-                var _cellInPath = new List<CellInBattle>();
-                for (int i = 0; i < path.Count; i++)
-                {
-                    _cellInPath.Add(MainBattleSystems.Instance.Cells[(int)path[i].x, (int)path[i].y]);
-                }
                 yield return enemy.Move.PersoneMove(_cellInPath, MainBattleSystems.Instance.Cells);
             }
             MainBattleSystems.Instance.Map.ResetStatsCellFields();

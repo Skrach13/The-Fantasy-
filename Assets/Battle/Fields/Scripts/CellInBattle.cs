@@ -1,49 +1,49 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+public enum ColorsCell 
+{
+    None = 0,
+    Enemies = 1,
+    ScopeOfAction = 2,
+    RangeArea = 3,
+    PaintPath = 4
+}
 
 public class CellInBattle : CellInBattleBase
 {
+    [SerializeField] private Color[] _colors;
     public MainBattleSystems MainSystemBattleScript { get; set; }
     public int AttackRange { get; set; }
     public PersoneInBattle PersoneStayInCell { get; set; }
     private SpriteRenderer spriteRenderer;
 
-    public event Action<Vector2> OnCellEnter;
-    public event Action OnCellExit;
-    public event Action OnClickedCell;
+    public event Action<CellInBattle> OnCellEnter;
+    public event Action<CellInBattle> OnCellExit;
+    public event Action<CellInBattle> OnClickedCell;
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
     private void OnMouseEnter()
     {
-        //проверка неходит ли сейчас персонаж и закрыта ли €чейка  
-        if (!MainSystemBattleScript._personeMove && !CloseCell && (MainSystemBattleScript.ActionTypePersone == 0))
-        {
-            OnCellEnter?.Invoke(PositionInGraff);
-        }
+        OnCellEnter?.Invoke(this);
     }
 
     private void OnMouseExit()
     {
-        if (!MainSystemBattleScript._personeMove && (MainSystemBattleScript.ActionTypePersone == 0))
-        {
-            OnCellExit?.Invoke();
-        }
+        OnCellExit?.Invoke(this);
     }
     private void OnMouseDown()
     {
         // если €чейка не закрыта\зан€та то после нажати€ мыши над €чейкой начанает движение персонажа
         if (!CloseCell && (MainSystemBattleScript.ActionTypePersone == 0))
         {
-            OnClickedCell?.Invoke();
+            OnClickedCell?.Invoke(this);
             MainSystemBattleScript._personeMove = true;
-        }       
+        }
     }
-    public void paintCellBattle(Color color)
+    public void PaintCellBattle(ColorsCell colorType)
     {
-        spriteRenderer.color = color;
+        spriteRenderer.color = _colors[((int)colorType)];
     }
 }

@@ -9,28 +9,22 @@ public enum KeySkills
     AttackRange
 }
 
-[CreateAssetMenu(fileName = "Skillstree", menuName = "Persone/SkillsProperties")]
+[Serializable]
+class SkillInDictonary
+{
+    public KeySkills key;
+    public SkillBase skill;
+}
+
+[CreateAssetMenu(fileName = "Skillstree", menuName = "Persone/Skillstree")]
 public class SkillsProperties : ScriptableObject
 {
-    [SerializeField] private SkillBase _skillas ;
-    [SerializeField] private SkillBase _skillasz;
-
-    private Dictionary<KeySkills, SkillBase> _skillMap;
-
-    public SkillsProperties()
-        {
-            _skillMap = new Dictionary<KeySkills, SkillBase>() 
-            {
-                { KeySkills.AttackMelle, _skillas }, 
-                { KeySkills.AttackRange, _skillasz } 
-            };
-
-       // _skillMap[KeySkills.AttackMelle] = _skillas;
-        }
-    
+    [SerializeField] private List<SkillInDictonary> _skillInDictonary = new List<SkillInDictonary>();
     public SkillBase GetSkill(KeySkills key)
-    {        
-        return _skillMap[key];
+    {
+        var skillinDictonary = _skillInDictonary.Find(skillinDictonary => skillinDictonary.key == key);
+        SkillBase skill = skillinDictonary.skill;
+        return skill;
     }
-    
+
 }

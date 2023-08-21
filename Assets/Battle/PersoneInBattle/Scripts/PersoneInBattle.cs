@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using static EnumInBattle;
 
@@ -8,21 +9,26 @@ using static EnumInBattle;
 public abstract class PersoneInBattle : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    public Dictionary<KeySkills,SkillBase> Skills;
     public string NamePersone;
     public int MaxHealthPoints;
     private int _healthPoint;
     public int ActionPointsMax;
-    public int Damage;
     public int Iniciative;
     public Stat[] Stats;
     public PersoneType PersoneType;
     private int _actionPoints;
-    public int RangeWeapone;
     public Vector2 BattlePosition;
 
     public Sprite Icon;
 
     private MovePersone _move;
+
+    public event Action<PersoneInBattle> OnPersoneEnter;
+    public event Action<PersoneInBattle> OnPersoneExit;
+    public event Action<PersoneInBattle> OnPersoneClicked;
+    public event Action<int, int> ChangeHealth;
+    public event Action<int, int> ChangeActionPoint;
 
     public MovePersone Move { get => _move; set => _move = value; }
     public SpriteRenderer SpriteRenderer { get => _spriteRenderer; set => _spriteRenderer = value; }
@@ -41,13 +47,10 @@ public abstract class PersoneInBattle : MonoBehaviour
         set
         {
             _actionPoints = value;
-
             ChangeActionPoint?.Invoke(ActionPointsMax, _actionPoints);
         }
     }
 
-    public event Action<int, int> ChangeHealth;
-    public event Action<int, int> ChangeActionPoint;
 
     public void ResetPointActioneStartTurn()
     {
@@ -68,12 +71,24 @@ public abstract class PersoneInBattle : MonoBehaviour
     {
 
     }
+    private void OnMouseEnter()
+    {       
+        if (MainBattleSystems.Instance.ActivePersone.PersoneType == PersoneType.Player)
+        {
+            MainBattleSystems.Instance.Target = this;
+            Debug.Log("mainBattleSystemScripts.target" + MainBattleSystems.Instance.Target);
+            OnPersoneEnter?.Invoke(this);
+        }
+    }
 
+    private void OnMouseExit()
+    {
+        MainBattleSystems.Instance.Target = null;
+        OnPersoneExit?.Invoke(this);
+    }
 
-
-
-
-
-
-
+    private void OnMouseDown()
+    {  
+            OnPersoneClicked?.Invoke(this);
+    }
 }

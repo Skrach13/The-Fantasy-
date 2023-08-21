@@ -26,11 +26,17 @@ public class PlayerPersone : BasePersone
     [SerializeField] private Dictionary<KeySkills, SkillBase> _skills = new();
     public Dictionary<KeySkills, SkillBase> Skills { get => _skills; private set => _skills = value; }
     public Sprite Sprite { get => _sprite; set => _sprite = value; }
-      
+
     public bool TryGetSkills(KeySkills keySkills, out SkillBase skill)
     {
         bool beSkill = _skills.TryGetValue(keySkills, out skill);
+        Debug.Log($"{skill.Name}");
         return beSkill;
+    }
+    public SkillBase GetSkills(KeySkills keySkills)
+    {
+        _skills.TryGetValue(keySkills, out SkillBase skill);
+        return skill;
     }
     public bool TrySkill(KeySkills keySkills)
     {

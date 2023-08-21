@@ -13,5 +13,9 @@ public class EnemyProperties : ScriptableObject
     [SerializeField] private Race _race;
     [SerializeField] private Sprite _sprite;
     public Stat[] Stats;    
-    public Sprite Icon;   
+    public Sprite Icon;
+    //TODO
+    [SerializeField] private SkillBase _skillAttack;
+    public SkillBase SkillAttack { get => _skillAttack; set => _skillAttack = value; }
+    //
 }

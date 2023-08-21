@@ -41,11 +41,11 @@ public class PathFinderInBattle : MonoBehaviour
     /// <param name="path">массив содержащий путь по вершинам графов </param>
     /// <param name="massiveField">массив €чеек(поле) </param>
     /// <param name="color">цвет покраски €чеек</param>
-    public static void PaintPath(List<Vector2> path, CellInBattle[,] massiveField, Color color)
+    public static void PaintPath(List<Vector2> path, CellInBattle[,] massiveField, ColorsCell colorsType)
     {
         foreach (Vector2 coordinat in path)
         {
-            massiveField[(int)coordinat.x, (int)coordinat.y].paintCellBattle(color);
+            massiveField[(int)coordinat.x, (int)coordinat.y].PaintCellBattle(colorsType);
         }
     }
 

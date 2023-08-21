@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93b58206c287b69449f72e44b6ed74fd, type: 3}
   m_Name: Skillstree
   m_EditorClassIdentifier: 
-  _skillas: {fileID: 11400000, guid: 2ab8318abcd114e4da5322e6829451f1, type: 2}
-  _skillasz: {fileID: 11400000, guid: 2ab8318abcd114e4da5322e6829451f1, type: 2}
+  _skillInDictonary:
+  - key: 0
+    skill: {fileID: 11400000, guid: 9466d1ccb385c7d458946f3300951df5, type: 2}
+  - key: 1
+    skill: {fileID: 11400000, guid: 2ab8318abcd114e4da5322e6829451f1, type: 2}

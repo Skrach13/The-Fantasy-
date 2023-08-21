@@ -49,13 +49,10 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 8851121289115748161}
   NamePersone: 
   MaxHealthPoints: 0
-  _healthPoint: 0
   ActionPointsMax: 0
-  Damage: 0
   Iniciative: 0
+  Stats: []
   PersoneType: 0
-  ActionPoints: 0
-  RangeWeapone: 0
   BattlePosition: {x: 0, y: 0}
   Icon: {fileID: 0}
 --- !u!114 &-192072163393223126
@@ -70,6 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4e3be9bfa2e9cc499befca538d5ebee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speedMove: 3
 --- !u!1 &8203106149817724114
 GameObject:
   m_ObjectHideFlags: 0

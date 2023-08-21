@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9642cdcd5ab414147822de2d86f4c101, type: 3}
-  m_Name: Sword
+  m_Script: {fileID: 11500000, guid: 08bd1f54169ea3b41adc2bc8df65e90d, type: 3}
+  m_Name: SwordProperties
   m_EditorClassIdentifier: 
   _itemType: 1
   _itemID: 0
-  _sprite: {fileID: 21300000, guid: 885f0f401b7f69140be7b84ab52f8157, type: 3}
+  _sprite: {fileID: 21300000, guid: 76beef9fdae7b48468ddf07d0400a374, type: 3}
+  _skillAttacking: {fileID: 11400000, guid: 9466d1ccb385c7d458946f3300951df5, type: 2}

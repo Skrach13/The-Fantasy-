@@ -23,19 +23,44 @@ public class SlotItemPersonePanelUI : SlotItemUI, IDropHandler
 
     public void SetItemPersone(ItemBase value)
     {
-        
         //TODO возможно надо поработать с количеством предметов   
         if (_slotType == SlotPersoneType.RightHanded)
         {
             if (value == null)
             {
                 Debug.Log("del itemdsasfasdf");
+                if (_playerPersone.TrySkill((_playerPersone.RightHandItem.Item as ItemWeapone).SkillAttacking.KeySkill))
+                {
+                    _playerPersone.Skills.Remove((_playerPersone.RightHandItem.Item as ItemWeapone).SkillAttacking.KeySkill);
+                }
                 _playerPersone.RightHandItem.Item = null;
                 _playerPersone.RightHandItem.Count = 0;
+                if (_playerPersone.Skills.Count != 0)
+                {
+                    foreach (KeyValuePair<KeySkills, SkillBase> skills in _playerPersone.Skills)
+                    {
+                        Debug.Log($"{skills.Key} and {skills.Value}");
+
+                    }
+                }
+                else
+                {
+                        Debug.Log($"_playerPersone.Skills.Count == 0");
+                }
             }
             else
             {
                 _playerPersone.RightHandItem.AddItemAndCount(value, 1);
+                if (!_playerPersone.TrySkill((value as ItemWeapone).SkillAttacking.KeySkill))
+                {
+                    _playerPersone.Skills.Add((value as ItemWeapone).SkillAttacking.KeySkill, (value as ItemWeapone).SkillAttacking);
+                }
+
+                foreach (KeyValuePair<KeySkills, SkillBase> skills in _playerPersone.Skills)
+                {
+                    Debug.Log($"{skills.Key} and {skills.Value}");
+
+                }
             }
         }
         if (_slotType == SlotPersoneType.LeftHanded)
@@ -48,7 +73,7 @@ public class SlotItemPersonePanelUI : SlotItemUI, IDropHandler
             else
             {
                 _playerPersone.LeftHandItem.AddItemAndCount(value, 1);
-            }           
+            }
         }
         if (_slotType == SlotPersoneType.Body)
         {
@@ -84,7 +109,7 @@ public class SlotItemPersonePanelUI : SlotItemUI, IDropHandler
             else
             {
                 _playerPersone.RingItem.AddItemAndCount(value, 1);
-            }           
+            }
         }
         if (_slotType == SlotPersoneType.Potion)
         {
@@ -96,7 +121,7 @@ public class SlotItemPersonePanelUI : SlotItemUI, IDropHandler
             else
             {
                 _playerPersone.PotionItem.AddItemAndCount(value, 1);
-            }            
+            }
         }
     }
     public bool TryTypeItem(ItemType type)

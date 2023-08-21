@@ -1,31 +1,32 @@
 using Mono.Collections.Generic;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using static EnumInBattle;
 
 
-public class AreaAttack : MonoBehaviour
+public class DefiningArea : MonoBehaviour
 {
     /// <summary>
     /// подкрашевание €чеек в радиусе атаки и подкраска €чеек красным цветом на которых стоит персонаж в радиусе атаки
     /// </summary>
     /// <param name="fields"></param>
     /// <param name="attacking"></param>
-    public static void AttackArea(CellInBattle[,] fields, PersoneInBattle attacking)
+    public static void DefiningScope(CellInBattle[,] fields, PersoneInBattle attacking,int radius)
     {
         Vector2 vector = attacking.BattlePosition;//позици€ атакующего
         int counAtattackRange = 1;// счетчик дистанции атаки оружи€
-        fields[(int)vector.x, (int)vector.y].AttackRange = attacking.RangeWeapone;// присваивание €чейки где стоит атакующей дистанции оружи€ дл€ закрытие €чейки
+        fields[(int)vector.x, (int)vector.y].AttackRange = radius;// присваивание €чейки где стоит атакующей дистанции оружи€ дл€ закрытие €чейки
         //колекци€ €чеек попадающих в дистанцую атаки
-        Collection<CellInBattle> fistCollection = GetNeighboursCell((fields[(int)attacking.BattlePosition.x, (int)attacking.BattlePosition.y]), fields, counAtattackRange); ;
-        Collection<CellInBattle> secondCollection = new Collection<CellInBattle>();
+        List<CellInBattle> fistCollection = GetNeighboursCell((fields[(int)attacking.BattlePosition.x, (int)attacking.BattlePosition.y]), fields, counAtattackRange); ;
+        List<CellInBattle> secondCollection = new List<CellInBattle>();
         counAtattackRange++;
-        while (counAtattackRange <= attacking.RangeWeapone)
+        while (counAtattackRange <= radius)
         {
             secondCollection.Clear();
-            var collection = new Collection<CellInBattle>();
+            var collection = new List<CellInBattle>();
             foreach (CellInBattle cell in fistCollection)
             {
                 collection = GetNeighboursCell(cell, fields, counAtattackRange);
@@ -43,20 +44,20 @@ public class AreaAttack : MonoBehaviour
     /// </summary>
     /// <param name="fields"></param>
     /// <param name="attacking"></param>
-    public static List<PersoneInBattle> PersoneAttackArea(CellInBattle[,] fields, PersoneInBattle attacking)
+    public static List<PersoneInBattle> FindAvailableTargets(CellInBattle[,] fields, PersoneInBattle attacking, SkillActive skill)
     {
         List<PersoneInBattle> playerPersone = new List<PersoneInBattle>();
         Vector2 vector = attacking.BattlePosition;//позици€ атакующего
         int counAtattackRange = 1;// счетчик дистанции атаки оружи€
-        fields[(int)vector.x, (int)vector.y].AttackRange = attacking.RangeWeapone;// присваивание €чейки где стоит атакующей дистанции оружи€ дл€ закрытие €чейки
+        fields[(int)vector.x, (int)vector.y].AttackRange = skill.RangeSkill;// присваивание €чейки где стоит атакующей дистанции оружи€ дл€ закрытие €чейки
         //колекци€ €чеек попадающих в дистанцую атаки
-        Collection<CellInBattle> fistCollection = GetNeighboursCell((fields[(int)attacking.BattlePosition.x, (int)attacking.BattlePosition.y]), fields, counAtattackRange); ;
+        List<CellInBattle> fistCollection = GetNeighboursCell((fields[(int)attacking.BattlePosition.x, (int)attacking.BattlePosition.y]), fields, counAtattackRange); ;
         Collection<CellInBattle> secondCollection = new Collection<CellInBattle>();
         counAtattackRange++;
-        while (counAtattackRange <= attacking.RangeWeapone)
+        while (counAtattackRange <= skill.RangeSkill)
         {
             secondCollection.Clear();
-            var collection = new Collection<CellInBattle>();
+            var collection = new List<CellInBattle>();
             foreach (CellInBattle cell in fistCollection)
             {
                 if (cell.CloseCell)
@@ -96,21 +97,21 @@ public class AreaAttack : MonoBehaviour
     /// <param name="attacking"></param>
     /// <param name="target"></param>
     /// <returns></returns>
-    public static CellInBattle NeighborCellToAttack(CellInBattle[,] fields, PersoneInBattle attacking, PersoneInBattle target)
+    public static CellInBattle NeighborCellToAttack(CellInBattle[,] fields, PersoneInBattle attacking, PersoneInBattle target , SkillActive skill)
     {
         CellInBattle neighborCell = null;
         Vector2 vector = target.BattlePosition;//позици€ атакующего
         int counAtattackRange = 1;// счетчик дистанции атаки оружи€
-        fields[(int)vector.x, (int)vector.y].AttackRange = attacking.RangeWeapone;// присваивание €чейки где стоит атакующей дистанции оружи€ дл€ закрытие €чейки
+        fields[(int)vector.x, (int)vector.y].AttackRange = skill.RangeSkill;// присваивание €чейки где стоит атакующей дистанции оружи€ дл€ закрытие €чейки
         //колекци€ €чеек попадающих в дистанцую атаки
-        Collection<CellInBattle> fistCollection = GetNeighboursCell((fields[(int)target.BattlePosition.x, (int)target.BattlePosition.y]), fields, counAtattackRange); ;
-        Collection<CellInBattle> secondCollection = new Collection<CellInBattle>();
+        List<CellInBattle> fistCollection = GetNeighboursCell((fields[(int)target.BattlePosition.x, (int)target.BattlePosition.y]), fields, counAtattackRange); ;
+        List<CellInBattle> secondCollection = new List<CellInBattle>();
 
         counAtattackRange++;
-        while (counAtattackRange <= attacking.RangeWeapone)
+        while (counAtattackRange <= skill.RangeSkill)
         {
             secondCollection.Clear();
-            var collection = new Collection<CellInBattle>();
+            var collection = new List<CellInBattle>();
             foreach (CellInBattle cell in fistCollection)
             {
                 collection = GetNeighboursCell(cell, fields, counAtattackRange);
@@ -122,24 +123,35 @@ public class AreaAttack : MonoBehaviour
             fistCollection.AddRange(secondCollection);
             counAtattackRange++;
         }
-        
-        float minDistance = 20;
-        float distance = 0;
-        foreach (CellInBattle cell in fistCollection)
+
+        // neighborCell = fistCollection.Min(Cell => Math.Abs(Cell.PositionInGraff.x - attacking.BattlePosition.x) + Math.Abs(Cell.PositionInGraff.y - attacking.BattlePosition.y));
+        while (neighborCell == null)
         {
-            distance = Math.Abs(cell.PositionInGraff.x - attacking.BattlePosition.x) + Math.Abs(cell.PositionInGraff.y - attacking.BattlePosition.y);
-            if (distance < minDistance)
+            float minDistance = 20;
+            float distance = 0;
+            foreach (CellInBattle cell in fistCollection)
             {
-                minDistance = distance;
-                neighborCell = cell ;
+
+                distance = Math.Abs(cell.PositionInGraff.x - attacking.BattlePosition.x) + Math.Abs(cell.PositionInGraff.y - attacking.BattlePosition.y);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    neighborCell = cell;
+                }
+            }
+            if (neighborCell.CloseCell == true)
+            {
+                fistCollection.Remove(neighborCell);
+                neighborCell = null;
             }
         }
+        Debug.Log($"{neighborCell}");
         return neighborCell;
     }
 
-    private static Collection<CellInBattle> GetNeighboursCell(CellInBattle cellFloor, CellInBattle[,] field, int countRangeAttack)
+    private static List<CellInBattle> GetNeighboursCell(CellInBattle cellFloor, CellInBattle[,] field, int countRangeAttack)
     {
-        var result = new Collection<CellInBattle>();
+        var result = new List<CellInBattle>();
         // —оседними точками €вл€ютс€ соседние по стороне клетки.
         Vector2 position = cellFloor.PositionInGraff;
         Vector2[] neighbourPoints = new Vector2[6];
@@ -181,23 +193,14 @@ public class AreaAttack : MonoBehaviour
             //  if ((field[(int)point.x, (int)point.y] != 0) && (field[(int)point.x, (int)point.y] != 1))
             //     continue;
 
-            if (countRangeAttack == 1)
+            if (countRangeAttack > 0)
             {
-                field[(int)point.x, (int)point.y].paintCellBattle(Color.yellow);
+                field[(int)point.x, (int)point.y].PaintCellBattle(ColorsCell.RangeArea);
             }
-            else if (countRangeAttack == 2)
-            {
-                field[(int)point.x, (int)point.y].paintCellBattle(Color.blue);
-            }
-            else
-            {
-                field[(int)point.x, (int)point.y].paintCellBattle(Color.cyan);
-            }
-
-
+            
             if (field[(int)point.x, (int)point.y].PersoneStayInCell != null)
             {
-                field[(int)point.x, (int)point.y].paintCellBattle(Color.red);
+                field[(int)point.x, (int)point.y].PaintCellBattle(ColorsCell.Enemies);
             }
             //point.paintCellBattle(Color.red);
 

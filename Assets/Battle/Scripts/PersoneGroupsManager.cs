@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static EnumInBattle;
@@ -10,6 +11,10 @@ public class PersoneGroupsManager : MonoBehaviour
     [SerializeField] private EnemyInBattle _preFabEnemy;//префаб противника(будет изменено)
     [SerializeField] private Vector2[] _positionsPlayer;
     [SerializeField] private Vector2[] _positionsEnemy;
+
+    public event Action<PersoneInBattle> OnPersoneEnterA;
+    public event Action<PersoneInBattle> OnPersoneExitA;
+    public event Action<PersoneInBattle> OnPersoneClickedA;
 
     private MainBattleSystems _battleSystems;
     public List<PersoneInBattle> MassivePersoneInBattle { get => _massivePersoneInBattle; set => _massivePersoneInBattle = value; }
@@ -28,32 +33,45 @@ public class PersoneGroupsManager : MonoBehaviour
             var enemy = CreatEnemyPersone(BattleData.Instance.EnemyProperties[i]);
             SetPositionPersone(_positionsEnemy[i], _battleSystems.Cells, enemy);
             MassivePersoneInBattle.Add(enemy);
-        }          
+        }
+      foreach(PersoneInBattle perosne in MassivePersoneInBattle)
+        {
+            perosne.OnPersoneEnter += OnPersoneEnter;
+            perosne.OnPersoneExit += OnPersoneExit;
+            perosne.OnPersoneClicked += OnPersoneCkliked;
+        }
 
         SortIniciative();
         MainBattleSystems.Instance.InitiativeManager.NextPersoneIniciative();
-        
+
     }
 
-    private PlayerPersoneInBattle CreatPlayerPersone(PlayerPersone propertiesPlayer )
+    private void OnDestroy()
     {
-        PlayerPersoneInBattle playerPersone = Instantiate(_preFabPlayer);        
+        foreach (PersoneInBattle perosne in MassivePersoneInBattle)
+        {
+            perosne.OnPersoneEnter -= OnPersoneEnter;
+            perosne.OnPersoneExit -= OnPersoneExit;
+            perosne.OnPersoneClicked -= OnPersoneCkliked;
+        }
+    }
+
+    private PlayerPersoneInBattle CreatPlayerPersone(PlayerPersone propertiesPlayer)
+    {
+        PlayerPersoneInBattle playerPersone = Instantiate(_preFabPlayer);
         playerPersone.PersoneType = PersoneType.Player;
+        playerPersone.Skills = propertiesPlayer.Skills;
         playerPersone.NamePersone = propertiesPlayer.Name;
         playerPersone.MaxHealthPoints = propertiesPlayer.Stats[0].Value;
 
         playerPersone.ActionPointsMax = propertiesPlayer.Stats[2].Value * 5;
         playerPersone.Iniciative = (int)(propertiesPlayer.Stats[2].Value * 1.5f);
-        
+
         playerPersone.Icon = propertiesPlayer.Icon;
         playerPersone.SpriteRenderer.sprite = playerPersone.Icon;
-        
 
         playerPersone.HealthPoint = playerPersone.MaxHealthPoints;
 
-        playerPersone.RangeWeapone = 2;
-        playerPersone.Damage = 3;
-        
         return playerPersone;
     }
 
@@ -68,16 +86,18 @@ public class PersoneGroupsManager : MonoBehaviour
         enemy.Iniciative = (int)(properties.Stats[2].Value * 1.5f);
 
         enemy.Icon = properties.Icon;
-        enemy.SpriteRenderer.sprite = properties.Icon;       
+        enemy.SpriteRenderer.sprite = properties.Icon;
 
         enemy.HealthPoint = properties.Stats[0].Value;
 
-        enemy.RangeWeapone = 2;
-        enemy.Damage = 3;
-       
         enemy.ActionPoints = enemy.ActionPointsMax;
+        //TODO
+        enemy.Skills = new Dictionary<KeySkills, SkillBase>();
+        enemy.Skills.Add(KeySkills.AttackMelle, properties.SkillAttack);
+        //
+
         return enemy;
-    }   
+    }
 
     public void SetPositionPersone(Vector2 positionSet, CellInBattle[,] cells, PersoneInBattle persone)
     {
@@ -104,5 +124,18 @@ public class PersoneGroupsManager : MonoBehaviour
         {
             return y.Iniciative.CompareTo(x.Iniciative);
         });
+    }
+
+    public void OnPersoneEnter(PersoneInBattle persone)
+    {
+        OnPersoneEnterA?.Invoke(persone);
+    }
+    public void OnPersoneExit(PersoneInBattle persone)
+    {
+        OnPersoneExitA?.Invoke(persone);
+    }
+    public void OnPersoneCkliked(PersoneInBattle persone)
+    {
+        OnPersoneClickedA?.Invoke(persone);
     }
 }
