@@ -9,7 +9,7 @@ using static EnumInBattle;
 public abstract class PersoneInBattle : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
-    public Dictionary<KeySkills,SkillBase> Skills;
+    public Dictionary<KeySkills, SkillBase> Skills;
     public string NamePersone;
     public int MaxHealthPoints;
     private int _healthPoint;
@@ -27,6 +27,7 @@ public abstract class PersoneInBattle : MonoBehaviour
     public event Action<PersoneInBattle> OnPersoneEnter;
     public event Action<PersoneInBattle> OnPersoneExit;
     public event Action<PersoneInBattle> OnPersoneClicked;
+    public event Action<PersoneInBattle> OnPersoneLose;
     public event Action<int, int> ChangeHealth;
     public event Action<int, int> ChangeActionPoint;
 
@@ -37,7 +38,12 @@ public abstract class PersoneInBattle : MonoBehaviour
         get => _healthPoint;
         set
         {
-            _healthPoint = _healthPoint < 0 ? _healthPoint = 0 : _healthPoint = value;
+            _healthPoint = value;
+            if (_healthPoint <= 0)
+            {
+                _healthPoint = 0;
+                Lose();
+            }            
             ChangeHealth?.Invoke(MaxHealthPoints, _healthPoint);
         }
     }
@@ -64,15 +70,15 @@ public abstract class PersoneInBattle : MonoBehaviour
     }
     public void ResetStats()
     {
-
+        //TODO
     }
 
-    public void Dead()
+    public void Lose()
     {
-
+        OnPersoneLose?.Invoke(this);
     }
     private void OnMouseEnter()
-    {       
+    {
         if (MainBattleSystems.Instance.ActivePersone.PersoneType == PersoneType.Player)
         {
             MainBattleSystems.Instance.Target = this;
@@ -88,7 +94,7 @@ public abstract class PersoneInBattle : MonoBehaviour
     }
 
     private void OnMouseDown()
-    {  
-            OnPersoneClicked?.Invoke(this);
+    {
+        OnPersoneClicked?.Invoke(this);
     }
 }

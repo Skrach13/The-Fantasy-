@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveInMap : MonoBehaviour
-{
-    [SerializeField] private GlobalMapGraf _globalMapGraf;
+{        
     [SerializeField] private Vector2 _positionInMap; 
     [SerializeField] private float _speed;
 
@@ -16,10 +15,7 @@ public class MoveInMap : MonoBehaviour
     public List<CellBase> Path { get => _path; set => _path = value; }
     public Vector2 PositionInMap { get => _positionInMap; set => _positionInMap = value; }
 
-    private void Start()
-    {        
-        transform.position = _globalMapGraf.Cells[(int)PositionInMap.x, (int)PositionInMap.y].transform.position;
-    }
+   
     public void StartMove(List<CellBase> cells)
     {
         if (_isMove == false)

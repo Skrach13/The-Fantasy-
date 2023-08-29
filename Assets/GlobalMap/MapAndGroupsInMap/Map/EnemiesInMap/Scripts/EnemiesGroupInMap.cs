@@ -3,22 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemiesGroupInMap : GroupInMap
-{      
+{
     [SerializeField] private int _countRangeWalk;
-    [SerializeField] private EnemyProperties[] _enemies;
-    
+    private EnemyProperties[] _enemies;
+    private Vector2 _positionInMap;
+    public bool IsBattle; 
 
     private List<CellBase> _randomGrafWalk;
 
     public EnemyProperties[] Enemies { get => _enemies; set => _enemies = value; }
+    public List<CellBase> RandomGrafWalk { get => _randomGrafWalk; set => _randomGrafWalk = value; }
+    public int CountRangeWalk { get => _countRangeWalk; set => _countRangeWalk = value; }
+    public Vector2 PositionInMap { get => _positionInMap; set => _positionInMap = value; }
 
     private new void Start()
     {
         base.Start();
-        _moveInMap = GetComponent<MoveInMap>();   
-        _randomGrafWalk = AddAreaWalk();
-        StartCoroutine(PatrolWalk());
+        MoveInMap = GetComponent<MoveInMap>();
+        MoveInMap.PositionInMap = _positionInMap;
         _raycast.OnRaycastHit += CheckedAnotherGroup;
+        RandomGrafWalk ??= AddAreaWalk();
+        StartCoroutine(PatrolWalk());
     }
     private void OnDestroy()
     {
@@ -35,30 +40,30 @@ public class EnemiesGroupInMap : GroupInMap
     {
         while (true)
         {
-            List<CellBase> path = new List<CellBase>();
-            foreach (var cellPosition in PathFinder.Path(_mapGraf.Cells, _moveInMap.PositionInMap, _randomGrafWalk[Random.Range(0, _randomGrafWalk.Count)].PositionInGraff))
+            List<CellBase> path = new();
+            foreach (var cellPosition in PathFinder.Path(GlobalMapGraf.Instance.Cells, MoveInMap.PositionInMap, RandomGrafWalk[Random.Range(0, RandomGrafWalk.Count)].PositionInGraff))
             {
-                path.Add(_mapGraf.Cells[(int)cellPosition.x, (int)cellPosition.y]);
+                path.Add(GlobalMapGraf.Instance.Cells[(int)cellPosition.x, (int)cellPosition.y]);
             }
-            yield return StartCoroutine( _moveInMap.MovedInPath(path));
+            yield return StartCoroutine(MoveInMap.MovedInPath(path));
         }
     }
 
 
     private List<CellBase> AddAreaWalk()
     {
-        Vector2 position = _moveInMap.PositionInMap;
-        List<CellBase> firstList = new List<CellBase>();
-        firstList = GetNeighboursCell(_mapGraf.Cells[(int)position.x, (int)position.y], _mapGraf.Cells, firstList);
-        firstList.Add(_mapGraf.Cells[(int)position.x, (int)position.y]);
-        _mapGraf.Cells[(int)position.x, (int)position.y].PaintCell(Color.blue);
+        Vector2 position = MoveInMap.PositionInMap;
+        List<CellBase> firstList = new();
+        firstList = GetNeighboursCell(GlobalMapGraf.Instance.Cells[(int)position.x, (int)position.y], GlobalMapGraf.Instance.Cells, firstList);
+        firstList.Add(GlobalMapGraf.Instance.Cells[(int)position.x, (int)position.y]);
+        GlobalMapGraf.Instance.Cells[(int)position.x, (int)position.y].PaintCell(Color.blue);
         int count = 1;
-        while (count < _countRangeWalk)
-        {           
-            List<CellBase> nextList = new List<CellBase>();
+        while (count < CountRangeWalk)
+        {
+            List<CellBase> nextList = new();
             for (int i = 0; i < firstList.Count; i++)
             {
-                var List = GetNeighboursCell(firstList[i], _mapGraf.Cells, firstList);
+                var List = GetNeighboursCell(firstList[i], GlobalMapGraf.Instance.Cells, firstList);
                 foreach (CellBase Cell in List)
                 {
                     nextList.Add(Cell);

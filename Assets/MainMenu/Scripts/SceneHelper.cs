@@ -5,8 +5,8 @@ public class SceneHelper : SingletonBase<SceneHelper>
 {
     private void Start()
     {
-      //  Cursor.visible = true;
-      // Cursor.lockState = CursorLockMode.None;
+        //  Cursor.visible = true;
+        // Cursor.lockState = CursorLockMode.None;
     }
     private void Update()
     {
@@ -26,6 +26,11 @@ public class SceneHelper : SingletonBase<SceneHelper>
     public void LoadLevel(int buildIndex)
     {
         SceneManager.LoadScene(buildIndex);
+    }
+    //TODO разухнать про аддиктивный способ загрузки сцен
+    public void LoadLevelAddtivity(int buildIndex)
+    {
+        SceneManager.LoadScene(buildIndex,LoadSceneMode.Additive);
     }
     public void Quit()
     {

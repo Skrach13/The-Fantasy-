@@ -4,25 +4,19 @@ using UnityEngine;
 [Serializable]
 public class SlotItem
 {
+    public SlotItem(){}
     public SlotItem(ItemBase item, int count)
     {
-        _item = item;
-        _count = count;
+        Item = item;
+        Count = count;
     }
 
-    public SlotItem()
-    {
-    }
-
-    private ItemBase _item;
-    private int _count;
-
-    public ItemBase Item { get => _item; set => _item = value; }
-    public int Count { get => _count; set => _count = value; }
+    public ItemBase Item;
+    public int Count;
 
     public void AddItemAndCount(ItemBase item, int count)
     {
-        _item = item; 
-        _count = count;
+        Item = item;
+        Count = count;
     }
 }

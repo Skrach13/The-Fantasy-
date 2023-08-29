@@ -1,5 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+
+[Serializable]
+public class SavedPlayerPersoneGroup 
+{
+    public string namegroup = "group";
+    public List<PlayerPersone> Group;
+}
 
 public class GroupGlobalMap : SingletonBase<GroupGlobalMap>
 {
@@ -8,24 +16,31 @@ public class GroupGlobalMap : SingletonBase<GroupGlobalMap>
     [SerializeField] private StatsUpExpiriensProperties _statsUpExpiriensProperties;
     [SerializeField] private string _testName;
 
-    [SerializeField] private List<PlayerPersone> _group = new List<PlayerPersone>();
+    [SerializeField] private List<PlayerPersone> _group = new();
 
     public List<PlayerPersone> Group { get => _group; private set => _group = value; }
     public StatsUpExpiriensProperties StatsUpExpiriensProperties { get => _statsUpExpiriensProperties; private set => _statsUpExpiriensProperties = value; }
 
     private void Start()
     {
-        if (_personeAssets.Persones.Length == 0)
+        if (SaveManager.IsLoad == false)
         {
-            Debug.LogError("PersoneAssets not filled in");
-            return;
+            if (_personeAssets.Persones.Length == 0)
+            {
+                Debug.LogError("PersoneAssets not filled in");
+                return;
+            }
+            for (int i = 0; i < _personeAssets.Persones.Length; i++)
+            {
+                Group.Add(PlayerPersone.CreatePersone(_personeAssets, i));
+                //TEST
+                _group[i].Skills.Add(KeySkills.AttackMelle, _skillsTree.GetSkill(0));
+            }
         }
-        for (int i = 0; i < _personeAssets.Persones.Length; i++)
+        else
         {
-            Group.Add(PlayerPersone.CreatePersone(_personeAssets, i));
-            //TEST
-            _group[i].Skills.Add(KeySkills.AttackMelle,_skillsTree.GetSkill(0));
-        }               
+            _group = SaveManager.Save.PlayerPersoneGroup.Group;
+        }
     }
     public void AddSkillPersone(string name, KeySkills keySkills)
     {
@@ -43,6 +58,15 @@ public class GroupGlobalMap : SingletonBase<GroupGlobalMap>
     {
         PlayerPersone perosne = _group.Find(x => x.Name == name);
         return perosne;
+    }
+
+    public SavedPlayerPersoneGroup GetSaveGroup()
+    {
+        SavedPlayerPersoneGroup saveGroup = new ()
+        {
+            Group = _group
+        };
+        return saveGroup;
     }
 
 

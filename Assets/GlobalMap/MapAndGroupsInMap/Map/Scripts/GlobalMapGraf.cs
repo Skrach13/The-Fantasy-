@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GlobalMapGraf : MonoBehaviour
+public class GlobalMapGraf : SingletonBase<GlobalMapGraf>
 {
+
     [SerializeField] private GlobalMapCell[,] _cells;
     [SerializeField] private PlayerGroupOnTheMap _groupGlobal;
 

@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PathFinderInBattle : MonoBehaviour

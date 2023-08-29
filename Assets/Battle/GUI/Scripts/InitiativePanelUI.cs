@@ -8,15 +8,37 @@ public class InitiativePanelUI : MonoBehaviour
     [SerializeField] private List<InitiativePersoneObjectUI> _InitiativePersones = new List<InitiativePersoneObjectUI>();
 
     [SerializeField] private InitiativeManager _initiativeManager;
+    [SerializeField] private PersoneGroupsManager _groupManager;
 
     private void Start()
     {
         FillinginitiativeLine();
         _initiativeManager.OnNextPersoneIndex += ChangeInitiativePersone;
-
+        _groupManager.OnLosePersone += LosePersone;
+    }
+    private void OnDestroy()
+    {
+        _groupManager.OnLosePersone -= LosePersone;
+    }
+    private void LosePersone()
+    {
+        FillinginitiativeLine();
     }
     private void FillinginitiativeLine()
     {
+        if(_initiativeLine.transform.childCount > 0)
+        {
+            List<Transform> childs = new List<Transform>();
+            for(int i = 0;i< _initiativeLine.transform.childCount; i++)
+            {
+                childs.Add(_initiativeLine.transform.GetChild(i));
+            }
+            foreach(Transform child in childs)
+            {
+                Destroy(child.gameObject);
+            }
+            _InitiativePersones.Clear();
+        }
         var persones = MainBattleSystems.Instance.MassivePersoneInBattle;
         for (int i = 0; i < persones.Count; i++)
         {

@@ -1,5 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+
+[Serializable]
+public class InventorySaveData
+{
+    public List<SlotItem> SlotsItem;
+}
+
 
 public class InventoryPlayerGroup : SingletonBase<InventoryPlayerGroup>
 {
@@ -7,13 +15,14 @@ public class InventoryPlayerGroup : SingletonBase<InventoryPlayerGroup>
 
     public List<SlotItem> SlotsItem { get => _slotsItem; private set => _slotsItem = value; }
 
-    private new void Awake()
+    private void Start()
     {
-        base.Awake();
-        if (SlotsItem == null)
+        if (SaveManager.Save != null)
         {
-            SlotsItem = new List<SlotItem>();
+            _slotsItem = SaveManager.Save.InventoryPlayer.SlotsItem;
         }
+
+        SlotsItem ??= new List<SlotItem>();
     }
     //Debug Test
     public void AddAllItemsInData()
@@ -67,9 +76,9 @@ public class InventoryPlayerGroup : SingletonBase<InventoryPlayerGroup>
         var itemInList = GetSlot(item);
         if (itemInList == null || itemInList.Count - count < 0)
         {
-            return false;           
+            return false;
         }
-        else if( itemInList.Count - count == 0 )
+        else if (itemInList.Count - count == 0)
         {
             itemInList.Count -= count;
             SlotsItem.Remove(itemInList);
@@ -80,5 +89,14 @@ public class InventoryPlayerGroup : SingletonBase<InventoryPlayerGroup>
             itemInList.Count -= count;
             return true;
         }
+    }
+
+    public InventorySaveData GetInventoryData()
+    {
+        var data = new InventorySaveData
+        {
+            SlotsItem = SlotsItem
+        };
+        return data;
     }
 }

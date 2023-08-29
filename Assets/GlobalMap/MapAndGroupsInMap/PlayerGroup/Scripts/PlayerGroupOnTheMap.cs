@@ -1,17 +1,31 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerGroupOnTheMap : GroupInMap
-{
-    public MoveInMap MoveInMap { get => _moveInMap; private set => _moveInMap = value; }
+[Serializable]
+public class SaveDataPlayerGroupOnTheMap
+{    
+    public Vector3 Position;
+    public Quaternion Rotation;
+    public Vector2 PositionInGraff;
+}
 
+
+public class PlayerGroupOnTheMap : GroupInMap
+{  
     private new void Start()
-    {
+    {       
         base.Start();
         MoveInMap = GetComponent<MoveInMap>();
         _mapGraf.OnCellClicked += StartMove;
         _raycast.OnRaycastHit += CheckedAnotherGroup;
+        transform.position = GlobalMapGraf.Instance.Cells[(int)MoveInMap.PositionInMap.x, (int)MoveInMap.PositionInMap.y].transform.position;
+        //TODO TEST
+        if(SaveManager.Save != null)
+        {
+            transform.SetPositionAndRotation(SaveManager.Save.PlayerGroupOnTheMap.Position, SaveManager.Save.PlayerGroupOnTheMap.Rotation);
+            MoveInMap.PositionInMap = SaveManager.Save.PlayerGroupOnTheMap.PositionInGraff;
+        }
     }
     private void OnDestroy()
     {
@@ -27,6 +41,17 @@ public class PlayerGroupOnTheMap : GroupInMap
     {
         MoveInMap.StartMove(cells);
     }
+    public SaveDataPlayerGroupOnTheMap GetSaveDataPlayerGroup()
+    {
+        SaveDataPlayerGroupOnTheMap saveData = new()
+        {
+            Position = this.transform.position,
+            Rotation = this.transform.rotation,
+            PositionInGraff = MoveInMap.PositionInMap
+        };
+        return saveData;
+    }
+
 }
 
 

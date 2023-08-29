@@ -7,9 +7,10 @@ public abstract class GroupInMap : MonoBehaviour
     [SerializeField] private GroupType _groupType;
 
     [SerializeField] protected GlobalMapGraf _mapGraf;
-    [SerializeField] protected MoveInMap _moveInMap;
+    [SerializeField] private MoveInMap moveInMap;
 
     internal GroupType GroupType { get => _groupType; set => _groupType = value; }
+    public MoveInMap MoveInMap { get => moveInMap; set => moveInMap = value; }
 
     protected void Start()
     {

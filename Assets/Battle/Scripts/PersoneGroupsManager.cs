@@ -15,6 +15,9 @@ public class PersoneGroupsManager : MonoBehaviour
     public event Action<PersoneInBattle> OnPersoneEnterA;
     public event Action<PersoneInBattle> OnPersoneExitA;
     public event Action<PersoneInBattle> OnPersoneClickedA;
+    public event Action OnLosePersone;
+    public event Action<bool> OnLoseOrWin;
+    
 
     private MainBattleSystems _battleSystems;
     public List<PersoneInBattle> MassivePersoneInBattle { get => _massivePersoneInBattle; set => _massivePersoneInBattle = value; }
@@ -39,6 +42,7 @@ public class PersoneGroupsManager : MonoBehaviour
             perosne.OnPersoneEnter += OnPersoneEnter;
             perosne.OnPersoneExit += OnPersoneExit;
             perosne.OnPersoneClicked += OnPersoneCkliked;
+            perosne.OnPersoneLose += LosePerosne;
         }
 
         SortIniciative();
@@ -53,6 +57,7 @@ public class PersoneGroupsManager : MonoBehaviour
             perosne.OnPersoneEnter -= OnPersoneEnter;
             perosne.OnPersoneExit -= OnPersoneExit;
             perosne.OnPersoneClicked -= OnPersoneCkliked;
+            perosne.OnPersoneLose -= LosePerosne;
         }
     }
 
@@ -124,6 +129,27 @@ public class PersoneGroupsManager : MonoBehaviour
         {
             return y.Iniciative.CompareTo(x.Iniciative);
         });
+    }
+
+    private void LosePerosne(PersoneInBattle persone)
+    {
+        MassivePersoneInBattle.Remove(persone);
+        CellInBattle cell = _battleSystems.Cells[(int)persone.BattlePosition.x, (int)persone.BattlePosition.y];
+        cell.PersoneStayInCell = null;
+        cell.CloseCell = false;
+        Destroy(persone.transform.gameObject);
+        SortIniciative();
+        OnLosePersone?.Invoke();
+        if(MassivePersoneInBattle.Find(playerPersone => playerPersone.PersoneType == PersoneType.Player) == null)
+        {
+            Debug.Log("Lose");
+            OnLoseOrWin?.Invoke(false);
+        }
+        if (MassivePersoneInBattle.Find(playerPersone => playerPersone.PersoneType == PersoneType.Enemy) == null)
+        {
+            Debug.Log("Win");
+            OnLoseOrWin?.Invoke(true);
+        }
     }
 
     public void OnPersoneEnter(PersoneInBattle persone)
