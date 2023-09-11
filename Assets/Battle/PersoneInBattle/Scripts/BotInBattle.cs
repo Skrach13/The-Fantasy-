@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static EnumInBattle;
 
@@ -14,7 +15,7 @@ internal class BotInBattle
         while (enemy.ActionPoints > 0)
         {
             MainBattleSystems.Instance.Map.ResetStatsCellFields();
-            maybeTarget = DefiningArea.FindAvailableTargets(MainBattleSystems.Instance.Cells, enemy, (SkillActive)enemy.Skills.GetValueOrDefault(KeySkills.AttackMelle));
+            maybeTarget = DefiningArea.FindAvailableTargets(MainBattleSystems.Instance.Cells, enemy, (SkillActive)enemy.Skills.First(skill => skill.KeySkill == KeySkills.AttackMelle));
             if (maybeTarget.Count > 0)
             {
                 float minDistance = 20;
@@ -31,7 +32,7 @@ internal class BotInBattle
                 }
                 if (enemy.ActionPoints >= 2)
                 {
-                    enemy.Skills.TryGetValue(KeySkills.AttackMelle, out SkillBase skill);
+                    enemy.TryGetSkills(KeySkills.AttackMelle, out SkillBase skill);
                     enemy.ActionPoints -= 2;
                     (skill as SkillAttacking).UseSkill(target);
                 }
@@ -48,7 +49,7 @@ internal class BotInBattle
                 //опрежелить ближайщего персонажа игрока
                 target = neighboringPlayerPersoneFields(enemy);
                 
-                neighbodCell = DefiningArea.NeighborCellToAttack(MainBattleSystems.Instance.Cells, enemy, target, (SkillActive)enemy.Skills.GetValueOrDefault(KeySkills.AttackMelle));
+                neighbodCell = DefiningArea.NeighborCellToAttack(MainBattleSystems.Instance.Cells, enemy, target, (SkillActive)enemy.GetSkill(KeySkills.AttackMelle));
                 var _cellInPath = MainBattleSystems.Instance.Map.GetCellsInPath(enemy.BattlePosition, neighbodCell.PositionInGraff);
 
                 yield return enemy.Move.PersoneMove(_cellInPath, MainBattleSystems.Instance.Cells);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class SavedPlayerPersoneGroup 
+public class SavedPlayerPersoneGroup
 {
     public string namegroup = "group";
     public List<PlayerPersone> Group;
@@ -34,7 +34,7 @@ public class GroupGlobalMap : SingletonBase<GroupGlobalMap>
             {
                 Group.Add(PlayerPersone.CreatePersone(_personeAssets, i));
                 //TEST
-                _group[i].Skills.Add(KeySkills.AttackMelle, _skillsTree.GetSkill(0));
+                _group[i].Skills.Add(_skillsTree.GetSkill(0));
             }
         }
         else
@@ -46,7 +46,7 @@ public class GroupGlobalMap : SingletonBase<GroupGlobalMap>
     {
         if (GetPerosne(name).TrySkill(keySkills) == false)
         {
-             GetPerosne(name).Skills.Add(keySkills,_skillsTree.GetSkill(keySkills));
+            GetPerosne(name).Skills.Add(_skillsTree.GetSkill(keySkills));
         }
         else
         {
@@ -62,7 +62,7 @@ public class GroupGlobalMap : SingletonBase<GroupGlobalMap>
 
     public SavedPlayerPersoneGroup GetSaveGroup()
     {
-        SavedPlayerPersoneGroup saveGroup = new ()
+        SavedPlayerPersoneGroup saveGroup = new()
         {
             Group = _group
         };

@@ -8,7 +8,6 @@ public class InventorySaveData
     public List<SlotItem> SlotsItem;
 }
 
-
 public class InventoryPlayerGroup : SingletonBase<InventoryPlayerGroup>
 {
     [SerializeField] private List<SlotItem> _slotsItem;
@@ -17,11 +16,13 @@ public class InventoryPlayerGroup : SingletonBase<InventoryPlayerGroup>
 
     private void Start()
     {
-        if (SaveManager.Save != null)
+        if (SaveManager.Save.InventoryPlayer != null)
         {
-            _slotsItem = SaveManager.Save.InventoryPlayer.SlotsItem;
+            if (SaveManager.Save.InventoryPlayer.SlotsItem != null)
+            {
+                _slotsItem = SaveManager.Save.InventoryPlayer.SlotsItem;
+            }       
         }
-
         SlotsItem ??= new List<SlotItem>();
     }
     //Debug Test

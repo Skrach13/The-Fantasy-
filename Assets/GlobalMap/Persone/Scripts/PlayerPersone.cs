@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 [Serializable]
@@ -23,24 +25,33 @@ public class PlayerPersone : BasePersone
     public SlotItem PotionItem { get => _potionItem; set => _potionItem = value; }
     #endregion
 
-    [SerializeField] private Dictionary<KeySkills, SkillBase> _skills = new();
-    public Dictionary<KeySkills, SkillBase> Skills { get => _skills; private set => _skills = value; }
+    [SerializeField] private List<SkillBase> _skills = new();
+    public List<SkillBase> Skills { get => _skills; private set => _skills = value; }
     public Sprite Sprite { get => _sprite; set => _sprite = value; }
 
     public bool TryGetSkills(KeySkills keySkills, out SkillBase skill)
     {
-        bool beSkill = _skills.TryGetValue(keySkills, out skill);
+        bool beSkill = false;
+        skill = _skills.First(skills => skills.KeySkill == keySkills);
+        if(skill != null)
+        {
+            beSkill = true;
+        }
         Debug.Log($"{skill.Name}");
         return beSkill;
     }
     public SkillBase GetSkills(KeySkills keySkills)
     {
-        _skills.TryGetValue(keySkills, out SkillBase skill);
+       SkillBase skill = _skills.First(skills => skills.KeySkill == keySkills);
         return skill;
     }
     public bool TrySkill(KeySkills keySkills)
     {
-        bool beSkill = _skills.TryGetValue(keySkills, out var skill);
+        bool beSkill = false;
+        if(_skills.First(skills => skills.KeySkill == keySkills) != null)
+        {
+            beSkill = true;
+        }       
         return beSkill;
     }
 

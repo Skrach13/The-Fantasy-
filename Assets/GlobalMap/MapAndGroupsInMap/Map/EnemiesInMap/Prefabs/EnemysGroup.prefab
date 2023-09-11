@@ -49,13 +49,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _groupType: 0
-  _mapGraf: {fileID: 0}
-  _moveInMap: {fileID: 6315593763836819238}
+  moveInMap: {fileID: 6315593763836819238}
   _countRangeWalk: 2
-  _enemies:
+  Enemies:
   - {fileID: 11400000, guid: 4b339f05c7564244380b868ce2cb80c7, type: 2}
   - {fileID: 11400000, guid: 4b339f05c7564244380b868ce2cb80c7, type: 2}
-  - {fileID: 11400000, guid: 4b339f05c7564244380b868ce2cb80c7, type: 2}
+  IsBattle: 0
 --- !u!114 &6315593763836819238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,7 +67,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c26516c067eab647899fb138e101539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _globalMapGraf: {fileID: 0}
   _positionInMap: {x: 5, y: 5}
   _speed: 1
 --- !u!114 &6315593763836819239

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static EnumInBattle;
 
@@ -9,7 +10,7 @@ using static EnumInBattle;
 public abstract class PersoneInBattle : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
-    public Dictionary<KeySkills, SkillBase> Skills;
+    public List<SkillBase> Skills;
     public string NamePersone;
     public int MaxHealthPoints;
     private int _healthPoint;
@@ -77,6 +78,32 @@ public abstract class PersoneInBattle : MonoBehaviour
     {
         OnPersoneLose?.Invoke(this);
     }
+    public bool TryGetSkills(KeySkills keySkills, out SkillBase skill)
+    {
+        bool beSkill = false;
+        skill = Skills.First(skills => skills.KeySkill == keySkills);
+        if (skill != null)
+        {
+            beSkill = true;
+        }
+        Debug.Log($"{skill.Name}");
+        return beSkill;
+    }
+    public SkillBase GetSkill(KeySkills keySkills)
+    {
+        SkillBase skill = Skills.First(skills => skills.KeySkill == keySkills);
+        return skill;
+    }
+    public bool TrySkill(KeySkills keySkills)
+    {
+        bool beSkill = false;
+        if (Skills.First(skills => skills.KeySkill == keySkills) != null)
+        {
+            beSkill = true;
+        }
+        return beSkill;
+    }
+
     private void OnMouseEnter()
     {
         if (MainBattleSystems.Instance.ActivePersone.PersoneType == PersoneType.Player)

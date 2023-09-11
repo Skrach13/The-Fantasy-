@@ -5,14 +5,12 @@ using UnityEngine;
 public class EnemiesGroupInMap : GroupInMap
 {
     [SerializeField] private int _countRangeWalk;
-    private EnemyProperties[] _enemies;
+    public EnemyProperties[] Enemies;
     private Vector2 _positionInMap;
     public bool IsBattle; 
 
-    private List<CellBase> _randomGrafWalk;
-
-    public EnemyProperties[] Enemies { get => _enemies; set => _enemies = value; }
-    public List<CellBase> RandomGrafWalk { get => _randomGrafWalk; set => _randomGrafWalk = value; }
+    private List<GlobalMapCell> _randomGrafWalk;
+    public List<GlobalMapCell> RandomGrafWalk { get => _randomGrafWalk; set => _randomGrafWalk = value; }
     public int CountRangeWalk { get => _countRangeWalk; set => _countRangeWalk = value; }
     public Vector2 PositionInMap { get => _positionInMap; set => _positionInMap = value; }
 
@@ -33,7 +31,7 @@ public class EnemiesGroupInMap : GroupInMap
     private void CheckedAnotherGroup(GroupInMap group)
     {
         Debug.Log($"{group.name}");
-        BattleData.Instance.StartBattle(_enemies);
+        BattleData.Instance.StartBattle(Enemies);
     }
 
     private IEnumerator PatrolWalk()
@@ -50,26 +48,26 @@ public class EnemiesGroupInMap : GroupInMap
     }
 
 
-    private List<CellBase> AddAreaWalk()
+    private List<GlobalMapCell> AddAreaWalk()
     {
         Vector2 position = MoveInMap.PositionInMap;
-        List<CellBase> firstList = new();
+        List<GlobalMapCell> firstList = new();
         firstList = GetNeighboursCell(GlobalMapGraf.Instance.Cells[(int)position.x, (int)position.y], GlobalMapGraf.Instance.Cells, firstList);
         firstList.Add(GlobalMapGraf.Instance.Cells[(int)position.x, (int)position.y]);
         GlobalMapGraf.Instance.Cells[(int)position.x, (int)position.y].PaintCell(Color.blue);
         int count = 1;
         while (count < CountRangeWalk)
         {
-            List<CellBase> nextList = new();
+            List<GlobalMapCell> nextList = new();
             for (int i = 0; i < firstList.Count; i++)
             {
                 var List = GetNeighboursCell(firstList[i], GlobalMapGraf.Instance.Cells, firstList);
-                foreach (CellBase Cell in List)
+                foreach (GlobalMapCell Cell in List)
                 {
                     nextList.Add(Cell);
                 }
             }
-            foreach (CellBase cell in nextList)
+            foreach (GlobalMapCell cell in nextList)
             {
                 firstList.Add(cell);
             }
@@ -78,9 +76,9 @@ public class EnemiesGroupInMap : GroupInMap
         return firstList;
     }
 
-    private List<CellBase> GetNeighboursCell(CellBase cellFloor, CellBase[,] field, List<CellBase> firstList)
+    private List<GlobalMapCell> GetNeighboursCell(GlobalMapCell cellFloor, GlobalMapCell[,] field, List<GlobalMapCell> firstList)
     {
-        var result = new List<CellBase>();
+        var result = new List<GlobalMapCell>();
         // —оседними точками €вл€ютс€ соседние по стороне клетки.
         Vector2 position = cellFloor.PositionInGraff;
         Vector2[] neighbourPoints = new Vector2[6];

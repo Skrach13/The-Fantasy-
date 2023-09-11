@@ -13,15 +13,16 @@ public class SaveDataPlayerGroupOnTheMap
 
 public class PlayerGroupOnTheMap : GroupInMap
 {  
+
     private new void Start()
     {       
         base.Start();
         MoveInMap = GetComponent<MoveInMap>();
-        _mapGraf.OnCellClicked += StartMove;
+        GlobalMapGraf.Instance.OnCellClicked += StartMove;
         _raycast.OnRaycastHit += CheckedAnotherGroup;
         transform.position = GlobalMapGraf.Instance.Cells[(int)MoveInMap.PositionInMap.x, (int)MoveInMap.PositionInMap.y].transform.position;
         //TODO TEST
-        if(SaveManager.Save != null)
+        if(SaveManager.Save.PlayerGroupOnTheMap != null)
         {
             transform.SetPositionAndRotation(SaveManager.Save.PlayerGroupOnTheMap.Position, SaveManager.Save.PlayerGroupOnTheMap.Rotation);
             MoveInMap.PositionInMap = SaveManager.Save.PlayerGroupOnTheMap.PositionInGraff;
@@ -29,7 +30,7 @@ public class PlayerGroupOnTheMap : GroupInMap
     }
     private void OnDestroy()
     {
-        _mapGraf.OnCellClicked -= StartMove;
+        GlobalMapGraf.Instance.OnCellClicked -= StartMove;
         _raycast.OnRaycastHit -= CheckedAnotherGroup;
     }
     private void CheckedAnotherGroup(GroupInMap group)

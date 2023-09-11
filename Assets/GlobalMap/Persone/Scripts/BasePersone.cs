@@ -2,8 +2,7 @@ using System;
 
 [Serializable]
 public abstract class BasePersone
-{
-    private int _ID;
+{   
     public string Name = "NoneName";
     public Race Race;
     public int MaxHealth;

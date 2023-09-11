@@ -29,14 +29,14 @@ public class PanelSkillsUI : MonoBehaviour
             _buttonsSkill.Clear();
         }
 
-        foreach (KeyValuePair<KeySkills, SkillBase> skills in persone.Skills)
+        foreach (SkillBase skills in persone.Skills)
         {
-            if (skills.Value.ActionType == MethodAction.Active)
+            if (skills.ActionType == MethodAction.Active)
             {
                 ButtonSkillUI button = Instantiate(_buttonSkillUI, _skillsPanel.transform);
                 _buttonsSkill.Add(button);
-                button.Skill = skills.Value as SkillActive;
-                button.TextInButton.text = skills.Value.Name; 
+                button.Skill = skills as SkillActive;
+                button.TextInButton.text = skills.Name; 
                 button.OnClickButton += OnClickButtonInPanel;
 
                 //Debug.Log($"{skills.Key} and {skills.Value}");

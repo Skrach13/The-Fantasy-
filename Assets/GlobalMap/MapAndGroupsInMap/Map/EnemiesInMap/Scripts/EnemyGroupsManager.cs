@@ -20,7 +20,7 @@ public class DataEnemyGroup
     public Vector2 PositionInMap;
     public EnemyProperties[] EnemysProperties;
 
-    public List<CellBase> RandomGrafWalk;
+    public List<Vector2> RandomGrafWalkVector;
     public int CountRangeWalk;
 }
 
@@ -34,7 +34,7 @@ public class EnemyGroupsManager : MonoBehaviour
 
     private void Start()
     {
-        if (SaveManager.Save != null)
+        if (SaveManager.Save.EnemyGroups != null)
         {
             foreach (var loadGroup in SaveManager.Save.EnemyGroups.groups)
             {
@@ -42,7 +42,7 @@ public class EnemyGroupsManager : MonoBehaviour
                 newGroup.transform.SetPositionAndRotation(loadGroup.Position, loadGroup.Rotation);
                 newGroup.PositionInMap = loadGroup.PositionInMap;
                 newGroup.Enemies = loadGroup.EnemysProperties;
-                newGroup.RandomGrafWalk = loadGroup.RandomGrafWalk;
+                newGroup.RandomGrafWalk = GlobalMapGraf.Instance.RecastPositionInGraffToCells( loadGroup.RandomGrafWalkVector);
                 newGroup.CountRangeWalk = loadGroup.CountRangeWalk;
             }
         }
@@ -67,8 +67,8 @@ public class EnemyGroupsManager : MonoBehaviour
                 Position = group.transform.position,
                 Rotation = group.transform.rotation,
                 EnemysProperties = group.Enemies,
-                PositionInMap = group.MoveInMap.PositionInMap,
-                RandomGrafWalk = group.RandomGrafWalk,
+                PositionInMap = group.PositionInMap,
+                RandomGrafWalkVector = GlobalMapGraf.Instance.RecastCellsPositionInGraffToVectors(group.RandomGrafWalk),
                 CountRangeWalk = group.CountRangeWalk,
                 IsBattle = group.IsBattle
             };

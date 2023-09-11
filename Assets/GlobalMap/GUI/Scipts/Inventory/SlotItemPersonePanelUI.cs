@@ -31,15 +31,16 @@ public class SlotItemPersonePanelUI : SlotItemUI, IDropHandler
                 Debug.Log("del itemdsasfasdf");
                 if (_playerPersone.TrySkill((_playerPersone.RightHandItem.Item as ItemWeapone).SkillAttacking.KeySkill))
                 {
-                    _playerPersone.Skills.Remove((_playerPersone.RightHandItem.Item as ItemWeapone).SkillAttacking.KeySkill);
+                    var skilldel = _playerPersone.Skills.Find(skill => skill.KeySkill == (_playerPersone.RightHandItem.Item as ItemWeapone).SkillAttacking.KeySkill);
+                   _playerPersone.Skills.Remove(skilldel);
                 }
                 _playerPersone.RightHandItem.Item = null;
                 _playerPersone.RightHandItem.Count = 0;
                 if (_playerPersone.Skills.Count != 0)
                 {
-                    foreach (KeyValuePair<KeySkills, SkillBase> skills in _playerPersone.Skills)
+                    foreach (SkillBase skills in _playerPersone.Skills)
                     {
-                        Debug.Log($"{skills.Key} and {skills.Value}");
+                        Debug.Log($"{skills.Name}");
 
                     }
                 }
@@ -53,12 +54,12 @@ public class SlotItemPersonePanelUI : SlotItemUI, IDropHandler
                 _playerPersone.RightHandItem.AddItemAndCount(value, 1);
                 if (!_playerPersone.TrySkill((value as ItemWeapone).SkillAttacking.KeySkill))
                 {
-                    _playerPersone.Skills.Add((value as ItemWeapone).SkillAttacking.KeySkill, (value as ItemWeapone).SkillAttacking);
+                    _playerPersone.Skills.Add((value as ItemWeapone).SkillAttacking);
                 }
 
-                foreach (KeyValuePair<KeySkills, SkillBase> skills in _playerPersone.Skills)
+                foreach (SkillBase skills in _playerPersone.Skills)
                 {
-                    Debug.Log($"{skills.Key} and {skills.Value}");
+                    Debug.Log($"{skills.Name}");
 
                 }
             }
