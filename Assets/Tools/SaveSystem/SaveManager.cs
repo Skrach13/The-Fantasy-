@@ -30,7 +30,9 @@ class  SettingsDataSave
     public float EffectVolume;
     public float EffectUIVolume;
 
-    public Vector2 ScreenResolution;
+    public Vector2Int ScreenResolution;
+
+    public int QualityIndex;
 
     public float GetValueVolumeSound(NamePropertiesSoundVolume name)
     {
@@ -117,14 +119,15 @@ public class SaveManager : SingletonBase<SaveManager>
         if (_globalSave == null)
         {
             Debug.LogWarning($"_globalSave == null");
-            SettingsDataSave settingsData = new SettingsDataSave() { 
+            SettingsDataSave settingsData = new SettingsDataSave() {
 
                 MasterVolume = _defaultSetting.MasterVolume,
                 MusicVolume = _defaultSetting.MusicVolume,
                 EffectVolume = _defaultSetting.EffectVolume,
                 EffectUIVolume = _defaultSetting.EffectUIVolume,
+                QualityIndex = QualitySettings.names.Length - 1,
 
-                ScreenResolution = new Vector2(1920,1080)
+                ScreenResolution = new Vector2Int(1920,1080)
             };
             
             _globalSave = new GlobalSave(settingsData);
