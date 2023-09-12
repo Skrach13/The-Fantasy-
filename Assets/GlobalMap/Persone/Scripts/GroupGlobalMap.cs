@@ -23,6 +23,8 @@ public class GroupGlobalMap : SingletonBase<GroupGlobalMap>
 
     private void Start()
     {
+        SaveManager.Instance.GroupGlobalMap = this;
+
         if (SaveManager.IsLoad == false)
         {
             if (_personeAssets.Persones.Length == 0)

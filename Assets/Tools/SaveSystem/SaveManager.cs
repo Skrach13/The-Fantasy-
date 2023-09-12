@@ -13,12 +13,48 @@ public enum KeyNameData
 [Serializable]
 class GlobalSave
 {  
+    public SettingsDataSave SettingsDataSave;
     public List<string> NameSave;    
-    public GlobalSave()
+    public GlobalSave(SettingsDataSave settingsDataSave)
     {
         NameSave = new List<string>();
+        SettingsDataSave = settingsDataSave;
     }
 }
+
+[Serializable]
+class  SettingsDataSave
+{
+    public float MasterVolume;
+    public float MusicVolume;
+    public float EffectVolume;
+    public float EffectUIVolume;
+
+    public Vector2 ScreenResolution;
+
+    public float GetValueVolumeSound(NamePropertiesSoundVolume name)
+    {
+        switch (name)
+        {
+            case NamePropertiesSoundVolume.Master: return MasterVolume;
+            case NamePropertiesSoundVolume.Music: return MusicVolume;
+            case NamePropertiesSoundVolume.Effect: return EffectVolume;
+            case NamePropertiesSoundVolume.EffectUI: return EffectUIVolume;
+        }
+        return 0f;
+    }
+    public void SetValueVolume(NamePropertiesSoundVolume name, float value)
+    {
+        switch (name)
+        {
+            case NamePropertiesSoundVolume.Master: MasterVolume = value; break;
+            case NamePropertiesSoundVolume.Music: MusicVolume = value; break;
+            case NamePropertiesSoundVolume.Effect: EffectVolume = value; break;
+            case NamePropertiesSoundVolume.EffectUI: EffectUIVolume = value; break;
+        }
+    }
+}
+
 
 
 [Serializable]
@@ -39,9 +75,11 @@ public class SavedData
 }
 
 public class SaveManager : SingletonBase<SaveManager>
-{
+{    
+    [SerializeField] private VolumeSettings _defaultSetting;
+
     [SerializeField] private GroupGlobalMap _groupGlobalMap;
-    [SerializeField] private InventoryPlayerGroup InventoryPlayer;
+    [SerializeField] private InventoryPlayerGroup _inventoryPlayer;
     [SerializeField] private PlayerGroupOnTheMap _playerGroupOnTheMap;
     [SerializeField] private EnemyGroupsManager _enemyGroupsManager;
 
@@ -57,28 +95,56 @@ public class SaveManager : SingletonBase<SaveManager>
     public static string SaveName { get => _saveName; private set => _saveName = value; }
     public static string LoadName { get => _loadName; private set => _loadName = value; }
     public static SavedData Save { get => _save; set => _save = value; }
+    public GroupGlobalMap GroupGlobalMap { get => _groupGlobalMap; set => _groupGlobalMap = value; }
+    public InventoryPlayerGroup InventoryPlayer { get => _inventoryPlayer; set => _inventoryPlayer = value; }
+    public PlayerGroupOnTheMap PlayerGroupOnTheMap { get => _playerGroupOnTheMap; set => _playerGroupOnTheMap = value; }
+    public EnemyGroupsManager EnemyGroupsManager { get => _enemyGroupsManager; set => _enemyGroupsManager = value; }
+    internal GlobalSave GlobalSave { get => _globalSave;private set => _globalSave = value; }
 
     protected override void Awake()
     {
         base.Awake();
+
+
+
         if (Directory.Exists($"{Application.dataPath}/Save") == false)
         {
             Directory.CreateDirectory($"{Application.dataPath}/Save");
         }
+
         Saver<GlobalSave>.TryLoad(GlobalSaveName, ref _globalSave);
+
         if (_globalSave == null)
         {
             Debug.LogWarning($"_globalSave == null");
-            _globalSave = new GlobalSave();
-        }       
+            SettingsDataSave settingsData = new SettingsDataSave() { 
+
+                MasterVolume = _defaultSetting.MasterVolume,
+                MusicVolume = _defaultSetting.MusicVolume,
+                EffectVolume = _defaultSetting.EffectVolume,
+                EffectUIVolume = _defaultSetting.EffectUIVolume,
+
+                ScreenResolution = new Vector2(1920,1080)
+            };
+            
+            _globalSave = new GlobalSave(settingsData);
+        }    
+        
         //TEST
         Load();
 
     }
-    private void OnDestroy()
+    private void Update()
     {
-        Debug.Log("SaveGlabalData()");
-        SaveData();
+        //TEST
+        if(Input.GetKeyDown(KeyCode.F5))
+        {
+            Debug.Log("SaveGlabalData()");
+            SaveData();
+        }
+    }
+    private void OnDestroy()
+    {        
         SaveGlabalData();
     }
     private void Load()
@@ -94,7 +160,7 @@ public class SaveManager : SingletonBase<SaveManager>
         {
             _globalSave.NameSave.Add(SaveName);
         }
-        SavedData group = new(_groupGlobalMap.GetSaveGroup(), InventoryPlayer.GetInventoryData(), _playerGroupOnTheMap.GetSaveDataPlayerGroup(),_enemyGroupsManager.GetSaveDataEnemyGroups());
+        SavedData group = new(_groupGlobalMap.GetSaveGroup(), _inventoryPlayer.GetInventoryData(), _playerGroupOnTheMap.GetSaveDataPlayerGroup(),_enemyGroupsManager.GetSaveDataEnemyGroups());
 
         Saver<SavedData>.Save(SaveName, group);
     }
