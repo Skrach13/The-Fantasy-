@@ -8,4 +8,6 @@ public class SettingsData : SingletonBase<SettingsData>
     public float EffectUIVolume;
 
     public Vector2 ScreenResolution;
+
+    public int QualityIndex;
 }

@@ -14,7 +14,7 @@ public class VolumeSettings : ScriptableObject
     [Range(-80, 20)] public float MasterVolume;
     [Range(-80, 20)] public float MusicVolume;
     [Range(-80, 20)] public float EffectVolume;
-    [Range(-80, 20)] public float EffectUIVolume;
+    [Range(-80, 20)] public float EffectUIVolume;       
 }
 
 
