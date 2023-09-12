@@ -34,6 +34,8 @@ public class EnemyGroupsManager : MonoBehaviour
 
     private void Start()
     {
+        SaveManager.Instance.EnemyGroupsManager = this;
+
         if (SaveManager.Save != null)
         {
             foreach (var loadGroup in SaveManager.Save.EnemyGroups.groups)

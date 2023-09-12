@@ -16,11 +16,17 @@ public class PlayerGroupOnTheMap : GroupInMap
     private new void Start()
     {       
         base.Start();
+
+        SaveManager.Instance.PlayerGroupOnTheMap = this;
+        
         MoveInMap = GetComponent<MoveInMap>();
         _mapGraf.OnCellClicked += StartMove;
         _raycast.OnRaycastHit += CheckedAnotherGroup;
         transform.position = GlobalMapGraf.Instance.Cells[(int)MoveInMap.PositionInMap.x, (int)MoveInMap.PositionInMap.y].transform.position;
+
         //TODO TEST
+        
+
         if(SaveManager.Save != null)
         {
             transform.SetPositionAndRotation(SaveManager.Save.PlayerGroupOnTheMap.Position, SaveManager.Save.PlayerGroupOnTheMap.Rotation);
