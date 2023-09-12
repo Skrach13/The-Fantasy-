@@ -17,6 +17,8 @@ public class InventoryPlayerGroup : SingletonBase<InventoryPlayerGroup>
 
     private void Start()
     {
+        SaveManager.Instance.InventoryPlayer = this;
+
         if (SaveManager.Save != null)
         {
             _slotsItem = SaveManager.Save.InventoryPlayer.SlotsItem;
