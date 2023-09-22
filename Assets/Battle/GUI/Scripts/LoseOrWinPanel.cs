@@ -36,7 +36,15 @@ public class LoseOrWinPanel : MonoBehaviour
     public void FinishBattle()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(1);
+        if(EventSceneManager.Instance.GameEvent != null)
+        {
+            EventSceneManager.Instance.GameEvent.StartEvent();
+        }
+        else
+        {
+            SceneManager.LoadScene("GlobalMap");
+        }
+
     }
 
     public void UploadSave()

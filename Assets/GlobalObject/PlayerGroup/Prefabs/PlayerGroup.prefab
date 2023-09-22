@@ -42,14 +42,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 611715957780921513}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f48dbf95db0cfa45b3c7fae30fe0f4f, type: 3}
+  m_Script: {fileID: 11500000, guid: 88589e198e541f848a38917d9f1a8ac4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _doNotDestroyOnload: 1
+  _doNotDestroyOnload: 0
   _skillsTree: {fileID: 11400000, guid: ee0fca98129bcc2449d3911756d5da1d, type: 2}
   _personeAssets: {fileID: 11400000, guid: dfb449c79b0c93e4e807cb6f2514f5d0, type: 2}
   _statsUpExpiriensProperties: {fileID: 11400000, guid: 0cd87b28b066a8948861ad0fa97b1aae, type: 2}
-  _testName: Kitty
+  _testName: 
   _group: []
 --- !u!114 &611715957780921508
 MonoBehaviour:

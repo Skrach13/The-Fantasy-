@@ -23,7 +23,7 @@ public class MovePersone : MonoBehaviour
     public IEnumerator PersoneMove(List<CellInBattle> path, CellInBattle[,] cells)
     {
         MainBattleSystems.Instance._personeMove = true;
-
+        _persone.AnimationsManager.ChangedWalk(true);
         int step = 0;
         path[step].CloseCell = false;
         path[step].PersoneStayInCell = null;
@@ -34,6 +34,7 @@ public class MovePersone : MonoBehaviour
 
             if (step < path.Count && _persone.ActionPoints > 0)// не превышает ли количество шагов длину пути (вообще надо?да надо! зачем хз) и есть ли очки передвижения у персонажа
             {
+                    _persone.AnimationsManager.ChangeFlip(Vector3.Normalize( path[step].gameObject.transform.position - transform.position));
                 if (transform.position.x != path[step].transform.position.x ||
                     transform.position.y != path[step].transform.position.y)// проверка не вышли за пределы поля ( перестраховка?)
                 {
@@ -54,6 +55,7 @@ public class MovePersone : MonoBehaviour
                 MainBattleSystems.Instance._personeMove = false;// персонаж не движеться
                 step = 0;// сброс счетчика ходов
                 MainBattleSystems.Instance.Map.ResetStatsCellFields();
+                _persone.AnimationsManager.ChangedWalk(false);
                 yield break;
 
             }

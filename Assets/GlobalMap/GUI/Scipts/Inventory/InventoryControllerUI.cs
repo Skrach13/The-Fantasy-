@@ -19,13 +19,13 @@ public class InventoryControllerUI : MonoBehaviour
     private void SelectedPersone(string name)
     {
         _inventoryUI.AddItemsAndSlots();
-        _personePanel.UpddatePanel(GroupGlobalMap.Instance.GetPerosne(name));
+        _personePanel.UpddatePanel(PlayerGroupGlobal.Instance.GetPerosne(name));
         NameSelectedPersone = name;
     }
 
     private void OnEnable()
     {
-        NameSelectedPersone = GroupGlobalMap.Instance.Group[0].Name;
+        NameSelectedPersone = PlayerGroupGlobal.Instance.Group[0].Name;
         SelectedPersone(NameSelectedPersone);        
     }
 }

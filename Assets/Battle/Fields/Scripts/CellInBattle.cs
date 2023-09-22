@@ -22,7 +22,7 @@ public class CellInBattle : CellInBattleBase
     public event Action<CellInBattle> OnClickedCell;
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
     private void OnMouseEnter()
     {

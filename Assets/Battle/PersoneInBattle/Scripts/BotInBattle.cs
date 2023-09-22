@@ -32,6 +32,7 @@ internal class BotInBattle
                 if (enemy.ActionPoints >= 2)
                 {
                     enemy.Skills.TryGetValue(KeySkills.AttackMelle, out SkillBase skill);
+                    enemy.AnimationsManager.AttackAnimation();
                     enemy.ActionPoints -= 2;
                     (skill as SkillAttacking).UseSkill(target);
                 }

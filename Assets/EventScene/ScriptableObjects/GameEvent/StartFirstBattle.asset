@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1712a0b48531b0a46a6525e29c7e1114, type: 3}
+  m_Name: StartFirstBattle
+  m_EditorClassIdentifier: 
+  _enemys:
+  - {fileID: 11400000, guid: 4b339f05c7564244380b868ce2cb80c7, type: 2}
+  - {fileID: 11400000, guid: 744edf9db3a36a1459637cfd298cd9e3, type: 2}
+  _gameEvent: {fileID: 11400000, guid: 76e9a255412b97048b24643ab22b3d73, type: 2}

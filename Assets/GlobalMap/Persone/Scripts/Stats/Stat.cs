@@ -28,7 +28,7 @@ public class Stat
                 Value++;
             }
             _upExperience = _upExperience - _neededExperience;
-            NeededExperience = GroupGlobalMap.Instance.StatsUpExpiriensProperties.UpExpiriensStat[Value];
+            NeededExperience = PlayerGroupGlobal.Instance.StatsUpExpiriensProperties.UpExpiriensStat[Value];
         }
     }
     public int NeededExperience { get => _neededExperience; set => _neededExperience = value; }
