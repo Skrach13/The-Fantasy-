@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyClass: 0
   _race: 2
-  _sprite: {fileID: 21300000, guid: 5d52b20f865aff242bfcb08c3b6f61a5, type: 3}
+  _sprite: {fileID: 21300000, guid: 6f446e14cac615e4e962ca71fbe4897a, type: 3}
   Stats:
   - Name: 
     Stats: 0
@@ -44,6 +44,6 @@ MonoBehaviour:
     Stats: 6
     Value: 0
     _upExperience: 0
-  Icon: {fileID: 21300000, guid: 064087ffd3c6130499c37096c7ada263, type: 3}
+  Icon: {fileID: 21300000, guid: 5824e17af5570864bb38f9f75ed7fc47, type: 3}
   AnimatorController: {fileID: 9100000, guid: 59a38f5c8b4beb54889478ce8cbe05d1, type: 2}
   _skillAttack: {fileID: 11400000, guid: 9466d1ccb385c7d458946f3300951df5, type: 2}

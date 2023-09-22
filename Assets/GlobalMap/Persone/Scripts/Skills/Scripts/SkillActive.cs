@@ -5,6 +5,7 @@ public class SkillActive : SkillBase
 {
     [SerializeField] protected int _cooldown;
     [SerializeField] protected int _rangeSkill;
+    public int CostUse;
     public int Cooldown { get => _cooldown; set => _cooldown = value; }
     public int RangeSkill { get => _rangeSkill; set => _rangeSkill = value; }
 

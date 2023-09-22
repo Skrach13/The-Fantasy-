@@ -11,6 +11,10 @@ internal class BotInBattle
         //определить нет ли персонажа игрока в радиусе атаки
         List<PersoneInBattle> maybeTarget = null;
         PersoneInBattle target = null;
+
+        //TEST TODO 
+        enemy.Skills.TryGetValue(KeySkills.AttackMelle, out SkillBase skill);
+        //
         while (enemy.ActionPoints > 0)
         {
             MainBattleSystems.Instance.Map.ResetStatsCellFields();
@@ -29,11 +33,11 @@ internal class BotInBattle
                     }
                     Debug.Log($" возможная цель {playerPersone.BattlePosition} позиция ИИ {enemy.BattlePosition}");
                 }
-                if (enemy.ActionPoints >= 2)
-                {
-                    enemy.Skills.TryGetValue(KeySkills.AttackMelle, out SkillBase skill);
+                if (enemy.ActionPoints >= (skill as SkillAttacking).CostUse)
+                {                   
                     enemy.AnimationsManager.AttackAnimation();
-                    enemy.ActionPoints -= 2;
+                    enemy.SoundManager.PlaySoundClip(1);
+                    enemy.ActionPoints -= (skill as SkillAttacking).CostUse;
                     (skill as SkillAttacking).UseSkill(target);
                 }
                 else
