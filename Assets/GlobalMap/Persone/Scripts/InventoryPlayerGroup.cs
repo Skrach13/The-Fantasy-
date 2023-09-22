@@ -21,7 +21,10 @@ public class InventoryPlayerGroup : SingletonBase<InventoryPlayerGroup>
 
         if (SaveManager.Save != null)
         {
-            _slotsItem = SaveManager.Save.InventoryPlayer.SlotsItem;
+            if (SaveManager.Save.InventoryPlayer != null)
+            {
+                _slotsItem = SaveManager.Save.InventoryPlayer.SlotsItem;
+            }
         }
 
         SlotsItem ??= new List<SlotItem>();

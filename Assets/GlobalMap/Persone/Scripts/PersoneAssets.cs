@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using UnityEditor.Animations;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Persone", menuName = "Persone/Persone", order = 1)]
@@ -11,6 +12,7 @@ public class PersoneAssets : ScriptableObject
         public string Name = "NoneName";
         public Sprite IconInBattle;
         public Sprite Sprite;
+        public AnimatorController AnimatorController;
         public Race Race;
         public StatValue[] Stats;       
         [TextArea(order = 8)] public string Description;

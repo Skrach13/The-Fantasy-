@@ -12,5 +12,6 @@ public class SceneFrame
 [CreateAssetMenu (fileName = "Scenario",menuName = "EventScene/Scenario")]
 public class ScenarioEventScene : ScriptableObject
 {
-    public SceneFrame[] Scenes;    
+    public SceneFrame[] Scenes;
+    public GameEvent[] GameEvent;
 }

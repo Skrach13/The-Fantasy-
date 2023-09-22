@@ -147,6 +147,7 @@ public class MainBattleSystems : SingletonBase<MainBattleSystems>
     {           
         if (!_personeMove && ActionTypePersone == ActionType.Attack)
         {
+            ActivePersone.AnimationsManager.AttackAnimation();
             _skill.UseSkill(persone);
         }
         else if(!_personeMove && ActionTypePersone == ActionType.Move)

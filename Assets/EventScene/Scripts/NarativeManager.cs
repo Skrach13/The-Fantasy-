@@ -10,15 +10,19 @@ public class NarativeManager : MonoBehaviour
     private int _indexSpriteFrame = 0;
     private int _indexTextFrame = 0;
 
+    private void Start()
+    {
+        _scenario = EventSceneManager.Instance.ScenarioEventScene;
+        NextSpriteFrame();
+        NextTextFrame();
+    }
+
     private void Update()
     {
         if (Input.anyKeyDown)
-        {
-            Debug.Log($"_indexScene = {_indexScene} _scenario.Scenes.Length = {_scenario.Scenes.Length}");
+        {          
             if (_indexScene < _scenario.Scenes.Length)
-            {
-                Debug.Log($"_indexTextFrame = {_indexScene} _scenario.Scenes[_indexScene].Text.Length = {_scenario.Scenes[_indexScene].Text.Length}");
-                Debug.Log($"_indexSpriteFrame = {_indexSpriteFrame} _scenario.Scenes[_indexScene].Sprites.Length = {_scenario.Scenes[_indexScene].Sprites.Length}");
+            {               
                 if (_indexTextFrame < _scenario.Scenes[_indexScene].Text.Length || _indexSpriteFrame < _scenario.Scenes[_indexScene].Sprites.Length)
                 {
                     NextSpriteFrame();
@@ -33,6 +37,13 @@ public class NarativeManager : MonoBehaviour
                         NextSpriteFrame();
                         NextTextFrame();
                     }
+                }
+            }
+            else
+            {
+                for(int i = 0; i < _scenario.GameEvent.Length;i++)
+                {
+                    _scenario.GameEvent[i].StartEvent();
                 }
             }
         }

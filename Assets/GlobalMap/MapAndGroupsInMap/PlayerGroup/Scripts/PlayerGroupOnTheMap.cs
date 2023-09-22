@@ -25,13 +25,13 @@ public class PlayerGroupOnTheMap : GroupInMap
         transform.position = GlobalMapGraf.Instance.Cells[(int)MoveInMap.PositionInMap.x, (int)MoveInMap.PositionInMap.y].transform.position;
 
         //TODO TEST
-        
 
-        if(SaveManager.Save != null)
-        {
-            transform.SetPositionAndRotation(SaveManager.Save.PlayerGroupOnTheMap.Position, SaveManager.Save.PlayerGroupOnTheMap.Rotation);
-            MoveInMap.PositionInMap = SaveManager.Save.PlayerGroupOnTheMap.PositionInGraff;
-        }
+        if (SaveManager.Save != null) {
+            if (SaveManager.Save.PlayerGroupOnTheMap != null)
+            {
+                transform.SetPositionAndRotation(SaveManager.Save.PlayerGroupOnTheMap.Position, SaveManager.Save.PlayerGroupOnTheMap.Rotation);
+                MoveInMap.PositionInMap = SaveManager.Save.PlayerGroupOnTheMap.PositionInGraff;
+            } }
     }
     private void OnDestroy()
     {

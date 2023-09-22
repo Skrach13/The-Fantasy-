@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 [Serializable]
@@ -24,6 +25,8 @@ public class PlayerPersone : BasePersone
     #endregion
 
     [SerializeField] private Dictionary<KeySkills, SkillBase> _skills = new();
+    internal AnimatorController AnimationsInBattle;
+
     public Dictionary<KeySkills, SkillBase> Skills { get => _skills; private set => _skills = value; }
     public Sprite Sprite { get => _sprite; set => _sprite = value; }
 
@@ -54,11 +57,12 @@ public class PlayerPersone : BasePersone
             p.Stats[i].Value = assets.Persones[index].Stats[i].Value;
             if (p.Stats[i].Stats != EStats.MaxHealth)
             {
-                p.Stats[i].NeededExperience = GroupGlobalMap.Instance.StatsUpExpiriensProperties.UpExpiriensStat[p.Stats[i].Value];
+                p.Stats[i].NeededExperience = PlayerGroupGlobal.Instance.StatsUpExpiriensProperties.UpExpiriensStat[p.Stats[i].Value];
             }
         }
         p.Icon = assets.Persones[index].IconInBattle;
         p.Sprite = assets.Persones[index].Sprite;
+        p.AnimationsInBattle = assets.Persones[index].AnimatorController;
         p.Description = assets.Persones[index].Description;
         return p;
     }

@@ -25,9 +25,9 @@ public class PersoneGroupsManager : MonoBehaviour
     {
         _battleSystems = GetComponent<MainBattleSystems>();
 
-        for (int i = 0; i < GroupGlobalMap.Instance.Group.Count; i++)
+        for (int i = 0; i < PlayerGroupGlobal.Instance.Group.Count; i++)
         {
-            var playerPersone = CreatPlayerPersone(GroupGlobalMap.Instance.Group[i]);
+            var playerPersone = CreatPlayerPersone(PlayerGroupGlobal.Instance.Group[i]);
             SetPositionPersone(_positionsPlayer[i], _battleSystems.Cells, playerPersone);
             MassivePersoneInBattle.Add(playerPersone);
         }
@@ -68,12 +68,14 @@ public class PersoneGroupsManager : MonoBehaviour
         playerPersone.Skills = propertiesPlayer.Skills;
         playerPersone.NamePersone = propertiesPlayer.Name;
         playerPersone.MaxHealthPoints = propertiesPlayer.Stats[0].Value;
+        playerPersone.Animator.runtimeAnimatorController = propertiesPlayer.AnimationsInBattle;
 
         playerPersone.ActionPointsMax = propertiesPlayer.Stats[2].Value * 5;
         playerPersone.Iniciative = (int)(propertiesPlayer.Stats[2].Value * 1.5f);
 
         playerPersone.Icon = propertiesPlayer.Icon;
         playerPersone.SpriteRenderer.sprite = playerPersone.Icon;
+        playerPersone.Sprite = propertiesPlayer.Sprite;
 
         playerPersone.HealthPoint = playerPersone.MaxHealthPoints;
 
@@ -92,6 +94,7 @@ public class PersoneGroupsManager : MonoBehaviour
 
         enemy.Icon = properties.Icon;
         enemy.SpriteRenderer.sprite = properties.Icon;
+        enemy.Animator.runtimeAnimatorController = properties.AnimatorController;
 
         enemy.HealthPoint = properties.Stats[0].Value;
 

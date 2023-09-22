@@ -37,7 +37,7 @@ public class PersonePanelInBattleUI : MonoBehaviour
             _currentPersone.ResetEventListner();
         }        
         _currentPersone = persone;        
-        _personeImage.sprite = persone.Icon;
+        _personeImage.sprite = persone.Sprite;
         _progressBarHP.UpdateProgressBar(persone.MaxHealthPoints, persone.HealthPoint);
         _textBarHP.text = $"{persone.HealthPoint} / {persone.MaxHealthPoints}";
         _progressBarActionPoints.UpdateProgressBar(persone.ActionPointsMax, persone.ActionPoints);

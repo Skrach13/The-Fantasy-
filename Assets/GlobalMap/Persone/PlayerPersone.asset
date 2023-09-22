@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _persones:
   - Name: Player
-    IconInBattle: {fileID: 21300000, guid: 064087ffd3c6130499c37096c7ada263, type: 3}
-    Sprite: {fileID: 21300000, guid: 6801082e5e0b8924e91bc41b38fe8e43, type: 3}
+    IconInBattle: {fileID: 21300000, guid: fb60f42f9e210744ebd06c69314314f5, type: 3}
+    Sprite: {fileID: 21300000, guid: c4792e5e4a483254fb18cc5ef5f33f6d, type: 3}
+    AnimatorController: {fileID: 9100000, guid: 9a34770d3dcba2a4584a47dd166edd82, type: 2}
     Race: 0
     Stats:
     - Stat: 0
@@ -34,8 +35,9 @@ MonoBehaviour:
       Value: 1
     Description: Player is player
   - Name: Kitty
-    IconInBattle: {fileID: 21300000, guid: 064087ffd3c6130499c37096c7ada263, type: 3}
-    Sprite: {fileID: 21300000, guid: 6801082e5e0b8924e91bc41b38fe8e43, type: 3}
+    IconInBattle: {fileID: 21300000, guid: afb1562efb80268488f10b30841ee0dd, type: 3}
+    Sprite: {fileID: 21300000, guid: 1b2ad3960bacffa4994b650cbb98710a, type: 3}
+    AnimatorController: {fileID: 9100000, guid: 87621aceffb918444889d51e210f8f99, type: 2}
     Race: 1
     Stats:
     - Stat: 0
@@ -54,8 +56,9 @@ MonoBehaviour:
       Value: 2
     Description: Fool cat
   - Name: Molly
-    IconInBattle: {fileID: 21300000, guid: 064087ffd3c6130499c37096c7ada263, type: 3}
-    Sprite: {fileID: 21300000, guid: 6801082e5e0b8924e91bc41b38fe8e43, type: 3}
+    IconInBattle: {fileID: 21300000, guid: 4d3bdcc473c9a9e409d949ea28a0bada, type: 3}
+    Sprite: {fileID: 21300000, guid: e53f435e6f19d804482d9b02faf615b4, type: 3}
+    AnimatorController: {fileID: 9100000, guid: dc6688f4d8ffe2c44b16ecc9bf9aeb3f, type: 2}
     Race: 1
     Stats:
     - Stat: 0

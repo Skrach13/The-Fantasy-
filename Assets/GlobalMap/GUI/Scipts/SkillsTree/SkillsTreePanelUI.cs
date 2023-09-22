@@ -17,7 +17,7 @@ public class SkillsTreePanelUI : MonoBehaviour
 
     public void ShowSkillsTreePersone(string name,int levelStat)
     {
-        var persone = GroupGlobalMap.Instance.GetPerosne(name);
+        var persone = PlayerGroupGlobal.Instance.GetPerosne(name);
         
 
         for (int i = 0; i < _buttonSkillsUI.Count; i++)
