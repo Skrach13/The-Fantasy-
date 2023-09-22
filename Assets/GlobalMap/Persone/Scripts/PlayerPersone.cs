@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 
 [Serializable]
@@ -25,7 +24,7 @@ public class PlayerPersone : BasePersone
     #endregion
 
     [SerializeField] private Dictionary<KeySkills, SkillBase> _skills = new();
-    internal AnimatorController AnimationsInBattle;
+    internal RuntimeAnimatorController AnimationsInBattle;
 
     public Dictionary<KeySkills, SkillBase> Skills { get => _skills; private set => _skills = value; }
     public Sprite Sprite { get => _sprite; set => _sprite = value; }

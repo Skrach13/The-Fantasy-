@@ -24,6 +24,8 @@ public class MovePersone : MonoBehaviour
     {
         MainBattleSystems.Instance._personeMove = true;
         _persone.AnimationsManager.ChangedWalk(true);
+        _persone.SoundManager.PlaySoundClip(0);
+
         int step = 0;
         path[step].CloseCell = false;
         path[step].PersoneStayInCell = null;
@@ -56,6 +58,7 @@ public class MovePersone : MonoBehaviour
                 step = 0;// сброс счетчика ходов
                 MainBattleSystems.Instance.Map.ResetStatsCellFields();
                 _persone.AnimationsManager.ChangedWalk(false);
+                _persone.SoundManager.StopAudioClip();
                 yield break;
 
             }

@@ -4,19 +4,20 @@ public class AnimationsManagerPersoneInBattle : MonoBehaviour
 {
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
+
     void Start()
     {
-        _animator = GetComponent<PersoneInBattle>().Animator;        
-        _spriteRenderer = GetComponent<PersoneInBattle>().SpriteRenderer;        
+        _animator = GetComponent<PersoneInBattle>().Animator;
+        _spriteRenderer = GetComponent<PersoneInBattle>().SpriteRenderer;
     }
-    
+
     public void ChangeFlip(Vector3 vector)
     {
-        if(vector.x < 0)
+        if (vector.x < 0)
         {
             _spriteRenderer.flipX = true;
         }
-        else if(vector.x > 0)
+        else if (vector.x > 0)
         {
             _spriteRenderer.flipX = false;
         }
@@ -24,7 +25,7 @@ public class AnimationsManagerPersoneInBattle : MonoBehaviour
 
     public void ChangedWalk(bool isWalk)
     {
-            _animator.SetBool("Walk", isWalk);
+        _animator.SetBool("Walk", isWalk);
     }
 
     public void AttackAnimation()

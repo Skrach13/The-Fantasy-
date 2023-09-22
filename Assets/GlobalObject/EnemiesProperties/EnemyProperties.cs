@@ -1,4 +1,3 @@
-using UnityEditor.Animations;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EnemiesProperties", menuName = "Enemies/EnemyProperties")]
@@ -15,7 +14,7 @@ public class EnemyProperties : ScriptableObject
     [SerializeField] private Sprite _sprite;
     public Stat[] Stats;    
     public Sprite Icon;
-    public AnimatorController AnimatorController;
+    public RuntimeAnimatorController AnimatorController;
     //TODO
     [SerializeField] private SkillBase _skillAttack;
     public SkillBase SkillAttack { get => _skillAttack; set => _skillAttack = value; }

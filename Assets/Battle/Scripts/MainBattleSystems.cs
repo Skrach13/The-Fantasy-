@@ -144,11 +144,15 @@ public class MainBattleSystems : SingletonBase<MainBattleSystems>
         }
     }
     public void OnPersoneCkliked(PersoneInBattle persone)
-    {           
+    {
         if (!_personeMove && ActionTypePersone == ActionType.Attack)
         {
+            if (_skill.CostUse <= ActivePersone.ActionPoints) { 
             ActivePersone.AnimationsManager.AttackAnimation();
+            ActivePersone.SoundManager.PlaySoundClip(1);
             _skill.UseSkill(persone);
+            ActivePersone.ActionPoints -= _skill.CostUse;
+            }
         }
         else if(!_personeMove && ActionTypePersone == ActionType.Move)
         {

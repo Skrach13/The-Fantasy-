@@ -15,5 +15,4 @@ MonoBehaviour:
   _enemys:
   - {fileID: 11400000, guid: 4b339f05c7564244380b868ce2cb80c7, type: 2}
   - {fileID: 11400000, guid: 744edf9db3a36a1459637cfd298cd9e3, type: 2}
-  - {fileID: 11400000, guid: 744edf9db3a36a1459637cfd298cd9e3, type: 2}
   _gameEvent: {fileID: 11400000, guid: 8a9d644272a539d4b949cb3cd3340c15, type: 2}

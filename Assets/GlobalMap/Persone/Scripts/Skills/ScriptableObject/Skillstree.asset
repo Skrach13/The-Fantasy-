@@ -16,4 +16,4 @@ MonoBehaviour:
   - key: 0
     skill: {fileID: 11400000, guid: 9466d1ccb385c7d458946f3300951df5, type: 2}
   - key: 1
-    skill: {fileID: 11400000, guid: 2ab8318abcd114e4da5322e6829451f1, type: 2}
+    skill: {fileID: 11400000, guid: ad9ef364d683f5d4480ab242cf38632a, type: 2}
