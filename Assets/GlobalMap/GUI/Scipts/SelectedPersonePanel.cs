@@ -28,12 +28,12 @@ public class SelectedPersonePanel : MonoBehaviour
     /// </summary>
     private void CreateButtomSelectedPersone()
     {
-        for (int i = 0; i < GroupGlobalMap.Instance.Group.Count; i++)
+        for (int i = 0; i < PlayerGroupGlobal.Instance.Group.Count; i++)
         {
             ButtonSelectedPerson newButton = Instantiate(_buttonPrefab, transform);
             newButton.OnSelectedPerson += VisualStatsPersone;
 
-            newButton.GetComponentInChildren<TextMeshProUGUI>().text = GroupGlobalMap.Instance.Group[i].Name;
+            newButton.GetComponentInChildren<TextMeshProUGUI>().text = PlayerGroupGlobal.Instance.Group[i].Name;
             _selectedButtons.Add(newButton);
         }
     }

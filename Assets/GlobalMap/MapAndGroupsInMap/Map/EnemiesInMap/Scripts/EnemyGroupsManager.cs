@@ -35,19 +35,22 @@ public class EnemyGroupsManager : MonoBehaviour
     private void Start()
     {
         SaveManager.Instance.EnemyGroupsManager = this;
-
         if (SaveManager.Save != null)
         {
-            foreach (var loadGroup in SaveManager.Save.EnemyGroups.groups)
+            if (SaveManager.Save.EnemyGroups != null)
             {
-                var newGroup = Instantiate(_prefabEnemiesGroup, this.transform);
-                newGroup.transform.SetPositionAndRotation(loadGroup.Position, loadGroup.Rotation);
-                newGroup.PositionInMap = loadGroup.PositionInMap;
-                newGroup.Enemies = loadGroup.EnemysProperties;
-                newGroup.RandomGrafWalk = loadGroup.RandomGrafWalk;
-                newGroup.CountRangeWalk = loadGroup.CountRangeWalk;
+                foreach (var loadGroup in SaveManager.Save.EnemyGroups.groups)
+                {
+                    var newGroup = Instantiate(_prefabEnemiesGroup, this.transform);
+                    newGroup.transform.SetPositionAndRotation(loadGroup.Position, loadGroup.Rotation);
+                    newGroup.PositionInMap = loadGroup.PositionInMap;
+                    newGroup.Enemies = loadGroup.EnemysProperties;
+                    newGroup.RandomGrafWalk = loadGroup.RandomGrafWalk;
+                    newGroup.CountRangeWalk = loadGroup.CountRangeWalk;
+                }
             }
         }
+
         if(_test)
         {
             var newGroup = Instantiate(_prefabEnemiesGroup, this.transform);

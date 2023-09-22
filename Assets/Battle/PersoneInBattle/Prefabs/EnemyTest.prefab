@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9028757017270417284}
   - component: {fileID: 7769981331803726096}
   - component: {fileID: -4460952504652839619}
+  - component: {fileID: 8011472177352132909}
   m_Layer: 0
   m_Name: EnemyTest
   m_TagString: Untagged
@@ -64,6 +65,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 2735425146225335613}
+  AnimationsManager: {fileID: 8011472177352132909}
+  Animator: {fileID: 5055013136501441442}
   NamePersone: 
   MaxHealthPoints: 0
   ActionPointsMax: 0
@@ -85,6 +88,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speedMove: 3
+--- !u!114 &8011472177352132909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3689910308015888220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adde1416bc21ad242bcdfa5003063f7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5923491922320127651
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,6 +110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 46974654457019498}
   - component: {fileID: 2735425146225335613}
+  - component: {fileID: 5055013136501441442}
   m_Layer: 0
   m_Name: VisualModel
   m_TagString: Untagged
@@ -158,14 +174,34 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.990566, g: 0.1728818, b: 0.1728818, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 8ca29ba3c1ffe7943a293b21df0fe0bf, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_DrawMode: 1
+  m_Size: {x: 3.2, y: 1.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &5055013136501441442
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5923491922320127651}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e9780f5b5e24ab44d82c625fb5e2c4d2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using static EnumInBattle;
 
@@ -9,7 +10,9 @@ using static EnumInBattle;
 public abstract class PersoneInBattle : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    public AnimationsManagerPersoneInBattle AnimationsManager;
     public Dictionary<KeySkills, SkillBase> Skills;
+    public Animator Animator;
     public string NamePersone;
     public int MaxHealthPoints;
     private int _healthPoint;
@@ -21,6 +24,7 @@ public abstract class PersoneInBattle : MonoBehaviour
     public Vector2 BattlePosition;
 
     public Sprite Icon;
+    public Sprite Sprite;
 
     private MovePersone _move;
 
@@ -38,12 +42,20 @@ public abstract class PersoneInBattle : MonoBehaviour
         get => _healthPoint;
         set
         {
+            if (_healthPoint != 0)
+            {
+                AnimationsManager.HitAnimation();
+            }
             _healthPoint = value;
             if (_healthPoint <= 0)
             {
                 _healthPoint = 0;
+                if (AnimationsManager != null)
+                {
+                    AnimationsManager.DeadAnimation();
+                }
                 Lose();
-            }            
+            }           
             ChangeHealth?.Invoke(MaxHealthPoints, _healthPoint);
         }
     }
