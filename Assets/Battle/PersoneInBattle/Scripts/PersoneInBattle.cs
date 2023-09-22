@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 using static EnumInBattle;
 
@@ -13,6 +12,7 @@ public abstract class PersoneInBattle : MonoBehaviour
     public AnimationsManagerPersoneInBattle AnimationsManager;
     public Dictionary<KeySkills, SkillBase> Skills;
     public Animator Animator;
+    public SoundManagerPersone SoundManager;
     public string NamePersone;
     public int MaxHealthPoints;
     private int _healthPoint;
@@ -55,7 +55,7 @@ public abstract class PersoneInBattle : MonoBehaviour
                     AnimationsManager.DeadAnimation();
                 }
                 Lose();
-            }           
+            }
             ChangeHealth?.Invoke(MaxHealthPoints, _healthPoint);
         }
     }
