@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static EnumInBattle;
 
@@ -127,7 +128,7 @@ public class MainBattleSystems : SingletonBase<MainBattleSystems>
     {
         if (!_personeMove && (ActionTypePersone == 0))
         {
-            var neighbortPosition = DefiningArea.NeighborCellToAttack(Cells, ActivePersone, persone, (SkillActive)ActivePersone.Skills.GetValueOrDefault(KeySkills.AttackMelle));
+            var neighbortPosition = DefiningArea.NeighborCellToAttack(Cells, ActivePersone, persone, (SkillActive)ActivePersone.Skills.First( skill => skill.KeySkill == KeySkills.AttackMelle));
             _path = Map.GetPathVector(ActivePersone.BattlePosition, neighbortPosition.PositionInGraff);
             PathFinderInBattle.PaintPath(_path, Cells, ColorsCell.PaintPath);
         }
@@ -157,7 +158,7 @@ public class MainBattleSystems : SingletonBase<MainBattleSystems>
         else if(!_personeMove && ActionTypePersone == ActionType.Move)
         {
             Map.ResetStatsCellFields();
-            var neighbortPosition = DefiningArea.NeighborCellToAttack(Cells, ActivePersone, persone, (SkillActive)ActivePersone.Skills.GetValueOrDefault(KeySkills.AttackMelle));
+            var neighbortPosition = DefiningArea.NeighborCellToAttack(Cells, ActivePersone, persone, (SkillActive)ActivePersone.Skills.First(skill => skill.KeySkill == KeySkills.AttackMelle));
             StartMove(Map.GetCellsInPath(ActivePersone.BattlePosition, neighbortPosition.PositionInGraff));
         }
     }
