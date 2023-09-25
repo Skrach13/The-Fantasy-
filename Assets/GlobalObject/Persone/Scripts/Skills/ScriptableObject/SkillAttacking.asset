@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _keySkill: 0
   _actionType: 0
-  _name: AttackSword
+  _name: AttackMelle
   icon: {fileID: 21300000, guid: d23ed12ea9f02784fb47d640a5a01b63, type: 3}
   description: 
   _cooldown: 0
