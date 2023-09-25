@@ -10,7 +10,7 @@ public abstract class PersoneInBattle : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
     public AnimationsManagerPersoneInBattle AnimationsManager;
-    public Dictionary<KeySkills, SkillBase> Skills;
+    public List<SkillBase> Skills;
     public Animator Animator;
     public SoundManagerPersone SoundManager;
     public string NamePersone;

@@ -100,8 +100,10 @@ public class PersoneGroupsManager : MonoBehaviour
 
         enemy.ActionPoints = enemy.ActionPointsMax;
         //TODO
-        enemy.Skills = new Dictionary<KeySkills, SkillBase>();
-        enemy.Skills.Add(KeySkills.AttackMelle, properties.SkillAttack);
+        enemy.Skills = new List<SkillBase>
+        {
+            properties.SkillAttack
+        };
         //
 
         return enemy;

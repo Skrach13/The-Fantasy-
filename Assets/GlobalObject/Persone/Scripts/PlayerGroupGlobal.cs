@@ -53,14 +53,14 @@ public class PlayerGroupGlobal : SingletonBase<PlayerGroupGlobal>
         Group.Add(PlayerPersone.CreatePersone(_personeAssets, indexPersone));
 
         //TEST
-        _group[indexPersone].Skills.Add(KeySkills.AttackMelle, _skillsTree.GetSkill(0));
+        _group[indexPersone].Skills.Add(_skillsTree.GetSkill(0));
     }
 
     public void AddSkillPersone(string name, KeySkills keySkills)
     {
         if (GetPerosne(name).TrySkill(keySkills) == false)
         {
-             GetPerosne(name).Skills.Add(keySkills,_skillsTree.GetSkill(keySkills));
+             GetPerosne(name).Skills.Add(_skillsTree.GetSkill(keySkills));
         }
         else
         {
