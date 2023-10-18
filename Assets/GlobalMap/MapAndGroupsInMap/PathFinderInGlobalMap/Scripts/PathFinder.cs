@@ -1,4 +1,3 @@
-using Mono.Collections.Generic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -110,8 +109,8 @@ public class PathFinder : MonoBehaviour
     {
         // Ўаг 1.—оздаетс€ 2 списка вершин Ч ожидающие рассмотрени€ и уже рассмотренные.
         //       ¬ ожидающие добавл€етс€ точка старта, список рассмотренных пока пуст. 
-        var closedSet = new Collection<PathNode>();
-        var openSet = new Collection<PathNode>();
+        var closedSet = new List<PathNode>();
+        var openSet = new List<PathNode>();
 
         // Ўаг 2.создание стартовой точки/ определение стартовой точки
         PathNode startNode = new PathNode()
@@ -164,10 +163,10 @@ public class PathFinder : MonoBehaviour
     /// <param name="goal"></param>
     /// <param name="field"></param>
     /// <returns></returns>
-    private static Collection<PathNode> GetNeighbours(PathNode pathNode,
+    private static List<PathNode> GetNeighbours(PathNode pathNode,
          Vector2 goal, CellBase[,] field)
     {
-        var result = new Collection<PathNode>();
+        var result = new List<PathNode>();
 
         // —оседними точками €вл€ютс€ соседние по стороне клетки.
         Vector2[] neighbourPoints = new Vector2[6];
