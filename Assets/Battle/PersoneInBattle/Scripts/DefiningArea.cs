@@ -1,5 +1,8 @@
+using Mono.Collections.Generic;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using static EnumInBattle;
 
@@ -49,7 +52,7 @@ public class DefiningArea : MonoBehaviour
         fields[(int)vector.x, (int)vector.y].AttackRange = skill.RangeSkill;// присваивание €чейки где стоит атакующей дистанции оружи€ дл€ закрытие €чейки
         //колекци€ €чеек попадающих в дистанцую атаки
         List<CellInBattle> fistCollection = GetNeighboursCell((fields[(int)attacking.BattlePosition.x, (int)attacking.BattlePosition.y]), fields, counAtattackRange); ;
-        List<CellInBattle> secondCollection = new List<CellInBattle>();
+        Collection<CellInBattle> secondCollection = new Collection<CellInBattle>();
         counAtattackRange++;
         while (counAtattackRange <= skill.RangeSkill)
         {
