@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using static EnumInBattle;
 
@@ -14,7 +13,7 @@ internal class BotInBattle
         PersoneInBattle target = null;
 
         //TEST TODO 
-        var skill = enemy.Skills.First(skills => skills.KeySkill == KeySkills.AttackMelle);
+        var skill = enemy.Skills[0];
         //
         while (enemy.ActionPoints > 0)
         {

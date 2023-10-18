@@ -48,7 +48,7 @@ public class MainBattleSystems : SingletonBase<MainBattleSystems>
     {
         _groupsManager = GetComponent<PersoneGroupsManager>();
         InitiativeManager = GetComponent<InitiativeManager>();
-        _panelSkillsUI.OnClickButtonActive += changeAttack;
+        _panelSkillsUI.OnClickButtonActive += ChangeAttack;
         Map.OnEnterClell += EnterMouseInCell;
         Map.OnExitCell += ExitMouseInCell;
         Map.OnCellClicked += OnAction;
@@ -59,7 +59,7 @@ public class MainBattleSystems : SingletonBase<MainBattleSystems>
     }
     private void OnDestroy()
     {
-        _panelSkillsUI.OnClickButtonActive -= changeAttack;
+        _panelSkillsUI.OnClickButtonActive -= ChangeAttack;
         Map.OnEnterClell -= EnterMouseInCell;
         Map.OnExitCell -= ExitMouseInCell;
         Map.OnCellClicked -= OnAction;
@@ -109,7 +109,7 @@ public class MainBattleSystems : SingletonBase<MainBattleSystems>
         StartCoroutine(ActivePersone.Move.PersoneMove(path, Cells));
     }
 
-    public void changeAttack(SkillActive skill)
+    public void ChangeAttack(SkillActive skill)
     {
         if (!(ActionTypePersone == ActionType.Attack))
         {
