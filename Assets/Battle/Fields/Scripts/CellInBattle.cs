@@ -31,7 +31,8 @@ public class CellInBattle : CellInBattleBase
 
     private void OnMouseExit()
     {
-        OnCellExit?.Invoke(this);
+        OnCellExit?.Invoke(this);  
+
     }
     private void OnMouseDown()
     {
