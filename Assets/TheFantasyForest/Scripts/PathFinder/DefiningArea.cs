@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -9,16 +9,16 @@ using static EnumInBattle;
 public class DefiningArea : MonoBehaviour
 {
     /// <summary>
-    /// подкрашевание ячеек в радиусе атаки и подкраска ячеек красным цветом на которых стоит персонаж в радиусе атаки
+    /// РїРѕРґРєСЂР°С€РµРІР°РЅРёРµ СЏС‡РµРµРє РІ СЂР°РґРёСѓСЃРµ Р°С‚Р°РєРё Рё РїРѕРґРєСЂР°СЃРєР° СЏС‡РµРµРє РєСЂР°СЃРЅС‹Рј С†РІРµС‚РѕРј РЅР° РєРѕС‚РѕСЂС‹С… СЃС‚РѕРёС‚ РїРµСЂСЃРѕРЅР°Р¶ РІ СЂР°РґРёСѓСЃРµ Р°С‚Р°РєРё
     /// </summary>
     /// <param name="fields"></param>
     /// <param name="attacking"></param>
     public static void DefiningScope(CellInBattle[,] fields, PersoneInBattle attacking,int radius)
     {
-        Vector2 vector = attacking.BattlePosition;//позиция атакующего
-        int counAtattackRange = 1;// счетчик дистанции атаки оружия
-        fields[(int)vector.x, (int)vector.y].AttackRange = radius;// присваивание ячейки где стоит атакующей дистанции оружия для закрытие ячейки
-        //колекция ячеек попадающих в дистанцую атаки
+        Vector2 vector = attacking.BattlePosition;//РїРѕР·РёС†РёСЏ Р°С‚Р°РєСѓСЋС‰РµРіРѕ
+        int counAtattackRange = 1;// СЃС‡РµС‚С‡РёРє РґРёСЃС‚Р°РЅС†РёРё Р°С‚Р°РєРё РѕСЂСѓР¶РёСЏ
+        fields[(int)vector.x, (int)vector.y].AttackRange = radius;// РїСЂРёСЃРІР°РёРІР°РЅРёРµ СЏС‡РµР№РєРё РіРґРµ СЃС‚РѕРёС‚ Р°С‚Р°РєСѓСЋС‰РµР№ РґРёСЃС‚Р°РЅС†РёРё РѕСЂСѓР¶РёСЏ РґР»СЏ Р·Р°РєСЂС‹С‚РёРµ СЏС‡РµР№РєРё
+        //РєРѕР»РµРєС†РёСЏ СЏС‡РµРµРє РїРѕРїР°РґР°СЋС‰РёС… РІ РґРёСЃС‚Р°РЅС†СѓСЋ Р°С‚Р°РєРё
         List<CellInBattle> fistCollection = GetNeighboursCell((fields[(int)attacking.BattlePosition.x, (int)attacking.BattlePosition.y]), fields, counAtattackRange); ;
         List<CellInBattle> secondCollection = new List<CellInBattle>();
         counAtattackRange++;
@@ -39,17 +39,17 @@ public class DefiningArea : MonoBehaviour
     }
 
     /// <summary>
-    /// костыль для АИ
+    /// РєРѕСЃС‚С‹Р»СЊ РґР»СЏ РђР
     /// </summary>
     /// <param name="fields"></param>
     /// <param name="attacking"></param>
     public static List<PersoneInBattle> FindAvailableTargets(CellInBattle[,] fields, PersoneInBattle attacking, SkillActive skill)
     {
         List<PersoneInBattle> playerPersone = new List<PersoneInBattle>();
-        Vector2 vector = attacking.BattlePosition;//позиция атакующего
-        int counAtattackRange = 1;// счетчик дистанции атаки оружия
-        fields[(int)vector.x, (int)vector.y].AttackRange = skill.RangeSkill;// присваивание ячейки где стоит атакующей дистанции оружия для закрытие ячейки
-        //колекция ячеек попадающих в дистанцую атаки
+        Vector2 vector = attacking.BattlePosition;//РїРѕР·РёС†РёСЏ Р°С‚Р°РєСѓСЋС‰РµРіРѕ
+        int counAtattackRange = 1;// СЃС‡РµС‚С‡РёРє РґРёСЃС‚Р°РЅС†РёРё Р°С‚Р°РєРё РѕСЂСѓР¶РёСЏ
+        fields[(int)vector.x, (int)vector.y].AttackRange = skill.RangeSkill;// РїСЂРёСЃРІР°РёРІР°РЅРёРµ СЏС‡РµР№РєРё РіРґРµ СЃС‚РѕРёС‚ Р°С‚Р°РєСѓСЋС‰РµР№ РґРёСЃС‚Р°РЅС†РёРё РѕСЂСѓР¶РёСЏ РґР»СЏ Р·Р°РєСЂС‹С‚РёРµ СЏС‡РµР№РєРё
+        //РєРѕР»РµРєС†РёСЏ СЏС‡РµРµРє РїРѕРїР°РґР°СЋС‰РёС… РІ РґРёСЃС‚Р°РЅС†СѓСЋ Р°С‚Р°РєРё
         List<CellInBattle> fistCollection = GetNeighboursCell((fields[(int)attacking.BattlePosition.x, (int)attacking.BattlePosition.y]), fields, counAtattackRange); ;
         List<CellInBattle> secondCollection = new List<CellInBattle>();
         counAtattackRange++;
@@ -90,7 +90,7 @@ public class DefiningArea : MonoBehaviour
 
     }
     /// <summary>
-    /// получение ближайшей ячейки с которой можно атаковать
+    /// РїРѕР»СѓС‡РµРЅРёРµ Р±Р»РёР¶Р°Р№С€РµР№ СЏС‡РµР№РєРё СЃ РєРѕС‚РѕСЂРѕР№ РјРѕР¶РЅРѕ Р°С‚Р°РєРѕРІР°С‚СЊ
     /// </summary>
     /// <param name="fields"></param>
     /// <param name="attacking"></param>
@@ -99,10 +99,10 @@ public class DefiningArea : MonoBehaviour
     public static CellInBattle NeighborCellToAttack(CellInBattle[,] fields, PersoneInBattle attacking, PersoneInBattle target , SkillActive skill)
     {
         CellInBattle neighborCell = null;
-        Vector2 vector = target.BattlePosition;//позиция атакующего
-        int counAtattackRange = 1;// счетчик дистанции атаки оружия
-        fields[(int)vector.x, (int)vector.y].AttackRange = skill.RangeSkill;// присваивание ячейки где стоит атакующей дистанции оружия для закрытие ячейки
-        //колекция ячеек попадающих в дистанцую атаки
+        Vector2 vector = target.BattlePosition;//РїРѕР·РёС†РёСЏ Р°С‚Р°РєСѓСЋС‰РµРіРѕ
+        int counAtattackRange = 1;// СЃС‡РµС‚С‡РёРє РґРёСЃС‚Р°РЅС†РёРё Р°С‚Р°РєРё РѕСЂСѓР¶РёСЏ
+        fields[(int)vector.x, (int)vector.y].AttackRange = skill.RangeSkill;// РїСЂРёСЃРІР°РёРІР°РЅРёРµ СЏС‡РµР№РєРё РіРґРµ СЃС‚РѕРёС‚ Р°С‚Р°РєСѓСЋС‰РµР№ РґРёСЃС‚Р°РЅС†РёРё РѕСЂСѓР¶РёСЏ РґР»СЏ Р·Р°РєСЂС‹С‚РёРµ СЏС‡РµР№РєРё
+        //РєРѕР»РµРєС†РёСЏ СЏС‡РµРµРє РїРѕРїР°РґР°СЋС‰РёС… РІ РґРёСЃС‚Р°РЅС†СѓСЋ Р°С‚Р°РєРё
         List<CellInBattle> fistCollection = GetNeighboursCell((fields[(int)target.BattlePosition.x, (int)target.BattlePosition.y]), fields, counAtattackRange); ;
         List<CellInBattle> secondCollection = new List<CellInBattle>();
 
@@ -151,7 +151,7 @@ public class DefiningArea : MonoBehaviour
     private static List<CellInBattle> GetNeighboursCell(CellInBattle cellFloor, CellInBattle[,] field, int countRangeAttack)
     {
         var result = new List<CellInBattle>();
-        // Соседними точками являются соседние по стороне клетки.
+        // РЎРѕСЃРµРґРЅРёРјРё С‚РѕС‡РєР°РјРё СЏРІР»СЏСЋС‚СЃСЏ СЃРѕСЃРµРґРЅРёРµ РїРѕ СЃС‚РѕСЂРѕРЅРµ РєР»РµС‚РєРё.
         Vector2 position = cellFloor.PositionInGraff;
         Vector2[] neighbourPoints = new Vector2[6];
         if (cellFloor.PositionInGraff.y % 2 != 0)
@@ -177,9 +177,7 @@ public class DefiningArea : MonoBehaviour
 
         foreach (var point in neighbourPoints)
         {
-
-
-            // Проверяем, что не вышли за границы карты.
+            // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ РЅРµ РІС‹С€Р»Рё Р·Р° РіСЂР°РЅРёС†С‹ РєР°СЂС‚С‹.
             if (point.x < 0 || point.x >= field.GetLength(0))
                 continue;
             if (point.y < 0 || point.y >= field.GetLength(1))
@@ -188,7 +186,7 @@ public class DefiningArea : MonoBehaviour
                 continue;
 
             field[(int)point.x, (int)point.y].AttackRange = countRangeAttack;
-            // Проверяем, что по клетке можно ходить.
+            // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ РїРѕ РєР»РµС‚РєРµ РјРѕР¶РЅРѕ С…РѕРґРёС‚СЊ.
             //  if ((field[(int)point.x, (int)point.y] != 0) && (field[(int)point.x, (int)point.y] != 1))
             //     continue;
 
